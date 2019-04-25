@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yl.transaction.custManager.dao.CustDao">
+
+	<!--获取客户信息 -->
+	<select id="getCustList" resultType="java.util.Map" parameterType="java.util.Map">
+		select c.CUST_ID,c.CUST_NAME, c.SEX, c.CUST_AGE, c.CONN_PHONE, c.CUST_ADDR, c.CUST_TYPE, c.UPDATE_OPR_ID, c.USER_NAME, c.UPDATE_TIME, c.MARK,c.dept_code,d.dept_name,d.dept_type  from 
+		(
+			select 
+			a.MAXACCEPT CUST_ID, a.CUST_NAME, a.SEX, a.CUST_AGE, a.CONN_PHONE, a.CUST_ADDR, a.CUST_TYPE, a.UPDATE_OPR_ID, b.USER_NAME, TO_CHAR(a.UPDATE_TIME, 'yyyy-mm-dd HH24:mi:ss') UPDATE_TIME, a.MARK, 
+			b.dept_code
+			from t_cust a left join t_user b on a.update_opr_id=b.maxaccept
+			where a.able_flag='10101'
+			<if test="deptCode != null and deptCode != '' ">
+				and b.dept_code in (select maxaccept
+                       from t_dept
+                      start with maxaccept=#{deptCode}
+                     connect by prior maxaccept = p_id)
+			</if>
+			<if test="custName != null and custName != '' ">
+				and a.CUST_NAME=#{custName}
+			</if>
+			<if test="custType != null and custType != '' ">
+				and a.CUST_TYPE=#{custType}
+			</if>
+		) c, t_dept d
+		where c.dept_code=d.maxaccept
+	</select>
+	
+	<select id="getBlackList" resultType="java.util.Map" parameterType="java.util.Map">
+		select 
+		a.MAXACCEPT, a.BLACK_PHONE, a.BLACK_REASON, a.UPDATE_OPR_ID, b.USER_NAME CREATE_OPR_NAME, to_char(a.UPDATE_TIME, 'yyyy-mm-dd HH24:mi:ss') UPDATE_TIME, a.ABLE_FLAG 
+		from T_BLACK_LIST a, T_USER b where a.UPDATE_OPR_ID=b.MAXACCEPT
+		<if test="blackPhone != null and blackPhone != '' ">
+			and a.BLACK_PHONE=#{blackPhone}
+		</if>
+	</select>
+	
+	<update id="updateBlackStatus" parameterType="java.util.Map">
+		update T_BLACK_LIST set ABLE_FLAG=#{ableFlag} where maxaccept=#{maxaccept}
+	</update>
+	
+	<insert id="addCustList" parameterType="java.util.Map">
+		insert into T_CUST (
+			MAXACCEPT,CUST_NAME,SEX,CUST_AGE,CONN_PHONE,CUST_ADDR,
+			<if test="custType != null and custType != '' ">
+				CUST_TYPE,
+			</if>
+			UPDATE_OPR_ID,UPDATE_TIME,MARK
+		) values (
+			#{maxaccept},#{custName},#{custSex}, #{custAge}, #{connPhone}, #{custAddr}, 
+			<if test="custType != null and custType != '' ">
+				#{custType}, 
+			</if>
+			#{oprID}, sysdate, #{custMark}
+		)
+	</insert>
+	
+	<update id="updateCustInfo" parameterType="java.util.Map">
+		update T_CUST 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="custName != null and custName != '' ">CUST_NAME=#{custName},</if>
+			<if test="custSex != null and custSex != '' ">SEX=#{custSex},</if>
+			<if test="custAge != null and custAge != '' ">CUST_AGE=#{custAge},</if>
+			<if test="connPhone != null and connPhone != '' ">CONN_PHONE=#{connPhone},</if>
+			<if test="custAddr != null and custAddr != '' ">CUST_ADDR=#{custAddr},</if>
+			<if test="custType != null and custType != '' ">CUST_TYPE=#{custType},</if>
+			<if test="custMark != null and custMark != '' ">MARK=#{custMark},</if>
+			<if test="oprID != null and oprID != '' ">UPDATE_OPR_ID=#{oprID},</if>
+			UPDATE_TIME=sysdate
+		</trim>
+		where MAXACCEPT=#{maxaccept}
+	</update>
+	
+	<update id="delCustInIDS" parameterType="String">
+		update T_CUST set able_flag='10102' where maxaccept in (${ids})
+	</update>
+</mapper>  

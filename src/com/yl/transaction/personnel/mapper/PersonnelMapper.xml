@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yl.transaction.personnel.dao.PersonnelDao">
+
+	<!--获取全部人员 -->
+	<select id="getAllPersonnel" resultType="java.util.Map" parameterType="java.util.Map">
+		select maxaccept,user_account,user_pwd,user_level,dept_code,dept_name,user_name,phone,tel,address,user_role,role_name from (
+			select n.maxaccept,n.user_account,n.user_pwd,n.user_level, n.dept_code, m.dept_name, n.user_name, n.phone, n.tel, n.address, n.user_role, n.role_name from (
+			       select a.maxaccept, a.user_account, a.user_pwd, a.user_level, a.dept_code, a.user_name, a.phone, a.tel, a.address, a.user_role, b.role_name from t_user a
+			       left join t_role b on a.user_role = b.maxaccept where a.ABLE_FLAG='10101'
+			       <if test="roleCode != null and roleCode != '' ">
+						and b.maxaccept=#{roleCode}
+				   </if>
+			       order by MAXACCEPT asc
+			) n left join t_dept m on n.dept_code = m.maxaccept
+		) where 1=1 
+		<if test="userName != null and userName != '' ">
+			and user_name=#{userName}
+		</if>
+		<if test="roleLevel != null and roleLevel != '' and roleLevel != '10303' ">
+			<if test="deptCode != null and deptCode != '' ">
+				and dept_code in (
+					select maxaccept from t_dept
+					start with maxaccept=#{deptCode}
+					connect by prior maxaccept = p_id
+				)
+			</if>
+		</if>
+		<if test="roleLevel != null and roleLevel != '' and roleLevel == '10303' ">
+			<if test="maxaccept != null and maxaccept != '' ">
+				and maxaccept=#{maxaccept}
+			</if>
+		</if>
+	</select>
+	
+	<!--分页查询总人员 -->
+	<select id="getTotalPersonnel" resultType="String">
+		select count(1) TOTAL from t_user
+	</select>
+	
+	<select id="getPersonnelByParam" resultType="java.util.Map" parameterType="java.util.Map">
+		select MAXACCEPT, USER_ACCOUNT, USER_PWD, USER_LEVEL, DEPT_CODE, USER_NAME, PHONE, TEL, ADDRESS, USER_ROLE, IS_ONLINE from t_user where dept_code in (
+		select MAXACCEPT from (
+		select MAXACCEPT, DEPT_NAME, DEPT_DES, P_ID, DEPT_TYPE from t_dept
+		start with maxaccept=${deptCode}
+		connect by prior maxaccept = p_id
+		) where dept_type=#{deptType})
+	</select>
+
+	<!-- 增加人员 -->
+	<insert id="addPersonnel"  parameterType="java.util.Map">
+		insert into t_user (maxaccept,user_account,user_pwd,dept_code,user_name,phone,tel,address,user_role) values (${maxaccept},#{account}, #{pwd},#{dept},#{name},#{phone},#{phone},#{address},#{role})
+	</insert>
+	
+	<!--删除人员 -->
+	<update id="delPersonnelInIDS" parameterType="String">
+		update t_user set ABLE_FLAG='10102' where maxaccept in (${ids}) 
+	</update>
+	
+	<!-- 修改人员 -->
+	<update id="updatePersonnelByID" parameterType="java.util.Map">
+		update t_user 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="account != null and account != '' ">user_account=#{account},</if>
+			<if test="pwd != null and pwd != '' ">user_pwd=#{pwd},</if>
+			<if test="dept != null and dept != '' ">dept_code=#{dept},</if>
+			<if test="name != null and name != '' ">user_name=#{name},</if>
+			<if test="phone != null and phone != '' ">phone=#{phone},</if>
+			<if test="phone != null and phone != '' ">tel=#{phone},</if>
+			<if test="address != null and address != '' ">address=#{address},</if>
+			<if test="role != null and role != '' ">user_role=#{role},</if>
+			<if test="photoHead != null and photoHead != '' ">PHOTO_HEAD=#{photoHead},</if>
+		</trim>
+		WHERE maxaccept=${maxaccept}
+	</update>
+	
+	<!--根据登录账户获取用户信息 -->
+	<select id="getPersonnelByAccount" resultType="java.util.Map" parameterType="String">
+		select maxaccept,user_account,user_pwd,user_level,dept_code,user_name,phone,tel,address,user_role from t_user where user_account=#{account}
+	</select>
+	<!--修改密码 -->
+	<update id="updatePassByMax" parameterType="java.util.Map">
+		update t_user set USER_PWD=#{newPass} where maxaccept=${maxaccept}
+	</update>
+	
+	<!-- 修改个人资料 -->
+	<update id="updateUserInfoByID" parameterType="java.util.Map">
+		update  T_USER 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="account != null and account != '' ">user_account=#{account},</if>
+			<if test="pwd != null and pwd != '' ">user_pwd=#{pwd},</if>
+			<if test="userName != null and userName != '' ">user_Name=#{userName},</if>
+			<if test="userPhone != null and userPhone != '' ">phone=#{userPhone},</if>
+			<if test="userTel != null and userTel != '' ">tel=#{userTel},</if>
+			<if test="userAddress != null and userAddress != '' ">address=#{userAddress}</if>
+			<if test="userLevel != null and userLevel != '' ">user_level=#{userLevel}</if>
+		</trim>
+		where maxaccept=${maxaccept}
+	</update> 
+</mapper>  

@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yl.transaction.patientManager.dao.PatientManagerDao">
+
+<!-- 获取全部人员 -->
+<select id="getAllPatientManger" resultType="java.util.Map" parameterType="java.util.Map">     
+	select maxaccept, PATIENT_TYPE, PATIENT_SEX, PATIENT_NAME,PATIENT_TYPE_NAME, PATIENT_SEX_NAME,
+		   PATENT_NATION,CARD_ID,TEL,PHONE,ADDRESS,STREET_COMM,PATHOGENY,NOW_PRESENT,HIS_PRESENT,
+		   C_CARD_ID,C_CARD_SUB,GU_NAME,GU_TEL,GU_RELATIVE,EM_NAME,EM_TEL,EM_RELATIVE,CARD_POSITIVE,
+       	   CARD_OTHER,C_CARD_INDEX,C_CARD_PHOTO,HB_INDEX,HB_SELF,TOGETHER_PHONE,CREATE_TIME,
+       	   UPDATE_TIME,UPDATE_OPR,UPDATE_OPR_NAME,MAKE_FLAG,MAKE_FLAG_NAME,ABLE_FLAG,
+           FW_TIMES,SERVER_TIME,SERVER_OPR,SERVER_OPR_NAME,VERSION 
+    from (
+           select a.maxaccept, a.patient_type, a.patient_sex, a.patient_name,a.patent_nation,a.card_id,
+           a.tel,a.phone,a.address,a.street_comm,a.pathogeny,a.now_present,a.his_present,a.c_card_id,
+           a.c_card_sub,a.gu_name,a.gu_tel,a.gu_relative,a.em_name,a.em_tel,a.em_relative,a.card_positive,
+           a.card_other,a.c_card_index,a.c_card_photo,a.hb_index,a.hb_self,a.together_phone,
+              to_char(a.create_time, 'yyyy-mm-dd HH24:mi:ss') CREATE_TIME,     
+              to_char(a.update_time, 'yyyy-mm-dd HH24:mi:ss') UPDATE_TIME,
+              a.update_opr,a.update_opr_name,a.make_flag,a.able_flag,a.fw_times,
+              a.server_time,a.server_opr,a.server_opr_name,a.version,
+       	   (select code_name from t_common_code t where t.code_key='PATIENT_TYPE' and t.code_id = a.patient_type) PATIENT_TYPE_NAME,
+           (select code_name from t_common_code t where t.code_key='MAKE_FLAG' and t.code_id=a.make_flag) MAKE_FLAG_NAME,
+           (select code_name from t_common_code t where t.code_key='PATIENT_SEX' and t.code_id = a.patient_sex) PATIENT_SEX_NAME 
+     from t_patient a where a.able_flag=10900
+       	   <if test=" cardID != null and cardID != '' ">
+				and CARD_ID=#{cardID}
+		   </if>
+		   <if test="name != null and name != '' ">
+				and PATIENT_NAME=#{name}
+		   </if>
+		   <if test="type != null and type != '' ">
+				and PATIENT_TYPE=#{type}
+		   </if>
+		   <if test="beginTime != null and beginTime != '' ">
+				and CREATE_TIME>=#{beginTime}
+		   </if>
+		   <if test="endTime != null and endTime != '' ">
+				<![CDATA[and CREATE_TIME<=#{endTime}]]>
+		   </if>
+       )b order by create_time desc
+</select>
+	
+<!--分页查询总人员 -->
+<select id="getTotalPatientManger" resultType="String">
+	select count(1) TOTAL from T_PATIENT
+</select>
+	
+<!-- 添加人员 -->
+<insert id="addPatientManger" parameterType="java.util.Map">
+	insert into T_PATIENT (
+		MAXACCEPT,
+		<if test="type != null and type != '' ">
+			PATIENT_TYPE,
+		</if>
+		<if test="name != null and name != '' ">
+			PATIENT_NAME,
+		</if>
+		<if test="sex != null and sex != '' ">
+			PATIENT_SEX,
+		</if>
+		<if test="cardID != null and cardID != '' ">
+			CARD_ID,
+		</if>
+		<if test="address != null and address != '' ">
+			ADDRESS,
+		</if>
+		<if test="pphone != null and pphone != '' ">
+			PHONE,
+		</if>
+		<if test="ptel != null and ptel != '' ">
+			TEL,
+		</if>
+		<if test="nation != null and nation != '' ">
+			PATENT_NATION,
+		</if>
+		<if test="comm != null and comm != '' ">
+			STREET_COMM,
+		</if>
+		<if test="pathogeny != null and pathogeny != '' ">
+			PATHOGENY,
+		</if>
+		<if test="nowpresent != null and nowpresent != '' ">
+			NOW_PRESENT,
+		</if>
+		<if test="hispresent != null and hispresent != '' ">
+			HIS_PRESENT,
+		</if>
+		<if test="ccardID != null and ccardID != '' ">
+			C_CARD_ID,
+		</if>
+		<if test="sub != null and sub != '' ">
+			C_CARD_SUB,
+		</if>
+		<if test="guname != null and guname != '' ">
+			GU_NAME,
+		</if>
+		<if test="gutel != null and gutel != '' ">
+			GU_TEL,
+		</if>
+		<if test="gurelative != null and gurelative != '' ">
+			GU_RELATIVE,
+		</if>
+		<if test="emname != null and emname != '' ">
+			EM_NAME,
+		</if>
+		<if test="emtel != null and emtel != '' ">
+			EM_TEL,
+		</if>
+		<if test="emrelative != null and emrelative != '' ">
+			EM_RELATIVE,
+		</if>
+		<if test="version != null and version != '' ">
+			VERSION,
+		</if>
+		<if test="ableflag != null and ableflag != '' ">
+			ABLE_FLAG,
+		</if>
+			CREATE_TIME,
+			UPDATE_TIME,
+		<if test="updateOpr != null and updateOpr != '' ">
+			UPDATE_OPR,
+		</if>
+		<if test="updateOprName !=null and updateOprName !='' ">
+			UPDATE_OPR_NAME
+		</if>
+) values (
+		${maxaccept},
+		<if test="type != null and type != '' ">
+			#{type},
+		</if>
+		<if test="name != null and name != '' ">
+			#{name},
+		</if>
+		<if test="sex != null and sex != '' ">
+			#{sex},
+		</if>
+		<if test="cardID != null and cardID != '' ">
+			#{cardID},
+		</if>
+		<if test="address != null and address != '' ">
+			#{address},
+		</if>
+		<if test="pphone != null and pphone != '' ">
+			#{pphone},
+		</if>
+		<if test="ptel != null and ptel != '' ">
+			#{ptel},
+		</if>
+		<if test="nation != null and nation != '' ">
+			#{nation},
+		</if>
+		<if test="comm != null and comm != '' ">
+			#{comm},
+		</if>
+		<if test="pathogeny != null and pathogeny != '' ">
+			#{pathogeny},
+		</if>
+		<if test="nowpresent != null and nowpresent != '' ">
+			#{nowpresent},
+		</if>
+		<if test="hispresent != null and hispresent != '' ">
+			#{hispresent},
+		</if>
+		<if test="ccardID != null and ccardID != '' ">
+			#{ccardID},
+		</if>
+		<if test="sub != null and sub != '' ">
+			#{sub},
+		</if>
+		<if test="guname != null and guname != '' ">
+			#{guname},
+		</if>
+		<if test="gutel != null and gutel != '' ">
+			#{gutel},
+		</if>
+		<if test="gurelative != null and gurelative != '' ">
+			#{gurelative},
+		</if>
+		<if test="emname != null and emname != '' ">
+			#{emname},
+		</if>
+		<if test="emtel != null and emtel != '' ">
+			#{emtel},
+		</if>
+		<if test="emrelative != null and emrelative != '' ">
+			#{emrelative},
+		</if>
+		<if test="version != null and version != '' ">
+			#{version},
+		</if>
+		<if test="ableflag != null and ableflag != '' ">
+			#{ableflag},
+		</if>
+			sysdate,
+			sysdate,
+		<if test="updateOpr != null and updateOpr != '' ">
+			#{updateOpr},
+		</if>
+		<if test="updateOprName !=null and updateOprName !='' ">
+				#{updateOprName}
+		</if>
+		)
+	</insert>
+	
+<!-- 删除人员 -->
+<!-- <delete id="delPatientMangerInIDS" parameterType="java.util.Map">
+	delete from T_PATIENT where maxaccept = ${maxaccept}
+	</delete> -->
+	
+<!-- 将状态改变  页面不显示 -->
+<update id="delPatientMangerInIDS" parameterType="java.util.Map">
+	update t_patient set able_flag=10901,update_time=sysdate,update_opr=#{updateOpr},update_opr_name=#{updateOprName} where maxaccept=${maxaccept}
+</update>
+	
+	
+<!-- 根据身份证号查询该患者是否存在 -->
+<select id="getPatientMangerByAccount" parameterType="java.util.Map" resultType="java.util.Map">
+	select maxaccept from t_patient where CARD_ID = #{cardID}
+</select>
+	
+<!-- 修改人员 -->
+<update id="updatePatientMangertByID" parameterType="java.util.Map">
+	update T_PATIENT set
+			PATIENT_TYPE=#{type},
+			PATIENT_NAME=#{name},
+			PATIENT_SEX=#{sex},
+			PATENT_NATION=#{nation},
+			CARD_ID=#{cardID},
+			TEL=#{ptel},
+			PHONE=#{pphone},
+			ADDRESS=#{address},
+			STREET_COMM=#{comm},
+			PATHOGENY=#{pathogeny},
+			NOW_PRESENT=#{nowpresent},
+			HIS_PRESENT=#{hispresent},
+			C_CARD_ID=#{ccardID},
+			C_CARD_SUB=#{sub},
+			GU_NAME=#{guname},
+			GU_TEL=#{gutel},
+			GU_RELATIVE=#{gurelative},
+			EM_NAME=#{emname},
+			EM_TEL=#{emtel},
+			EM_RELATIVE=#{emrelative},
+			VERSION=#{ver},
+			UPDATE_TIME = sysdate,
+			UPDATE_OPR=#{updateOpr},
+			UPDATE_OPR_NAME=#{updateOprName}
+		WHERE maxaccept=${maxaccept} and version = #{version}
+</update>
+	
+<select id="getPatientByParam" resultType="java.util.Map" parameterType="java.util.Map">
+	select 
+		  MAXACCEPT,PATIENT_TYPE,PATIENT_NAME,PATIENT_SEX,PATENT_NATION,
+		  CARD_ID,TEL,PHONE,ADDRESS,STREET_COMM,PATHOGENY,NOW_PRESENT,HIS_PRESENT,
+		  C_CARD_ID,C_CARD_SUB,GU_NAME,GU_TEL,GU_RELATIVE,EM_NAME,EM_TEL,EM_RELATIVE,
+		  CARD_POSITIVE,CARD_OTHER,C_CARD_INDEX,C_CARD_PHOTO,HB_INDEX,HB_SELF,TOGETHER_PHONE,
+		  to_char(CREATE_TIME,'yyyy-mm-dd HH24:mi:ss') CREATE_TIME,
+		  to_char(UPDATE_TIME,'yyyy-mm-dd HH24:mi:ss') UPDATE_TIME,
+		  UPDATE_OPR,UPDATE_OPR_NAME,MAKE_FLAG,ABLE_FLAG,
+		  FW_TIMES,
+		  to_char(SERVER_TIME,'yyyy-mm-dd HH24:mi:ss') SERVER_TIME,
+		  SERVER_OPR,SERVER_OPR_NAME,VERSION              
+	from t_patient where 1=1 
+	<if test="patientCardNO != null and patientCardNO != '' ">
+		 and CARD_ID=#{patientCardNO}
+	</if>
+	<if test="maxaccept != null and maxaccept != '' ">
+		 and MAXACCEPT=#{maxaccept}
+	</if>
+	<if test="ableFlag != null and ableFlag != '' ">
+		and ABLE_FLAG=#{ableFlag}
+	</if>
+	<if test="patientName != null and patientName != '' and patientPhone != null and patientPhone != '' ">
+		and (PATIENT_NAME=#{patientName} or PHONE=#{patientPhone})
+	</if>
+	order by create_time desc
+</select>
+	
+<select id="getBasePatientByParam" resultType="java.util.Map" parameterType="java.util.Map">
+	select 
+		  MAXACCEPT,PATIENT_TYPE,PATIENT_NAME,PATIENT_SEX,PATENT_NATION,
+		  CARD_ID,TEL,PHONE,ADDRESS,STREET_COMM,PATHOGENY,NOW_PRESENT,HIS_PRESENT,
+		  C_CARD_ID,C_CARD_SUB,GU_NAME,GU_TEL,GU_RELATIVE,EM_NAME,EM_TEL,EM_RELATIVE,
+		  CARD_POSITIVE,CARD_OTHER,C_CARD_INDEX,C_CARD_PHOTO,HB_INDEX,HB_SELF,TOGETHER_PHONE,
+		  to_char(CREATE_TIME,'yyyy-mm-dd HH24:mi:ss') CREATE_TIME,
+		  to_char(UPDATE_TIME,'yyyy-mm-dd HH24:mi:ss') UPDATE_TIME,
+		  UPDATE_OPR,UPDATE_OPR_NAME,MAKE_FLAG,ABLE_FLAG,
+		  FW_TIMES,
+		  to_char(SERVER_TIME,'yyyy-mm-dd HH24:mi:ss') SERVER_TIME,
+		  SERVER_OPR,SERVER_OPR_NAME,VERSION              
+	from t_patient_temp where 1=1 
+	<if test="patientCardNO != null and patientCardNO != '' ">
+		 and CARD_ID=#{patientCardNO}
+	</if>
+	<if test="maxaccept != null and maxaccept != '' ">
+		 and MAXACCEPT=#{maxaccept}
+	</if>
+	<if test="ableFlag != null and ableFlag != '' ">
+		 and ABLE_FLAG=#{ableFlag}
+	</if>
+	<if test="oprID != null and oprID != '' ">
+		 and UPDATE_OPR=#{oprID}
+	</if>
+</select>
+	
+	<update id="updatePatientByParam" parameterType="java.util.Map">
+		update t_patient 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="versionAdd != null and versionAdd != '' ">version=#{versionAdd},</if>
+			<if test="makeFlag != null and makeFlag != '' ">make_flag=#{makeFlag},</if>
+			
+			<!-- 后台工单添加修改以下内容 -->
+			<if test="updateOpr != null and updateOpr != '' ">UPDATE_OPR=#{updateOpr},</if>
+			<if test="updateOprName != null and updateOprName != '' ">UPDATE_OPR_NAME=#{updateOprName},UPDATE_TIME=sysdate,</if>
+			<if test="serverTime != null and serverTime != '' ">SERVER_TIME=to_date(#{serverTime}, 'yyyy-mm-dd HH24:mi:ss'),</if>
+			<if test="fwTimes != null and fwTimes != '' ">FW_TIMES=#{fwTimes},</if>
+			<if test="serverOpr != null and serverOpr != '' ">SERVER_OPR=#{serverOpr},</if>
+			<if test="serverOprName != null and serverOprName != '' ">SERVER_OPR_NAME=#{serverOprName},</if>
+			
+			<!-- 后台工单删除修改以下内容 -->
+			<if test="fwTimesMinus != null and fwTimesMinus != '' ">fw_times=decode(fw_times, '0', '0', fw_times-1),</if>
+			<if test="fwTimesAdd != null and fwTimesAdd != '' ">fw_times=fw_times+1,</if>
+		</trim>
+		WHERE maxaccept=#{maxaccept} 
+		<if test="version != null and version != '' ">
+			and version=#{version}
+		</if>
+	</update>
+	
+	<insert id="insertPatientInfo" parameterType="java.util.Map">
+		insert into t_patient (
+			MAXACCEPT
+			<if test="patientName != null and patientName != '' ">
+				,PATIENT_NAME
+			</if>
+			<if test="patientCardID != null and patientCardID != '' ">
+				,CARD_ID
+			</if>
+			<if test="patientPhone != null and patientPhone != '' ">
+				,TEL,PHONE
+			</if>
+			<if test="patientAddress != null and patientAddress != '' ">
+				,ADDRESS
+			</if>
+			,CREATE_TIME
+			,UPDATE_TIME
+			<if test="oprID != null and oprID != '' ">
+				,UPDATE_OPR
+			</if>
+			<if test="oprName != null and oprName != '' ">
+				,UPDATE_OPR_NAME
+			</if>
+			<if test="makeFlag != null and makeFlag != '' ">
+				,MAKE_FLAG
+			</if>
+			<if test="ableFlag != null and ableFlag != '' ">
+				,ABLE_FLAG
+			</if>
+			<if test="fwTimes != null and fwTimes != '' ">
+				,FW_TIMES
+			</if>
+			<if test="version != null and version != '' ">
+				,VERSION
+			</if>
+		) values (
+			#{maxaccept}
+			<if test="patientName != null and patientName != '' ">
+				,#{patientName}
+			</if>
+			<if test="patientCardID != null and patientCardID != '' ">
+				,#{patientCardID}
+			</if>
+			<if test="patientPhone != null and patientPhone != '' ">
+				,#{patientPhone},#{patientPhone}
+			</if>
+			<if test="patientAddress != null and patientAddress != '' ">
+				,#{patientAddress}
+			</if>
+			,sysdate
+			,sysdate
+			<if test="oprID != null and oprID != '' ">
+				,#{oprID}
+			</if>
+			<if test="oprName != null and oprName != '' ">
+				,#{oprName}
+			</if>
+			<if test="makeFlag != null and makeFlag != '' ">
+				,#{makeFlag}
+			</if>
+			<if test="ableFlag != null and ableFlag != '' ">
+				,#{ableFlag}
+			</if>
+			<if test="fwTimes != null and fwTimes != '' ">
+				,#{fwTimes}
+			</if>
+			<if test="version != null and version != '' ">
+				,#{version}
+			</if>
+		)
+	</insert>
+
+	<!-- 患者类型下拉菜单 -->
+	<select id="getPatientTypeList" resultType="java.util.Map">
+		select code_name, code_id from t_common_code where code_key = 'PATIENT_TYPE'
+	</select>
+	<!-- 患者性别下拉菜单 -->
+	<select id="getPatientSexList" resultType="java.util.Map">
+		select code_name,code_id from t_common_code where code_key ='PATIENT_SEX'
+	</select>
+	
+	<insert id="insertBasePatientInfo" parameterType="java.util.Map">
+		insert into t_patient_temp (
+			select 
+				MAXACCEPT,PATIENT_TYPE,PATIENT_NAME,PATIENT_SEX,PATENT_NATION,
+			  	CARD_ID,TEL,PHONE,ADDRESS,STREET_COMM,PATHOGENY,NOW_PRESENT,HIS_PRESENT,
+			 	C_CARD_ID,C_CARD_SUB,GU_NAME,GU_TEL,GU_RELATIVE,EM_NAME,EM_TEL,EM_RELATIVE,
+			  	CARD_POSITIVE,CARD_OTHER,C_CARD_INDEX,C_CARD_PHOTO,HB_INDEX,HB_SELF,TOGETHER_PHONE,
+			  	sysdate,sysdate,#{oprID},#{oprName},MAKE_FLAG,ABLE_FLAG,
+			  	FW_TIMES, SERVER_TIME, SERVER_OPR,SERVER_OPR_NAME,VERSION   
+		  	from t_patient where maxaccept=#{patientID}
+		)
+	</insert>
+	
+	<update id="updateBasePatient" parameterType="java.util.Map">
+		update t_patient_temp 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="patientType != null and patientType != '' ">PATIENT_TYPE=#{patientType},</if>
+			<if test="patientName != null and patientName != '' ">PATIENT_NAME=#{patientName},</if>
+			<if test="patientSex != null and patientSex != '' ">PATIENT_SEX=#{patientSex},</if>
+			<if test="patientNation != null and patientNation != '' ">PATENT_NATION=#{patientNation},</if>
+			<if test="cardID != null and cardID != '' ">CARD_ID=#{cardID},</if>
+			<if test="patientPhone != null and patientPhone != '' ">TEL=#{patientPhone},</if>
+			<if test="patientPhone != null and patientPhone != '' ">PHONE=#{patientPhone},</if>
+			<if test="patientAddress != null and patientAddress != '' ">ADDRESS=#{patientAddress},</if>
+			<if test="streetComm != null and streetComm != '' ">STREET_COMM=#{streetComm},</if>
+			<if test="patientPathogeny != null and patientPathogeny != '' ">PATHOGENY=#{patientPathogeny},</if>
+			<if test="nowPresent != null and nowPresent != '' ">NOW_PRESENT=#{nowPresent},</if>
+			<if test="hisPresent != null and hisPresent != '' ">HIS_PRESENT=#{hisPresent},</if>
+			<if test="cCardID != null and cCardID != '' ">C_CARD_ID=#{cCardID},</if>
+			<if test="cCardSub != null and cCardSub != '' ">C_CARD_SUB=#{cCardSub},</if>
+			<if test="guName != null and guName != '' ">GU_NAME=#{guName},</if>
+			<if test="guPhone != null and guPhone != '' ">GU_TEL=#{guPhone},</if>
+			<if test="guRelative != null and guRelative != '' ">GU_RELATIVE=#{guRelative},</if>
+			<if test="guName != null and guName != '' ">EM_NAME=#{guName},</if>
+			<if test="guPhone != null and guPhone != '' ">EM_TEL=#{guPhone},</if>
+			<if test="guRelative != null and guRelative != '' ">EM_RELATIVE=#{guRelative},</if>
+			<if test="cardPositive != null and cardPositive != '' ">CARD_POSITIVE=#{cardPositive},</if>
+			<if test="cardOther != null and cardOther != '' ">CARD_OTHER=#{cardOther},</if>
+			<if test="cCardIndex != null and cCardIndex != '' ">C_CARD_INDEX=#{cCardIndex},</if>
+			<if test="cCardPhoto != null and cCardPhoto != '' ">C_CARD_PHOTO=#{cCardPhoto},</if>
+			<if test="hbIndex != null and hbIndex != '' ">HB_INDEX=#{hbIndex},</if>
+			<if test="hbSelf != null and hbSelf != '' ">HB_SELF=#{hbSelf},</if>
+			<if test="togetherPhoto != null and togetherPhoto != '' ">TOGETHER_PHONE=#{togetherPhoto},</if>
+			<if test="oprID != null and oprID != '' ">UPDATE_OPR=#{oprID},</if>
+			<if test="oprName != null and oprName != '' ">UPDATE_OPR_NAME=#{oprName},</if>
+			<if test='saveFlag != null and saveFlag != "" and saveFlag == "0" '>MAKE_FLAG='10701',</if>
+			<if test='saveFlag != null and saveFlag != "" and saveFlag == "1" '>MAKE_FLAG='10702',</if>
+			<!-- <if test='saveFlag != null and saveFlag != "" and saveFlag == "0" '>ABLE_FLAG='10900',</if>
+			<if test='saveFlag != null and saveFlag != "" and saveFlag == "1" '>ABLE_FLAG='10901',</if> -->
+			<if test="ableFlag != null and ableFlag != '' ">ABLE_FLAG=#{ableFlag},</if>
+			<if test='saveFlag != null and saveFlag != "" and saveFlag == "1" '>FW_TIMES=FW_TIMES+1,</if>
+			<if test='saveFlag != null and saveFlag != "" and saveFlag == "1" '>SERVER_TIME=sysdate,</if>
+			<if test="oprID != null and oprID != '' ">SERVER_OPR=#{oprID},</if>
+			<if test="oprName != null and oprName != '' ">SERVER_OPR_NAME=#{oprName},</if>
+			UPDATE_TIME=sysdate
+		</trim>
+		where ABLE_FLAG='10900'
+		<if test="patientID != null and patientID != '' ">
+			and maxaccept=#{patientID}
+		</if>
+		<if test="oprID != null and oprID != '' ">
+			and UPDATE_OPR=#{oprID}
+		</if>
+	</update>
+	
+
+	<select id="getPatientCJInfo" resultType="java.util.Map" parameterType="java.util.Map">
+		select 
+		  maxaccept, patient_id, cj_type, cj_level, create_time, update_opr, update_opr_name, able_flag 
+		from t_cj_mapping where 1=1 
+		<if test="maxaccept != null and maxaccept != '' ">
+			and patient_id=#{maxaccept}
+		</if>
+		<if test="ableFlag != null and ableFlag != '' ">
+			and able_flag=#{ableFlag}
+		</if>
+		<if test="cjType != null and cjType != '' ">
+			and cj_type=#{cjType}
+		</if>
+		<if test="cjLevel != null and cjLevel != '' ">
+			and cj_level=#{cjLevel}
+		</if>
+	</select>
+	
+	<insert id="insertCJMapper" parameterType="java.util.Map">
+		insert into t_cj_mapping (
+			MAXACCEPT,
+			PATIENT_ID,
+			CJ_TYPE,
+			CJ_LEVEL,
+			CREATE_TIME,
+			UPDATE_OPR,
+			UPDATE_OPR_NAME,
+			ABLE_FLAG
+		) values (
+			#{maxaccept},
+			#{patientID},
+			#{cjType},
+			#{cjLevel},
+			sysdate,
+			#{oprID},
+			#{oprName},
+			#{ableFlag}
+		)
+	</insert>
+	
+	<update id="patientTempToReal" parameterType="java.util.Map">
+		merge into t_patient  
+	    using t_patient_temp  
+	    on(t_patient.maxaccept=t_patient_temp.maxaccept and t_patient_temp.maxaccept=#{maxaccept} and t_patient_temp.able_flag='10900')  
+	    when matched then  
+	    update set 
+	    t_patient.patient_type = t_patient_temp.patient_type, 
+	    t_patient.PATIENT_NAME = t_patient_temp.PATIENT_NAME, 
+	    t_patient.PATIENT_SEX = t_patient_temp.PATIENT_SEX, 
+	    t_patient.PATENT_NATION = t_patient_temp.PATENT_NATION, 
+	    t_patient.CARD_ID = t_patient_temp.CARD_ID, 
+	    t_patient.TEL = t_patient_temp.TEL, 
+	    t_patient.PHONE = t_patient_temp.PHONE, 
+	    t_patient.ADDRESS = t_patient_temp.ADDRESS, 
+	    t_patient.STREET_COMM = t_patient_temp.STREET_COMM, 
+	    t_patient.PATHOGENY = t_patient_temp.PATHOGENY, 
+	    t_patient.NOW_PRESENT = t_patient_temp.NOW_PRESENT, 
+	    t_patient.HIS_PRESENT = t_patient_temp.HIS_PRESENT, 
+	    t_patient.C_CARD_ID = t_patient_temp.C_CARD_ID, 
+	    t_patient.C_CARD_SUB = t_patient_temp.C_CARD_SUB, 
+	    t_patient.GU_NAME = t_patient_temp.GU_NAME, 
+	    t_patient.GU_TEL = t_patient_temp.GU_TEL, 
+	    t_patient.GU_RELATIVE = t_patient_temp.GU_RELATIVE, 
+	    t_patient.EM_NAME = t_patient_temp.EM_NAME, 
+	    t_patient.EM_TEL = t_patient_temp.EM_TEL, 
+	    t_patient.EM_RELATIVE = t_patient_temp.EM_RELATIVE, 
+	    t_patient.CARD_POSITIVE = t_patient_temp.CARD_POSITIVE, 
+	    t_patient.CARD_OTHER = t_patient_temp.CARD_OTHER, 
+	    t_patient.C_CARD_INDEX = t_patient_temp.C_CARD_INDEX, 
+	    t_patient.C_CARD_PHOTO = t_patient_temp.C_CARD_PHOTO, 
+	    t_patient.HB_INDEX = t_patient_temp.HB_INDEX, 
+	    t_patient.HB_SELF = t_patient_temp.HB_SELF, 
+	    t_patient.TOGETHER_PHONE = t_patient_temp.TOGETHER_PHONE, 
+	    t_patient.UPDATE_TIME = t_patient_temp.UPDATE_TIME, 
+	    t_patient.UPDATE_OPR = t_patient_temp.UPDATE_OPR, 
+	    t_patient.UPDATE_OPR_NAME = t_patient_temp.UPDATE_OPR_NAME, 
+	    t_patient.MAKE_FLAG = t_patient_temp.MAKE_FLAG, 
+	    t_patient.FW_TIMES = t_patient_temp.FW_TIMES, 
+	    t_patient.SERVER_TIME = t_patient_temp.SERVER_TIME, 
+	    t_patient.SERVER_OPR = t_patient_temp.SERVER_OPR, 
+	    t_patient.SERVER_OPR_NAME = t_patient_temp.SERVER_OPR_NAME, 
+	    t_patient.VERSION = t_patient_temp.VERSION
+	</update>
+		
+	<!-- 获取版本号 -->
+	<select id="getVersion" resultType="java.lang.String" parameterType="java.util.Map">
+		select version from T_PATIENT where maxaccept=#{maxaccept}
+	</select>	
+	
+	<!-- 患者信息详情查询 -->
+	<select id="getPatientInfoDet" parameterType="java.util.Map" resultType="java.util.Map">
+    	select
+		   MAXACCEPT,PATIENT_TYPE,PATIENT_NAME,PATIENT_SEX,PATENT_NATION,
+		   CARD_ID,TEL,PHONE,ADDRESS,STREET_COMM,PATHOGENY,NOW_PRESENT,HIS_PRESENT,
+		   C_CARD_ID,C_CARD_SUB,GU_NAME,GU_TEL,GU_RELATIVE,EM_NAME,EM_TEL,EM_RELATIVE,
+		   CARD_POSITIVE,CARD_OTHER,C_CARD_INDEX,C_CARD_PHOTO,HB_INDEX,HB_SELF,TOGETHER_PHONE,
+		   to_char(CREATE_TIME,'yyyy-mm-dd HH24:mi:ss') CREATE_TIME,
+		   to_char(UPDATE_TIME,'yyyy-mm-dd HH24:mi:ss') UPDATE_TIME,
+		   UPDATE_OPR,UPDATE_OPR_NAME,MAKE_FLAG,ABLE_FLAG,
+		   FW_TIMES,
+		   to_char(SERVER_TIME,'yyyy-mm-dd HH24:mi:ss') SERVER_TIME,
+		   SERVER_OPR,SERVER_OPR_NAME              
+	    from t_patient where maxaccept=#{maxaccept}
+	</select>
+</mapper>

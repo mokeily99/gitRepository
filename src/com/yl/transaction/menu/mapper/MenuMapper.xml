@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yl.transaction.menu.dao.MenuDao">
+
+	<resultMap type="com.yl.transaction.menu.pojo.Menu" id="menu">
+		<result column="MAXACCEPT" property="maxaccept" />
+		<result column="MENU_INDEX" property="menuIndex" />
+		<result column="MENU_NAME" property="menuName" />
+		<result column="MENU_URL" property="menuUrl" />
+		<result column="MENU_LEVEL" property="menuLevel" />
+		<result column="PID" property="pid" />
+		<result column="ICON" property="icon" />
+	</resultMap>
+
+	<!--获取一级菜单 -->
+	<select id="getParentMenu" resultMap="menu">
+		select MAXACCEPT,MENU_INDEX,MENU_NAME,MENU_URL,MENU_LEVEL,IS_SHOW from T_MENU where MENU_LEVEL='0' ORDER BY MENU_INDEX ASC
+	</select>
+	
+	<!--根据ID获取菜单 -->
+	<select id="getMenuByID" resultMap="menu"  parameterType="String">
+		select MAXACCEPT,MENU_INDEX,MENU_NAME,MENU_URL,MENU_LEVEL,IS_SHOW from T_MENU where MAXACCEPT=${maxaccept} ORDER BY MENU_INDEX ASC
+	</select>
+	
+	<!--根据IDS\菜单等级获取菜单 -->
+	<select id="getMenuInIDByLevel" resultMap="menu"  parameterType="java.util.Map">
+		select MAXACCEPT,MENU_INDEX,MENU_NAME,MENU_URL,MENU_LEVEL,IS_SHOW,PID from T_MENU where 1=1 
+		<if test="maxaccept != null and maxaccept != ''">
+		 AND MAXACCEPT in (${maxaccept}) 
+		 </if>
+		 <if test="menuLevel != null and menuLevel != ''">
+		 AND MENU_LEVEL in (#{menuLevel}) 
+		 </if>
+		  ORDER BY MENU_INDEX ASC
+	</select>
+	
+	<!--根据IDS获取一级菜单 -->
+	<select id="getMenuInID" resultMap="menu"  parameterType="String">
+		select MAXACCEPT,MENU_INDEX,MENU_NAME,MENU_URL,MENU_LEVEL,IS_SHOW from T_MENU where 1=1 
+		<if test="maxaccept != null and maxaccept != ''">
+		 AND MAXACCEPT in (${maxaccept}) 
+		 </if>
+		 ORDER BY MENU_INDEX ASC
+	</select>
+	
+	<!--获取子菜单 -->
+	<select id="loadMenu" resultType="java.util.Map" parameterType="String">
+		select A.MAXACCEPT SMAXACCEPT,A.MENU_INDEX SMENU_INDEX,A.MENU_NAME SMENU_NAME,A.MENU_URL SMENU_URL,A.MENU_LEVEL SMENU_LEVEL,A.IS_SHOW SIS_SHOW,A.PID SPID,B.MAXACCEPT PMAXACCEPT,B.MENU_INDEX PMENU_INDEX,B.MENU_NAME PMENU_NAME,B.MENU_URL PMENU_URL,B.MENU_LEVEL PMENU_LEVEL,B.IS_SHOW PIS_SHOW,B.PID PPID  from t_menu a left join t_menu b on a.pid=b.maxaccept where a.MENU_LEVEL='1' 
+		<if test="roleMenus != null and roleMenus != ''">
+		  AND a.maxaccept in (${roleMenus})
+		 </if>
+	</select>
+	
+	<!--根据ID修改菜单 -->
+	<update id="updateMenuByID" parameterType="java.util.Map">
+		UPDATE T_MENU SET MENU_NAME=#{menuName}, MENU_URL=#{menuUrl} where MAXACCEPT=#{menuID}
+	</update>
+	
+	<!--根据父ID获取最大序列 -->
+	<select id="getMaxIndeByParenID" resultType="String" parameterType="String">
+		select max(menu_index) from t_menu where pid=${parentMenuID}
+	</select>
+	
+	<!-- 获取一级菜单最大序列 -->
+	<select id="getMaxInde" resultType="String">
+		select max(menu_index) from t_menu where menu_level='0'
+	</select>
+	
+	<!-- 增加菜单-->
+	<insert id="addMenu" parameterType="java.util.Map">
+		insert into t_menu (
+			maxaccept
+			<if test="menuIndex != null and menuIndex != '' ">
+				,menu_index 
+			</if>
+			,menu_name
+			,menu_url
+			<if test="menuLevel != null and menuLevel != '' ">
+				,menu_level
+			</if>
+			<if test="showFlag != null and showFlag != '' ">
+				,is_show
+			</if>
+			<if test="parentMenuID != null and parentMenuID != '' ">
+				,pid
+			</if>
+		) values(
+			${maxaccept}
+			<if test="menuIndex != null and menuIndex != '' ">
+				,#{menuIndex}
+			</if>
+			,#{menuName}
+			,#{menuUrl}
+			<if test="menuLevel != null and menuLevel != '' ">
+				,#{menuLevel}
+			</if>
+			<if test="showFlag != null and showFlag != '' ">
+				,#{showFlag}
+			</if>
+			<if test="parentMenuID != null and parentMenuID != '' ">
+				,#{parentMenuID}
+			</if>
+		)
+	</insert>
+	
+	<!--根据父ID获取所有子菜单 -->
+	<select id="getMenusByParenID" resultMap="menu" parameterType="String">
+		select MAXACCEPT,MENU_INDEX,MENU_NAME,MENU_URL,MENU_LEVEL,IS_SHOW,PID from t_menu where pid=${pid}
+	</select>
+	
+	<!--根据ID删除 -->
+	<delete id="deleteMenuByID" parameterType="String">
+		delete from t_menu where maxaccept=${maxaccept}
+	</delete>
+	
+	<!--根据ID删除菜单和子菜单 -->
+	<delete id="deleteMenusByPID" parameterType="String">
+		delete from t_menu where maxaccept in (${ids}) or PID in (${ids})
+	</delete>
+	
+	<!--获取所有父菜单 -->
+	<select id="getAllParentMemus" resultType="java.util.Map" parameterType="java.util.Map">
+		select MAXACCEPT,MENU_INDEX,MENU_NAME,MENU_URL,MENU_LEVEL,IS_SHOW,PID from t_menu where menu_level='0'
+	</select>
+	
+	<!--获取所有子菜单 -->
+	<select id="getAllSonMemus" resultType="java.util.Map" parameterType="java.util.Map">
+		select MAXACCEPT,MENU_INDEX,MENU_NAME,MENU_URL,MENU_LEVEL,IS_SHOW,PID from t_menu where menu_level='1'
+	</select>
+</mapper>  

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yl.transaction.role.dao.RoleDao">
+
+	<!--获取一级菜单 -->
+	<select id="getAllRoles" resultType="java.util.Map">
+		select maxaccept,role_name,role_menus,role_des,role_level from t_role order by maxaccept desc
+	</select>
+	
+	<!--根据ID获取角色信息 -->
+	<select id="getRoleByID" resultType="java.util.Map"  parameterType="String">
+		select maxaccept,role_name,role_menus,role_des from t_role where maxaccept=${maxaccept}
+	</select>
+	
+	<!--修改角色菜单 -->
+	<update id="saveRoleMenus" parameterType="java.util.Map">
+		update t_role set role_menus=#{roleMenus} where maxaccept=${roleID}
+	</update>
+	
+	<!-- 增加角色 -->
+	<insert id="addRole"  parameterType="java.util.Map">
+		insert into t_role (maxaccept, role_name, role_des, role_level) VALUES (${maxaccept}, #{roleName}, #{roleDes}, #{roleLevel})
+	</insert>
+	
+	<!--删除角色-->
+	<update id="delRoleInIDS" parameterType="String">
+		delete from t_role where maxaccept in (${ids})
+	</update>
+	
+	<update id="modRole" parameterType="java.util.Map">
+		update t_role 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="roleName != null and roleName != '' ">role_name=#{roleName},</if>
+			<if test="roleDes != null and roleDes != '' ">role_des=#{roleDes},</if>
+			<if test="roleLevel != null and roleLevel != '' ">role_level=#{roleLevel},</if>
+			<if test="roleMenus != null and roleMenus != '' ">ROLE_MENUS=#{roleMenus},</if>
+		</trim>
+		WHERE maxaccept=${maxaccept}
+	</update>
+</mapper>  

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yl.common.dao.PublicDao">
+	
+	<!-- 获取一级菜单最大序列 -->
+	<select id="getMaxaccept" resultType="String">
+		select maxaccept_seq.nextval from dual
+	</select>
+	
+	<insert id="insertSMS" parameterType="java.util.Map">
+		insert into t_sms (
+			MAXACCEPT
+			<if test="sendOpr != null and sendOpr !='' ">
+				,SEND_OPR
+			</if>
+			<if test="phone != null and phone !='' ">
+				,PHONE
+			</if>
+			<if test="message != null and message !='' ">
+				,MESSAGE
+			</if>
+			,CREATE_TIME
+			<if test="patientID != null and patientID !='' ">
+				,PATIENT_ID
+			</if>
+		) values (
+			#{maxaccept}
+			<if test="sendOpr != null and sendOpr !='' ">
+				,#{sendOpr}
+			</if>
+			<if test="phone != null and phone !='' ">
+				,#{phone}
+			</if>
+			<if test="message != null and message !='' ">
+				,#{message}
+			</if>
+			,sysdate
+			<if test="patientID != null and patientID !='' ">
+				,#{patientID}
+			</if>
+		)
+	</insert>
+	
+	<insert id="insertCodeNum" parameterType="java.util.Map">
+		insert into T_CODE_NUM (
+			MAXACCEPT
+			,PHONE
+			,CODE_NUM
+			,CREATE_TIME
+			,ORDER_ID
+		) values (
+			#{maxaccept}
+			,#{phone}
+			,#{code}
+			,sysdate
+			,#{orderID}
+		)
+	</insert>
+</mapper>  

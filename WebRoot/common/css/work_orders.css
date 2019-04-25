@@ -1,0 +1,43 @@
+@charset "utf-8";
+/* CSS Document */
+html,body,div,dl,dt,dd,ul,ol,li,p,blockquote,pre,hr,figure,table,caption,th,td,form,fieldset,legend,input,button,textarea,menu{margin:0;padding:0;}
+header,footer,section,article,aside,nav,hgroup,address,figure,figcaption,menu,details，h1,h2,h3,h4,h5,h6,video {display:block;}
+table{border-collapse:collapse;border-spacing:0;}
+caption{text-align:left;font-weight:normal;}
+a{text-decoration:none; color:#525252;}
+html,body,fieldset,img,iframe,abbr{border:0;}
+i,cite,em,var,address,dfn{font-style:normal;}
+[hidefocus],summary{outline:0;}
+li{list-style:none;}
+input:focus,select:focus,button:focus,textarea:focus{ outline:none;}
+input{outline:none;-webkit-appearance: none;}
+.fl{ float:left;}.fr{ float:right;}
+html{ overflow-x:hidden;-ms-touch-action: none;}
+body{ overflow-x:hidden; overflow-x:visible;color:#333;}
+.clear{ clear:both;}
+.clearfix:after{content:'.';display:block; clear:both; height:0; overflow:hidden; visibility:hidden;}
+/*---------------------清除默认样式------------------------*/
+.word_bg{ background-color:#f1f2f6;}
+.word_wrap{ width:97%; margin:20px 1.5% 40px;}
+.order_text h1,.order_photo h1,.patient h1,.patient_photo h1{ width:100%; background-color:#f8ab59; height:37px; line-height:37px; display:block; color:#fff; font-size:14px; padding-left:20px; box-sizing:border-box; border-radius: 5px 5px 0px 0px; margin-bottom:15px;}
+.order_text ul,.order_photo ul,.patient ul,.patient_photo ul{ width:96%; background-color:#fff; display:block; padding:20px 2% 0px;}
+.order_text ul li,.order_photo ul li,.patient ul li,.patient_photo ul li{ width:20%;font-size:12px;float:left;}
+.order_text ul li label,.patient ul li label{ width:50%;word-wrap: break-word;word-break: break-all;overflow: hidden; text-align:right;}
+.order_text ul li span,.patient ul li span{ padding-bottom:20px; width:50%;}
+.order_text ul li label,.order_text ul li span,.patient ul li span,.patient ul li label{ float:left; display:block;}
+.order_text ul li span,.patient ul li span{ padding-right:2%; box-sizing:border-box;}
+.order_photo{ margin:30px 0 40px;}
+.patient_photo{margin:30px 0 0;}
+.order_photo img,.patient_photo img{ width:82%; height:160px; display:block; margin:30px 9% 0;}
+#zoom li:hover{cursor:pointer;transform:scale(1.5);-webkit-transform:scale(1.5);-moz-transform:scale(1.5);-o-transform:scale(1.5); }
+.order_photo p,.patient_photo p{ width:82%;height:40px; display:block; background:linear-gradient(to right bottom, #eaeaef , #fff); margin:0 9% 0px; text-align:center; font-size:12px; line-height:40px; }
+.patient_photo ul,.order_photo ul{ padding:0 2% 30px !important;}
+.patient h1,.patient_photo h1{ background-color:#23b7e5 !important;}
+@media screen and (max-width:1500px){
+	.order_photo img,.patient_photo img{ width:90%; margin:30px 5% 0;}	
+	.order_photo p,.patient_photo p{ width:90%; margin:0 5% 0px;}
+	.patient i{ display:none;}
+	}
+@media screen and (max-width:1450px){
+	.order_text ul li,.order_photo ul li,.patient ul li,.patient_photo ul li{ width:25%;}
+ }

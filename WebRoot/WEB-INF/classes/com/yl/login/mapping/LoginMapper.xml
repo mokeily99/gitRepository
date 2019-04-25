@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yl.login.dao.LoginDao">
+
+	<resultMap type="com.yl.common.user.pojo.UserView" id="userView">
+		<result column="MAXACCEPT" property="maxaccept" />
+		<result column="USER_ACCOUNT" property="userAccount" />
+		<result column="USER_PWD" property="userPwd" />
+		<result column="USER_LEVEL" property="userLevel" />
+		<result column="DEPT_CODE" property="deptCode" />
+		<result column="DEPT_NAME" property="deptName" />
+		<result column="DEPT_TYPE" property="deptType" />
+		<result column="DEPT_PID" property="deptPid" />
+		<result column="USER_NAME" property="userName" />
+		<result column="PHONE" property="phone" />
+		<result column="TEL" property="tel" />
+		<result column="ADDRESS" property="address" />
+		<result column="USER_ROLE" property="userRole" />
+		<result column="ROLE_NAME" property="roleName" />
+		<result column="ROLE_MENUS" property="roleMenus" />
+		<result column="ROLE_LEVEL" property="roleLevel" />
+		<result column="PHOTO_HEAD" property="photoHead" />
+	</resultMap>
+
+
+	<!--自己配置的查询表所有数据的sql -->
+	<select id="getUserLogin" resultMap="userView" parameterType="java.util.Map">
+		select a.MAXACCEPT,
+	       a.USER_ACCOUNT,
+	       a.USER_PWD,
+	       a.USER_LEVEL,
+	       a.DEPT_CODE,
+	       (select DEPT_TYPE from t_dept where maxaccept=a.dept_code) DEPT_TYPE, 
+	       c.dept_name,
+	       c.p_id DEPT_PID,
+	       a.USER_NAME,
+	       a.PHONE,
+	       a.TEL,
+	       a.ADDRESS,
+	       a.USER_ROLE,
+	       b.role_name,
+	       b.ROLE_MENUS,
+	       b.ROLE_DES,
+	       b.ROLE_LEVEL, 
+	       a.IS_ONLINE,
+	       a.PHOTO_HEAD
+	  from t_user a, t_role b, t_dept c
+	  where a.user_role = b.maxaccept and a.dept_code=c.maxaccept
+	  and user_account = #{userName}
+	  and user_pwd = #{pwd}
+	</select>
+	
+	<update id="updateUserOnline" parameterType="java.util.Map">
+		update t_user set IS_ONLINE=${isOnline} where 1=1 
+		<if test="maxaccept != null and maxaccept !=''">
+		 and maxaccept=${maxaccept}
+		</if>
+		<if test="userName != null and userName !=''">
+		 and USER_ACCOUNT=#{userName}
+		</if>
+	</update>
+	
+	<!-- 根据maxaccept获取该用户原始密码 -->
+	<select id="getUserPwd" parameterType="java.util.Map" resultType="String">
+		select user_pwd from t_user where maxaccept = ${maxaccept}
+	</select>
+	
+	<!-- 根据maxaccept修改用户密码 -->
+	<update id="updateUserPwd" parameterType="java.util.Map">
+		update t_user set user_pwd = #{newPwd} where maxaccept = ${maxaccept}
+	</update>
+</mapper>  

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yl.common.user.dao.UserDao">
+
+	<resultMap type="com.yl.common.user.pojo.UserView" id="userView">
+		<result column="MAXACCEPT" property="maxaccept" />
+		<result column="USER_ACCOUNT" property="userAccount" />
+		<result column="USER_PWD" property="userPwd" />
+		<result column="USER_LEVEL" property="userLevel" />
+		<result column="DEPT_CODE" property="deptCode" />
+		<result column="DEPT_NAME" property="deptName" />
+		<result column="DEPT_TYPE" property="deptType" />
+		<result column="DEPT_PID" property="deptPid" />
+		<result column="USER_NAME" property="userName" />
+		<result column="PHONE" property="phone" />
+		<result column="TEL" property="tel" />
+		<result column="ADDRESS" property="address" />
+		<result column="USER_ROLE" property="userRole" />
+		<result column="ROLE_NAME" property="roleName" />
+		<result column="ROLE_MENUS" property="roleMenus" />
+		<result column="PHOTO_HEAD" property="photoHead" />
+	</resultMap>
+
+
+	<!--自己配置的查询表所有数据的sql -->
+	<select id="getUserView" resultMap="userView" parameterType="String">
+		select A.MAXACCEPT,A.USER_ACCOUNT,A.USER_PWD,A.USER_LEVEL,A.DEPT_CODE, C.DEPT_TYPE, C.DEPT_NAME, C.P_ID DEPT_PID, A.USER_NAME, A.PHONE,A.TEL,A.ADDRESS,A.USER_ROLE,B.ROLE_NAME,B.ROLE_MENUS, A.PHOTO_HEAD from t_user A, T_ROLE B, T_DEPT C 
+		where A.USER_ROLE=B.MAXACCEPT and A.DEPT_CODE = C.MAXACCEPT
+		<if test="maxaccept != null and maxaccept != ''">
+		 AND A.MAXACCEPT=#{maxaccept}
+		</if>
+	</select>
+</mapper>  

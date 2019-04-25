@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yl.transaction.code.dao.CodeDao">
+
+	
+	<select id="getCodeList" resultType="java.util.Map" parameterType="String">
+		select code_id,code_name
+		from T_COMMON_CODE where code_key =#{codeType}
+	</select>
+	
+	<select id="getCodename" resultType="java.util.Map" parameterType="String">
+		SELECT CODE_ID,CODE_NAME
+		FROM T_COMMON_CODE WHERE CODE_KEY =#{code_key} AND CODE_ID=#{code_id}
+	</select>
+	
+	<select id="getCodeByName" resultType="java.util.Map" parameterType="String">
+		SELECT CODE_ID,CODE_NAME
+		FROM T_COMMON_CODE WHERE CODE_KEY =#{code_key} AND CODE_NAME=#{code_name}
+	</select>
+	
+	<!-- 公共获取转换码方法 -->
+	<select id="getCommonCode" resultType="java.util.Map" parameterType="java.util.Map">
+		select MAXACCEPT,CODE_KEY,CODE_ID,CODE_NAME,CODE_DES, P_CODE_ID, DEPT_CODE from t_common_code where 1=1 
+		<if test="codeKey != null and codeKey != ''">
+			AND CODE_KEY=#{codeKey}
+	    </if>
+	    <if test="codeIDS != null and codeIDS != ''">
+			 AND CODE_ID in (${codeIDS})
+	    </if>
+	    <if test="deptCode != null and deptCode != ''">
+			 AND DEPT_CODE=#{deptCode}
+	    </if>
+	</select>
+	
+	<select id="getCommonCustTypeCode" resultType="java.util.Map" parameterType="java.util.Map">
+		select MAXACCEPT,CODE_KEY,CODE_ID,CODE_NAME,CODE_DES, P_CODE_ID, DEPT_CODE from t_common_code where 1=1 
+		<if test="codeKey != null and codeKey != ''">
+			AND CODE_KEY=#{codeKey}
+	    </if>
+	    <if test="codeIDS != null and codeIDS != ''">
+			 AND CODE_ID in (${codeIDS})
+	    </if>
+	    <if test="deptCode != null and deptCode != ''">
+			 AND DEPT_CODE in (
+			 	select maxaccept
+				from t_dept    
+				start with maxaccept=#{deptCode}
+				connect by prior maxaccept = p_id
+			 )
+	    </if>
+	</select>
+</mapper>  
