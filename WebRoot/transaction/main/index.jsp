@@ -76,10 +76,16 @@
 						}
 					</script>
 				</div>
+				<div style="float: left; height: 100%; width: 434px;">
+					<div style="color:white;float:left;margin:20px;"><a href="#" style="color:white;">接听</a></div>
+					<div style="color:white;float:left;margin:20px;"><a href="#" style="color:white;">挂断</a></div>
+					<div style="color:white;float:left;margin:20px;"><a href="#" style="color:white;">置忙</a></div>
+					<div style="color:white;float:left;margin:20px;"><a href="#" style="color:white;">置闲</a></div>
+				</div>
 				<!-- 顶部右侧菜单 -->
 				<ul class="layui-nav top_menu">
 					<li class="layui-nav-item showNotice" id="showNotice" pc><a
-						href="javascript:;"><i class="iconfont icon-gonggao"></i><cite>系统公告</cite></a>
+						href="javascript:;"><i class="iconfont icon-gonggao"></i><cite>系统提醒</cite></a>
 					</li>
 					<li class="layui-nav-item" mobile><a href="javascript:;"
 						data-url="page/user/changePwd.html"><i
