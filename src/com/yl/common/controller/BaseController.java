@@ -37,6 +37,7 @@ public class BaseController{
 		PrintWriter writer = null;
 		try {
 			writer = response.getWriter();
+			System.out.println("0000000");
 		} catch (IOException e) {
 			logger.error(e.getMessage(),e);
 		} finally {
