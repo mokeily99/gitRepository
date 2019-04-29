@@ -30,7 +30,7 @@
 		<!-- 顶部 -->
 		<div class="layui-header header">
 			<div class="layui-main">
-				<a href="#" class="logo">远程康复后台管理</a>
+				<a href="#" class="logo">天翼云呼</a>
 				<!-- 天气信息 -->
 				<div class="weather" pc>
 					<div id="tp-weather-widget"></div>

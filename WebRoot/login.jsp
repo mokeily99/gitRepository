@@ -8,7 +8,7 @@
 <meta charset="UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>康复师管理系统</title>
+<title>天翼云呼</title>
 
 <link rel="stylesheet" type="text/css" href="<%=webpath%>/login.css" />
 <link rel="shortcut icon" href="<%=webpath%>/common/ui/hAdmin/img/favicon.ico" type="image/x-icon"> 
@@ -39,10 +39,10 @@
 </script>
 </head>
 <body>
-	<div style="width:100%;height:80px;background-color:white;"><a href="http://www.jl96123.com/" target="_blank"><img style="margin-left:300px;margin-top:10px;" src="<%=webpath%>/common/img/logo.png"></img></a></div>
+	<div style="width:100%;height:80px;background-color:white;"><img style="margin-left:300px;margin-top:10px;height:70px;" src="<%=webpath%>/common/img/logo.png"></img></div>
 	<div class="bg1"></div>
 	<div class="gyl">
-		公众号后台系统
+		天翼云呼系统
 		<div class="gy2">追求品质，只争朝夕，全力以赴，矢志不移</div>
 	</div>
 	<div class="bg" style="font-size:14px;">
@@ -61,7 +61,7 @@
 		<span id="msg" style="color: red;position:absolute;top:19rem;right:9.3rem;font-size:12px;">${msg}</span>
 	</div>
 <div style="width:100%;height:80px;background-color:white;position:absolute;bottom:0px;">
-	<div class="loginbm">版权所有:©2019 吉林省友联电子科技有限公司 当前系统版本:v1.0.0 </div>
+	<div class="loginbm">当前系统版本:v1.0.0 </div>
 </div>
 </body>
 </html>
