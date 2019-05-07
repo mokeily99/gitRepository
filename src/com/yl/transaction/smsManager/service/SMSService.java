@@ -26,4 +26,6 @@ public interface SMSService {
 	public List<Map<String, String>> getMouldInfo(Map<String, String> param);
 	
 	public void insertSmsInfo(Map<String, String> param);
+	
+	public List<Map<String, String>> getSmsList(Map<String, Object> param);
 }

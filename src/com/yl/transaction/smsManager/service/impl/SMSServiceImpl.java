@@ -73,5 +73,10 @@ public class SMSServiceImpl implements SMSService{
 		smsDao.insertSmsInfo(param);
 	}
 
+	@Override
+	public List<Map<String, String>> getSmsList(Map<String, Object> param) {
+		return smsDao.getSmsList(param);
+	}
+
 	
 }

@@ -23,13 +23,13 @@
 				<div class="layui-inline">
 					<label class="layui-form-label" style="width:98px;">手机号码</label>
 					<div class="layui-input-inline">
-						<input type="text" id="black_phone" name="black_phone" autocomplete="off" class="layui-input">
+						<input type="text" id="sms_phone" name="sms_phone" autocomplete="off" class="layui-input">
 					</div>
 				</div>
 				<div class="layui-inline">
 					<label class="layui-form-label"></label>
 					<div class="layui-input-inline">
-						<button type="button" class="layui-btn layui-btn-normal" id="query_black_btn">查询</button>
+						<button type="button" class="layui-btn layui-btn-normal" id="query_sms_btn">查询</button>
 						<button type="reset" class="layui-btn layui-btn-danger">重置</button>
 					</div>
 				</div>
@@ -38,15 +38,8 @@
 		<fieldset class="layui-elem-field site-demo-button" style="margin: 30px;padding-top:20px;padding-bottom:20px;">
 			<legend>工作区域</legend>
 			
-			<div style="width:99%;margin:auto;">
-				<div class="layui-btn-group">
-			    	<button class="layui-btn" id="add_black_btn">增加</button>
-				    <button class="layui-btn" id="edit_black_btn">编辑</button>
-				    <button class="layui-btn" id="del_black_btn">删除</button>
-			  	</div>
-		  	</div>
 		  	<div style="width:99%;margin:auto;">
-			  	<table class="layui-hide" id="black_grid_list"></table>
+			  	<table class="layui-hide" id="sms_grid_list"></table>
 		  	</div>
 		</fieldset>
 	</div>
