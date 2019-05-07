@@ -54,6 +54,7 @@
 			    	<button class="layui-btn" id="bat_cust_btn">批量资料录入</button>
 				    <button class="layui-btn" id="edit_cust_btn">编辑</button>
 				    <button class="layui-btn" id="del_cust_btn">删除</button>
+				    <button class="layui-btn" id="send_sms_btn">短信发送</button>
 			  	</div>
 		  	</div>
 		  	<div style="width:99%;margin:auto;">
@@ -195,5 +196,42 @@
 		  <a class="layui-btn layui-btn-danger" id="cancelBtn" href="javascript:closeDialog()">取消</a>
 		</div>
 	  </div>
+	</form>
+</div>
+
+<div id="send_sms_div" style="display:none;">
+	<form lay-filter="send_sms_form" class="layui-form" action="" id="esend_sms_form">
+		<input type="hidden" id="cust_ids" name="cust_ids">
+		<div class="layui-form-item" style="margin-top:15px;width: 411px;">
+			<label class="layui-form-label">发送方式</label>
+			<div class="layui-input-block">
+				<select id="send_sms_type" name="send_sms_type" lay-verify="required" lay-filter="send_type"></select>
+			</div>
+		</div>
+		<div class="layui-form-item" id="send_sms_date_div" style="margin-top:15px;width: 411px;display:none;">
+			<label class="layui-form-label">发送日期</label>
+			<div class="layui-input-block">
+				<input type="text" class="layui-input" id="send_sms_date" name="send_sms_date">
+			</div>
+		</div>
+		<div class="layui-form-item" style="margin-top:15px;width: 411px;">
+			<label class="layui-form-label">插入模板</label>
+			<div class="layui-input-block">
+				<select id="sms_mould_type" name="sms_mould_type" lay-filter="sms_mould"></select>
+			</div>
+		</div>
+		<div class="layui-form-item layui-form-text">
+			<label class="layui-form-label">短信内容</label>
+			<div class="layui-input-block">
+				<textarea class="layui-textarea" id="send_sms_content" name="send_sms_content" lay-verify="required" style="width:300px;"></textarea>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-input-block"
+				style="float:right;margin-right:20px;margin-top:15px;">
+				<a class="layui-btn" lay-submit lay-filter="send_sms_form_sub">提交</a>
+				<a class="layui-btn layui-btn-danger" id="cancelBtn" href="javascript:closeDialog()">取消</a>
+			</div>
+		</div>
 	</form>
 </div>

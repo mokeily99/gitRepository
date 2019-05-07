@@ -68,4 +68,81 @@
 	<delete id="delBlackListInIDS" parameterType="java.util.Map">
 		delete from T_BLACK_LIST where maxaccept in (${ids})
 	</delete>
+	
+	<select id="getMouldList" resultType="java.util.Map" parameterType="java.util.Map">
+		select MAXACCEPT, MOULD_TYPE, MOULD_TITLE, MOULD_CONTENT, CREATE_OPR_ID, 
+		CREATE_OPR_NAME, to_char(CREATE_TIME, 'yyyy-mm-dd HH24:mi:ss') CREATE_TIME, 
+		DEPT_CODE 
+		from T_SMS_MOULD where 1=1
+		<if test="deptCode != null and deptCode != '' ">
+			and DEPT_CODE in (SELECT maxaccept FROM t_dept START WITH maxaccept=#{deptCode} CONNECT BY PRIOR p_id = maxaccept)
+		</if>
+		<if test="mouldTitle != null and mouldTitle != '' ">
+			and MOULD_TITLE like '%'||#{mouldTitle}||'%'
+		</if>
+	</select>
+	
+	<insert id="addMould" parameterType="java.util.Map">
+		insert into T_SMS_MOULD (
+	       	MAXACCEPT,
+	       	MOULD_TYPE,
+	       	MOULD_TITLE,
+	       	MOULD_CONTENT,
+	       	CREATE_OPR_ID,
+	       	CREATE_OPR_NAME,
+	       	CREATE_TIME,
+	       	DEPT_CODE
+		) values(
+			#{maxaccept},
+			#{mouldType},
+			#{mouldTitle},
+			#{mouldContent},
+			#{oprID},
+			#{oprName},
+			sysdate,
+			#{deptCode}
+		)
+	</insert>
+	
+	<update id="editMould" parameterType="java.util.Map">
+		update T_SMS_MOULD 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="mouldTitle != null and mouldTitle != '' ">MOULD_TITLE=#{mouldTitle},</if>
+			<if test="mouldContent != null and mouldContent != '' ">MOULD_CONTENT=#{mouldContent},</if>
+			<if test="oprID != null and oprID != '' ">CREATE_OPR_ID=#{oprID},</if>
+			<if test="oprName != null and oprName != '' ">CREATE_OPR_NAME=#{oprName},</if>
+			<if test="deptCode != null and deptCode != '' ">DEPT_CODE=#{deptCode},</if>
+			CREATE_TIME=sysdate
+		</trim>
+		where MAXACCEPT=#{maxaccept}
+	</update>
+	
+	<delete id="delMouldInIDS" parameterType="java.util.Map">
+		delete from T_SMS_MOULD where maxaccept in (${ids})
+	</delete>
+	
+	<select id="getMouldInfo" resultType="java.util.Map" parameterType="java.util.Map">
+		select MAXACCEPT, MOULD_TYPE, MOULD_TITLE, MOULD_CONTENT, CREATE_OPR_ID, 
+		CREATE_OPR_NAME, to_char(CREATE_TIME, 'yyyy-mm-dd HH24:mi:ss') CREATE_TIME, 
+		DEPT_CODE 
+		from T_SMS_MOULD where 1=1
+		<if test="deptCode != null and deptCode != '' ">
+			and DEPT_CODE in (SELECT maxaccept FROM t_dept START WITH maxaccept=#{deptCode} CONNECT BY PRIOR p_id = maxaccept)
+		</if>
+		<if test="maxaccept != null and maxaccept != '' ">
+			and maxaccept=#{maxaccept}
+		</if>
+	</select>
+	
+	<insert id="insertSmsInfo" parameterType="java.util.Map">
+		insert into T_SMS_LIST (
+			MAXACCEPT,CUST_ID,CUST_NAME,PHONE,
+			SEND_TIME,CREATE_OPR_ID,CREACREATE_OPR_NAME,
+			SMS_CONTENT, DEPT_CODE
+		) values (
+			${maxaccept}, #{custID}, #{custName}, #{phone}, 
+			to_date(#{sendDate}, 'yyyy-mm-dd'), #{oprID}, #{oprName}, 
+			#{smsContent}, #{deptCode}
+		)
+	</insert>
 </mapper>  

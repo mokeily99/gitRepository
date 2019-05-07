@@ -1,11 +1,12 @@
 var dialogIndex;
-layui.use(['form', 'layer', 'table', 'upload'], function() {
+layui.use(['form', 'layer', 'table', 'upload', 'laydate'], function() {
 	var treeSelect = layui.treeSelect;
 	var table = layui.table;
 	form = layui.form;
 	$ = layui.jquery;
 	layer = layui.layer;
 	var upload = layui.upload;
+	var laydate = layui.laydate;
 	
 	//超级管理员不显示客户类型
 	if(userLevel == "10202"){
@@ -58,6 +59,20 @@ layui.use(['form', 'layer', 'table', 'upload'], function() {
 			{
 				field : 'CUST_ADDR',
 				title : '地址'
+			},
+			{
+				field : 'CONN_PHONE',
+				title : '客户状态',
+				templet: function(row){
+					var phone = row.CONN_PHONE;
+					var value = "白名单客户";
+					if(!isEmpty(phone)){
+						if(blackQuery(phone)){
+							value = "黑名单客户";
+						}
+					}
+					return value;
+				}
 			},
 			{
 				field : 'CUST_TYPE',
@@ -300,6 +315,132 @@ layui.use(['form', 'layer', 'table', 'upload'], function() {
 		}) ;
 	});
 	
+	//短信发送
+	$('#send_sms_btn').click(function() {
+		var checkData = table.checkStatus("cust_grid_list");
+		if(checkData.data.length < 1){
+			layer.msg('未选择任何数据！',{icon:0});
+			return;
+		}
+		var sendData = checkData.data;
+		var ids = "";
+		for(var ix=0; ix<sendData.length; ix++){
+			if(blackQuery(sendData[ix].CONN_PHONE)){
+				layer.msg('黑名单客户不能发送短信！',{icon:0});
+				return;
+			}
+			ids = sendData[ix].CUST_ID + "," + ids;
+		}
+		
+		//客户信息赋值
+		$("#cust_ids").val(ids);
+		
+		dialogIndex = layer.open({
+			type : 1,
+			title : '短信发送',
+			content : $('#send_sms_div'),
+			area : [ '500px', '300px' ]
+		});
+		
+		//发送方式赋值
+		LayerSelect.initLayerSelect({
+			dom : "send_sms_type",
+			url : webpath + "/code/getCommonCode.action",
+			type : "post",
+			dataType : "json",
+			queryParams: {codeKey: "SEND_TYPE"},
+			text : "CODE_NAME",
+			id : "CODE_ID",
+			defaultText: "请选择"
+		});
+		
+		//短信模板赋值
+		LayerSelect.initLayerSelect({
+			dom : "sms_mould_type",
+			url : webpath + "/sms/getMouldInfo.action",
+			type : "post",
+			dataType : "json",
+			queryParams: {codeKey: "MOULD_TYPE"},
+			text : "MOULD_TITLE",
+			id : "MAXACCEPT",
+			defaultText: "请选择"
+		});
+		
+		//日期加载
+		var myDate = new Date();
+		var year = myDate.getFullYear();
+		var month = myDate.getMonth()+1;
+		var date = myDate.getDate();
+		laydate.render({
+		    elem: '#send_sms_date', //指定元素
+		    value: year+"-"+month+"-"+date,
+		    min: year+"-"+month+"-"+date
+		});
+		form.render();
+		
+		//下拉监听
+		form.on('select(send_type)', function(data){
+			var sendType = data.value;
+			if(sendType == "10502"){
+				$("#send_sms_date_div").show();
+			}
+		});
+		form.on('select(sms_mould)', function(data){
+			var maxaccept = data.value;
+			$.ajax({
+				url: webpath + "/sms/getMouldInfo.action",
+				type:"post",
+				data: {maxaccept: maxaccept},
+				dataType: "json",
+				success: function(data){
+					if(isEmpty(maxaccept)){
+						$("#send_sms_content").text("");
+					}else{
+						var mould = data[0];
+						$("#send_sms_content").text(mould.MOULD_CONTENT);
+					}
+				}
+			});
+		});
+		
+		
+		//短信发送提交
+		form.on('submit(send_sms_form_sub)', function(data) {
+			
+			//判断敏感词
+			var smsContent = $("#send_sms_content").val();
+			smsContent = smsContent.replace(/ /g,"");
+			smsContent = smsContent.replace(/\n/g,"");
+			var senList = getSenWords();
+			for(var ix=0; ix<senList.length; ix++){
+				if(smsContent.indexOf(senList[ix].SENSITIVE_WORDS) != -1 ){
+					layer.msg('短信内容包含敏感词:' + senList[ix].SENSITIVE_WORDS,{icon:0});
+					return;
+				}
+			}
+
+			$.ajax({
+				url : webpath + "/sms/addSendSms.action",
+				method : 'post',
+				data : data.field,
+				dataType : "json",
+				success : function(data1) {
+					layer.close(dialogIndex);
+					var resultCode = data1.resultCode;
+					if (resultCode == "0000") {
+						layer.msg('添加成功！');
+						custTable = table.reload("cust_grid_list");
+					} else {
+						layer.alert('添加失败，请重新操作！', {
+							icon : 2
+						});
+					}
+				}
+			});
+
+		});
+	});
+	
 	//表单校验
   	form.verify({
   		connPhone : function(value, item) { //value：表单的值、item：表单的DOM对象
@@ -320,3 +461,40 @@ function closeDialog() {
 	layer.close(dialogIndex);
 }
 
+function blackQuery(phone){
+	var flag = false;
+	$.ajax({
+		url: webpath + "/sms/getBlackInfo.action",
+		type: "post",
+		data: {blackPhone: phone},
+		dataType: "json",
+		async: false,
+		success: function(data){
+			var resultCode = data.resultCode;
+			if(resultCode == "0000"){
+				var resultData = data.resultData;
+				if(!isEmpty(resultData)){
+					flag = true; 
+				}
+			}
+		}
+	});
+	return flag;
+}
+
+function getSenWords(){
+	var obj;
+	$.ajax({
+		url: webpath + "/senwords/getSenwordsInfo.action",
+		type: "post",
+		dataType: "json",
+		async: false,
+		success: function(data){
+			var resultCode = data.resultCode;
+			if(resultCode == "0000"){
+				obj = data.resultData;
+			}
+		}
+	});
+	return obj;
+}

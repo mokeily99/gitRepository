@@ -27,6 +27,14 @@
 		where c.dept_code=d.maxaccept
 	</select>
 	
+	<select id="getCustInfo" resultType="java.util.Map" parameterType="java.util.Map">
+		select 
+		MAXACCEPT, CUST_NAME, SEX, CUST_AGE, CONN_PHONE, CUST_ADDR, CUST_TYPE, 
+		UPDATE_OPR_ID, to_char(UPDATE_TIME, 'yyyy-mm-dd HH24:mi:ss') UPDATE_TIME, 
+		MARK, ABLE_FLAG
+		from T_CUST where maxaccept=#{custID}
+	</select>
+	
 	<select id="getBlackList" resultType="java.util.Map" parameterType="java.util.Map">
 		select 
 		a.MAXACCEPT, a.BLACK_PHONE, a.BLACK_REASON, a.UPDATE_OPR_ID, b.USER_NAME CREATE_OPR_NAME, to_char(a.UPDATE_TIME, 'yyyy-mm-dd HH24:mi:ss') UPDATE_TIME, a.ABLE_FLAG 

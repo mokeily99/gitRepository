@@ -43,5 +43,35 @@ public class SMSServiceImpl implements SMSService{
 		smsDao.delBlackListInIDS(param);
 	}
 
+	@Override
+	public List<Map<String, String>> getMouldList(Map<String, Object> param) {
+		return smsDao.getMouldList(param);
+	}
+
+	@Override
+	public void addMould(Map<String, String> param) {
+		smsDao.addMould(param);
+	}
+
+	@Override
+	public void editMould(Map<String, String> param) {
+		smsDao.editMould(param);
+	}
+
+	@Override
+	public void delMouldInIDS(String param) {
+		smsDao.delMouldInIDS(param);
+	}
+
+	@Override
+	public List<Map<String, String>> getMouldInfo(Map<String, String> param) {
+		return smsDao.getMouldInfo(param);
+	}
+
+	@Override
+	public void insertSmsInfo(Map<String, String> param) {
+		smsDao.insertSmsInfo(param);
+	}
+
 	
 }

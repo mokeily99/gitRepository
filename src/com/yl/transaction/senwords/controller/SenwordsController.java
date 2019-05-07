@@ -60,6 +60,30 @@ public class SenwordsController extends BaseController{
 		return tableResult;
 	}
 	/**
+	 * 获取敏感词信息
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/getSenwordsInfo")
+	@ResponseBody
+	public Result getSenwordsInfo(HttpServletRequest request, HttpServletResponse response, Model model) {
+		
+		Result result = new Result();
+		try{
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("ableFlag", "10101");
+			List<Map<String, String>> senList = senwordsService.getSenWordsList(param);
+			result.setResultData(senList);
+		}catch(Exception e){
+			logger.error(e.getMessage(),e);
+			result.setResultCode("9999");
+			result.setResultMsg("操作失败!" + e);
+		}
+		return result;
+	}
+	/**
 	 * 修改敏感词状态
 	 * @param deptCode
 	 * @param deptType

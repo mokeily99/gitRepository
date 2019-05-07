@@ -45,5 +45,10 @@ public class CustServiceImpl implements CustService{
 		custDao.delCustInIDS(param);
 	}
 
+	@Override
+	public Map<String, String> getCustInfo(Map<String, String> param) {
+		return custDao.getCustInfo(param);
+	}
+
 	
 }

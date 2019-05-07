@@ -14,4 +14,6 @@ public interface CustService {
 	public void updateCustInfo(Map<String, String> param);
 	
 	public void delCustInIDS(String param);
+	
+	public Map<String, String> getCustInfo(Map<String, String> param);
 }

@@ -16,4 +16,6 @@ public interface CustDao {
 	public void updateCustInfo(Map<String, String> param);
 	
 	public void delCustInIDS(@Param("ids") String ids);
+	
+	public Map<String, String> getCustInfo(Map<String, String> param);
 }

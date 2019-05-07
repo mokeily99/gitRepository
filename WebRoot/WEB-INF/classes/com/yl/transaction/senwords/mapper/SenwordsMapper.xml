@@ -37,6 +37,9 @@
 		select 
 		a.MAXACCEPT, a.SENSITIVE_WORDS, a.UPDATE_OPR_ID, b.USER_NAME CREATE_OPR_NAME, to_char(a.CREATE_TIME, 'yyyy-mm-dd HH24:mi:ss') CREATE_TIME, a.ABLE_FLAG 
 		from T_SENWORD a, T_USER b where a.UPDATE_OPR_ID=b.MAXACCEPT
+		<if test="ableFlag != null and ableFlag != '' ">
+			and a.ABLE_FLAG=#{ableFlag}
+		</if>
 		<if test="senwords != null and senwords != '' ">
 			and a.SENSITIVE_WORDS LIKE '%'||#{senwords}||'%'
 		</if>
