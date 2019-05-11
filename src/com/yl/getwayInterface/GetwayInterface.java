@@ -28,7 +28,31 @@ public class GetwayInterface extends BaseController{
 	
 	@RequestMapping("/report")
 	@ResponseBody
-	public Result saveRoleMenus(HttpServletRequest request, HttpServletResponse response, Model model) {
+	public Result report(HttpServletRequest request, HttpServletResponse response, Model model) {
+		String event = request.getParameter("event");
+		
+		Result result = new Result();
+		result.setResultCode("0000");
+		result.setResultMsg("操作成功！");
+		try {
+			
+		} catch (Exception e) {
+			logger.error(e.getMessage(),e);
+			result.setResultCode("9999");
+			result.setResultMsg("操作失败!" + e);
+		}
+		return result;
+	}
+	/**
+	 * 坐席置忙
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/agentBreak")
+	@ResponseBody
+	public Result agentBreak(HttpServletRequest request, HttpServletResponse response, Model model) {
 		String event = request.getParameter("event");
 		
 		Result result = new Result();

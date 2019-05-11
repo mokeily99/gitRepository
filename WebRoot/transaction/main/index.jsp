@@ -19,7 +19,16 @@
 <link rel="stylesheet" href="<%=webpath%>/transaction/main/css/main.css" media="all" />
 
 <script src="<%=webpath%>/common/ui/hAdmin/js/jquery.min.js?v=2.1.4"></script>
+<script src="<%=webpath%>/transaction/main/bar.js"></script>
 
+<style type="text/css">
+	a{
+		color:white;
+	}
+	.seat_class:active{
+		color:red;
+	}
+</style>
 <script type="text/javascript">
 	var webpath = '<%=webpath%>';
 </script>
@@ -30,7 +39,7 @@
 		<!-- 顶部 -->
 		<div class="layui-header header">
 			<div class="layui-main">
-				<a href="#" class="logo">远程康复后台管理</a>
+				<a href="#" class="logo">天翼云呼</a>
 				<!-- 天气信息 -->
 				<div class="weather" pc>
 					<div id="tp-weather-widget"></div>
@@ -77,10 +86,9 @@
 					</script>
 				</div>
 				<div style="float: left; height: 100%; width: 434px;">
-					<div style="color:white;float:left;margin:20px;"><a href="#" style="color:white;">接听</a></div>
-					<div style="color:white;float:left;margin:20px;"><a href="#" style="color:white;">挂断</a></div>
-					<div style="color:white;float:left;margin:20px;"><a href="#" style="color:white;">置忙</a></div>
-					<div style="color:white;float:left;margin:20px;"><a href="#" style="color:white;">置闲</a></div>
+					<div style="color:white;float:left;margin:20px;"><img id="seat_free_busy_img" src="<%=webpath%>/common/img/busy.png" style="margin-top:-10px;"/></div>
+					<div style="color:white;float:left;margin:20px;"><a class="seat_class" href="javascript:setFree()">置闲</a></div>
+					<div style="color:white;float:left;margin:20px;"><a class="seat_class" href="javascript:setBusy()">置忙</a></div>
 				</div>
 				<!-- 顶部右侧菜单 -->
 				<ul class="layui-nav top_menu">
