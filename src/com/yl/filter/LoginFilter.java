@@ -34,21 +34,12 @@ public class LoginFilter implements Filter {
 		HttpSession session =  request.getSession();
 		UserView user = (UserView) session.getAttribute("userInfo");
 		
-		//维护人员还原cookie
-		if(user != null && "11201".equals(user.getDeptType()) && "11302".equals(user.getRoleLevel())){
-			String sessionid = session.getId(); //获取sessionid
-	        Cookie cookie = new Cookie("JSESSIONID", sessionid); //new一个cookie，cookie的名字是JSESSIONID跟带id的cookie一样
-	        cookie.setPath(request.getContextPath()); //设置cookie应用范围。getContextPath是获取当前项目的名字。
-	        cookie.setMaxAge(30*24*60*60); //设置有效时间7天免登陆
-	        response.addCookie(cookie);//用这个cookie把带id的cookie覆盖掉
-		}
 		
-		if (!(requestUrl.contains("login")) && user == null) {
-			if(requestUrl.contains(ConfigUtil.getConfigKey("REDIRECT_FLAG"))){
-				response.sendRedirect(phone_logout_page);
-			}else{
-				response.sendRedirect(logout_page);
-			}
+		if(requestUrl.contains("getwayInterface")){
+			filterChain.doFilter(request, response);
+			return;
+		}else if(!(requestUrl.contains("login")) && user == null) {
+			response.sendRedirect(logout_page);
 			return;
 		} else {
 			filterChain.doFilter(request, response);
@@ -58,7 +49,7 @@ public class LoginFilter implements Filter {
 	}
 
 	public void init(FilterConfig arg0) throws ServletException {
-
+		
 	}
 
 	public static void main(String[] args) {
