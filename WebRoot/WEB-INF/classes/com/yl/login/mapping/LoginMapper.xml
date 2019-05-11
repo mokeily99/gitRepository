@@ -20,6 +20,8 @@
 		<result column="ROLE_MENUS" property="roleMenus" />
 		<result column="ROLE_LEVEL" property="roleLevel" />
 		<result column="PHOTO_HEAD" property="photoHead" />
+		<result column="SEAT_NO" property="seatNO" />
+		<result column="SEAT_PWD" property="seatPwd" />
 	</resultMap>
 
 
@@ -43,7 +45,9 @@
 	       b.ROLE_DES,
 	       b.ROLE_LEVEL, 
 	       a.IS_ONLINE,
-	       a.PHOTO_HEAD
+	       a.PHOTO_HEAD,
+	       a.SEAT_NO, 
+	       a.SEAT_PWD
 	  from t_user a, t_role b, t_dept c
 	  where a.user_role = b.maxaccept and a.dept_code=c.maxaccept
 	  and user_account = #{userName}

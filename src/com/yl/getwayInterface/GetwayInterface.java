@@ -1,8 +1,10 @@
 package com.yl.getwayInterface;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yl.common.controller.BaseController;
@@ -28,18 +31,21 @@ public class GetwayInterface extends BaseController{
 	
 	@RequestMapping("/report")
 	@ResponseBody
-	public Result report(HttpServletRequest request, HttpServletResponse response, Model model) {
-		String event = request.getParameter("event");
+	public Map<String, String> report(@RequestParam Map<String,String> params) {
+		logger.error("=============="+params);
+		Iterator<Entry<String, String>> entries = params.entrySet().iterator(); 
+		while (entries.hasNext()) { 
+		  Map.Entry<String, String> entry = entries.next(); 
+		  logger.error("Key = " + entry.getKey() + ", Value = " + entry.getValue()); 
+		}
 		
-		Result result = new Result();
-		result.setResultCode("0000");
-		result.setResultMsg("操作成功！");
+		Map<String, String> result = new HashMap<String, String>();
+		result.put("status", "success");
 		try {
 			
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
-			result.setResultCode("9999");
-			result.setResultMsg("操作失败!" + e);
+			
 		}
 		return result;
 	}

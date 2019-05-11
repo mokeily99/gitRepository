@@ -95,7 +95,7 @@ public class HttpUtil {
 		JSONObject jsStr = null;
 		URLConnection conn = null;
 		try {
-			URL realUrl = new URL(url+param);
+			URL realUrl = new URL(url);
 			// 打开和URL之间的连接
 			conn = realUrl.openConnection();
 			// 发送POST请求必须设置如下两行
@@ -107,7 +107,7 @@ public class HttpUtil {
 			out = new PrintWriter(new OutputStreamWriter(conn.getOutputStream(), "UTF-8"));
 			logger.info("用户资料查询请求参数-REQUEST：" + param);
 			// 发送请求参数
-//			out.print(param);
+			out.print(param);
 			// flush输出流的缓冲
 			out.flush();
 			// 定义BufferedReader输入流来读取URL的响应

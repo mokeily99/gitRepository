@@ -1,7 +1,25 @@
 $(function(){
+	//登录验证
+	loginVal();
 	//获取坐席闲忙
 	getSeatFreeBusyStatus();
+	
 })
+
+//登录验证
+function loginVal(){
+	$.ajax({
+		url:webpath + "/seat/loginVal.action",
+		type: "post",
+		dataType: "json",
+		success: function(data){
+			var resultCode = data.resultCode;
+			if(resultCode == "0000"){
+				alert("API登录成功！");
+			}
+		}
+	});
+}
 
 function getSeatFreeBusyStatus(){
 	$.ajax({

@@ -7,6 +7,10 @@
 		select maxaccept_seq.nextval from dual
 	</select>
 	
+	<select id="getToken" resultType="String">
+		select TOKEN from T_API_TOKEN
+	</select>
+	
 	<insert id="insertSMS" parameterType="java.util.Map">
 		insert into t_sms (
 			MAXACCEPT

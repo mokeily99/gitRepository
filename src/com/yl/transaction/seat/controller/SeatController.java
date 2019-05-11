@@ -33,10 +33,15 @@ import com.yl.common.user.pojo.UserView;
 import com.yl.common.util.ConfigUtil;
 import com.yl.common.util.DBUtil;
 import com.yl.common.util.ExcelUtil;
+import com.yl.common.util.HttpUtil;
+import com.yl.common.util.JsonUtils;
+import com.yl.common.util.MD5Utils;
 import com.yl.common.util.UploadUtil;
 import com.yl.transaction.code.service.CodeService;
 import com.yl.transaction.custManager.service.CustService;
 import com.yl.transaction.seat.service.SeatService;
+
+import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping("/seat")
@@ -47,6 +52,48 @@ public class SeatController extends BaseController {
 
 	@Resource
 	private PublicDao publicDao;
+	
+	/**
+	 * 登录验证
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/loginVal")
+	@ResponseBody
+	public Result loginVal(HttpServletRequest request, HttpServletResponse response, Model model) {
+		Result result = new Result();
+		
+		try {
+			Map<String, String> param = new HashMap<String, String>();
+			param.put("username", ConfigUtil.getConfigKey("API_USER_NAME"));
+			param.put("password", MD5Utils.MD5Encode(ConfigUtil.getConfigKey("API_PWD"), "utf-8"));
+			param.put("url", ConfigUtil.getConfigKey("API_ACCEPT_URL"));
+			String para = JsonUtils.toJsonObj(param);
+			JSONObject resp = HttpUtil.doPostJson(para, ConfigUtil.getConfigKey("SWITCH_URL")+"/API/login");
+			
+			if("success".equals(resp.optString("status"))){
+				param.put("token", resp.optString("token"));
+				seatService.updateSeatStatus(param);
+			}else{
+				result.setResultCode("0001");
+				result.setResultMsg("API登录失败!");
+			}
+			
+			/*UserView user = this.getUserView(request);
+			param.put("seatID", user.getMaxaccept());
+			List<Map<String, String>> seatList = seatService.getSeatFreeBusyInfo(param);
+			if(seatList.size() > 0){
+				result.setResultData(seatList.get(0));
+			}*/
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			result.setResultCode("9999");
+			result.setResultMsg("操作失败!" + e);
+		}
+		return result;
+	}
 
 	/**
 	 * 获取闲忙状态
@@ -59,10 +106,22 @@ public class SeatController extends BaseController {
 	@ResponseBody
 	public Result getSeatFreeBusy(HttpServletRequest request, HttpServletResponse response, Model model) {
 		Result result = new Result();
-
+		
 		try {
 			UserView user = this.getUserView(request);
+			//从网关获取状态
 			Map<String, String> param = new HashMap<String, String>();
+			param.put("queueid", ConfigUtil.getConfigKey("QUEUEID"));
+			param.put("extid", user.getSeatNO());
+			JSONObject resp = HttpUtil.doPostJson(JsonUtils.toJsonObj(param), ConfigUtil.getConfigKey("SWITCH_URL")+"/API/agent_query?token="+publicDao.getToken());
+			if("success".equals(resp.optString("status"))){
+				String seatStatus = resp.optString("agentstatus");
+				if("logged in".equals(seatStatus)){
+					
+				}
+			}else{
+				
+			}
 			param.put("seatID", user.getMaxaccept());
 			List<Map<String, String>> seatList = seatService.getSeatFreeBusyInfo(param);
 			if(seatList.size() > 0){

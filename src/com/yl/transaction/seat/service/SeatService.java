@@ -10,4 +10,6 @@ public interface SeatService {
 	public void setBusyFree(Map<String, String> param);
 	
 	public void insertSeatInfo(Map<String, String> param);
+	
+	public void updateSeatStatus(Map<String, String> param);
 }

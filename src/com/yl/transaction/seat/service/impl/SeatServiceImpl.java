@@ -36,5 +36,10 @@ public class SeatServiceImpl implements SeatService{
 	public void insertSeatInfo(Map<String, String> param) {
 		seatDao.insertSeatInfo(param);
 	}
+
+	@Override
+	public void updateSeatStatus(Map<String, String> param) {
+		seatDao.updateSeatStatus(param);
+	}
 	
 }

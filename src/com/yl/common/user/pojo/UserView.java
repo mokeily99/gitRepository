@@ -36,6 +36,26 @@ public class UserView {
 	
 	private String photoHead;
 	
+	private String seatNO;
+	
+	private String seatPwd;
+	
+	
+	public String getSeatNO() {
+		return seatNO;
+	}
+
+	public void setSeatNO(String seatNO) {
+		this.seatNO = seatNO;
+	}
+
+	public String getSeatPwd() {
+		return seatPwd;
+	}
+
+	public void setSeatPwd(String seatPwd) {
+		this.seatPwd = seatPwd;
+	}
 
 	public String getPhotoHead() {
 		return photoHead;

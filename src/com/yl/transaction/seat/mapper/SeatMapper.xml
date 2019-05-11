@@ -20,6 +20,10 @@
 		)
 	</insert>
 	
+	<update id="updateSeatStatus" parameterType="java.util.Map">
+		update T_API_TOKEN set TOKEN=#{token}
+	</update>
+	
 	<update id="updateCustInfo" parameterType="java.util.Map">
 		update T_CUST 
 		<trim prefix="set" suffixOverrides=",">
