@@ -20,7 +20,7 @@ function loginVal(){
 		}
 	});
 }
-
+//获取坐席闲忙
 function getSeatFreeBusyStatus(){
 	$.ajax({
 		url:webpath + "/seat/getSeatFreeBusy.action",
@@ -31,9 +31,9 @@ function getSeatFreeBusyStatus(){
 			if(resultCode == "0000"){
 				var resultData = data.resultData;
 				if(!isEmpty(resultData)){
-					var status = resultData.STATUS;
+					var status = resultData;
 					if(!isEmpty(status)){
-						if(status == "1"){//闲
+						if(status == "logged in"){//闲
 							$("#seat_free_busy_img").attr("src", webpath+"/common/img/free.png");
 						}else{//忙
 							$("#seat_free_busy_img").attr("src", webpath+"/common/img/busy.png");

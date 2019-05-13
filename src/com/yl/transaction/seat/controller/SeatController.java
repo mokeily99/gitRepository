@@ -53,7 +53,7 @@ public class SeatController extends BaseController {
 	@Resource
 	private PublicDao publicDao;
 	
-	/**
+	/**getSeatFreeBusy
 	 * 登录验证
 	 * @param request
 	 * @param response
@@ -106,27 +106,42 @@ public class SeatController extends BaseController {
 	@ResponseBody
 	public Result getSeatFreeBusy(HttpServletRequest request, HttpServletResponse response, Model model) {
 		Result result = new Result();
-		
+		String status = null;
 		try {
 			UserView user = this.getUserView(request);
 			//从网关获取状态
-			Map<String, String> param = new HashMap<String, String>();
-			param.put("queueid", ConfigUtil.getConfigKey("QUEUEID"));
-			param.put("extid", user.getSeatNO());
-			JSONObject resp = HttpUtil.doPostJson(JsonUtils.toJsonObj(param), ConfigUtil.getConfigKey("SWITCH_URL")+"/API/agent_query?token="+publicDao.getToken());
-			if("success".equals(resp.optString("status"))){
-				String seatStatus = resp.optString("agentstatus");
-				if("logged in".equals(seatStatus)){
-					
+			JSONObject resp1 = HttpUtil.agentQuery(ConfigUtil.getConfigKey("QUEUEID"), user.getSeatNO(), ConfigUtil.getConfigKey("QUEUE_PWD"), publicDao.getToken());
+			if("success".equals(resp1.optString("status"))){
+				String seatStatus = resp1.optString("agentstatus");
+				if("logged out".equals(seatStatus)){
+					HttpUtil.agentLogin(ConfigUtil.getConfigKey("QUEUEID"), user.getSeatNO(), ConfigUtil.getConfigKey("QUEUE_PWD"), publicDao.getToken());
+					//重新获取登入状态
+					JSONObject resp2 = HttpUtil.agentQuery(ConfigUtil.getConfigKey("QUEUEID"), user.getSeatNO(), ConfigUtil.getConfigKey("QUEUE_PWD"), publicDao.getToken());
+					status = resp2.optString("agentstatus");
+				}else{
+					status = seatStatus;
 				}
-			}else{
-				
 			}
+			
+			Map<String, String> param = new HashMap<String, String>();
 			param.put("seatID", user.getMaxaccept());
 			List<Map<String, String>> seatList = seatService.getSeatFreeBusyInfo(param);
 			if(seatList.size() > 0){
-				result.setResultData(seatList.get(0));
+				if(status == null){
+					status = seatList.get(0).get("STATUS");
+				}else{
+					if("logged in".equals(status)){
+						param.put("status", "1");
+					}else {
+						param.put("status", "0");
+					}
+					seatService.setBusyFree(param);
+				}
+			}else{
+				param.put("maxaccept", DBUtil.getMaxaccept(publicDao));
+				seatService.insertSeatInfo(param);
 			}
+			result.setResultData(status);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			result.setResultCode("9999");
@@ -148,16 +163,31 @@ public class SeatController extends BaseController {
 
 		try {
 			UserView user = this.getUserView(request);
-			Map<String, String> param = new HashMap<String, String>();
-			param.put("seatID", user.getMaxaccept());
-			param.put("status", status);
-			List<Map<String, String>> seatList = seatService.getSeatFreeBusyInfo(param);
-			if(seatList.size()>0){
-				seatService.setBusyFree(param);
-			}else{
-				param.put("maxaccept", DBUtil.getMaxaccept(publicDao));
-				seatService.insertSeatInfo(param);
+			
+			JSONObject resp = null;
+			if("0".equals(status)){//置忙
+				resp = HttpUtil.agentBreak(ConfigUtil.getConfigKey("QUEUEID"), user.getSeatNO(), publicDao.getToken());
+			}else{//置闲
+				resp = HttpUtil.agentResume(ConfigUtil.getConfigKey("QUEUEID"), user.getSeatNO(), publicDao.getToken());
 			}
+			
+			String resultStatus = resp.optString("status");
+			if(!"success".equals(resultStatus)){
+				result.setResultCode("0001");
+				result.setResultMsg("操作失败!");
+			}else{
+				Map<String, String> param = new HashMap<String, String>();
+				param.put("seatID", user.getMaxaccept());
+				param.put("status", status);
+				List<Map<String, String>> seatList = seatService.getSeatFreeBusyInfo(param);
+				if(seatList.size()>0){
+					seatService.setBusyFree(param);
+				}else{
+					param.put("maxaccept", DBUtil.getMaxaccept(publicDao));
+					seatService.insertSeatInfo(param);
+				}
+			}
+			
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			result.setResultCode("9999");

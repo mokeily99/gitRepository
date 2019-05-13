@@ -10,7 +10,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
-import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -136,7 +137,69 @@ public class HttpUtil {
 		
 		return jsStr;
 	}
-
+	/**
+	 * 查询坐席状态
+	 * @param queueid
+	 * @param extid
+	 * @param password
+	 * @return
+	 * @throws UnsupportedEncodingException 
+	 */
+	public static JSONObject agentQuery(String queueid, String extid, String password, String token) throws UnsupportedEncodingException{
+		Map<String, String> param = new HashMap<String, String>();
+		param.put("queueid", queueid);
+		param.put("extid", extid);
+		param.put("password", password);
+		JSONObject resp = doPostJson(JsonUtils.toJsonObj(param), ConfigUtil.getConfigKey("SWITCH_URL")+"/API/agent_query?token="+token);
+		return resp;
+	}
+	/**
+	 * 坐席登入
+	 * @param queueid
+	 * @param extid
+	 * @param password
+	 * @param token
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	public static JSONObject agentLogin(String queueid, String extid, String password, String token) throws UnsupportedEncodingException{
+		Map<String, String> param = new HashMap<String, String>();
+		param.put("queueid", queueid);
+		param.put("extid", extid);
+		param.put("password", password);
+		JSONObject resp = doPostJson(JsonUtils.toJsonObj(param), ConfigUtil.getConfigKey("SWITCH_URL")+"/API/agent_login?token="+token);
+		return resp;
+	}
+	/**
+	 * 坐席置忙
+	 * @param queueid
+	 * @param extid
+	 * @param token
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	public static JSONObject agentBreak(String queueid, String extid, String token) throws UnsupportedEncodingException{
+		Map<String, String> param = new HashMap<String, String>();
+		param.put("queueid", queueid);
+		param.put("extid", extid);
+		JSONObject resp = doPostJson(JsonUtils.toJsonObj(param), ConfigUtil.getConfigKey("SWITCH_URL")+"/API/agent_break?token="+token);
+		return resp;
+	}
+	/**
+	 * 坐席置闲
+	 * @param queueid
+	 * @param extid
+	 * @param token
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	public static JSONObject agentResume(String queueid, String extid, String token) throws UnsupportedEncodingException{
+		Map<String, String> param = new HashMap<String, String>();
+		param.put("queueid", queueid);
+		param.put("extid", extid);
+		JSONObject resp = doPostJson(JsonUtils.toJsonObj(param), ConfigUtil.getConfigKey("SWITCH_URL")+"/API/agent_resume?token="+token);
+		return resp;
+	}
 	public static void main(String[] args) throws Exception {
 		String parameterData = "cdkey=7SDK-LHW-0588-RBRUM&password=352064&phone=18686530251&message=欢迎使用同鑫热力投诉系统，您的短信验证码是0000，请确保由您本人完成操作。如非本人操作，请忽略本短信。【同鑫热力】&seqid=123&addserial=";
 		System.out.println(doPost(parameterData));
