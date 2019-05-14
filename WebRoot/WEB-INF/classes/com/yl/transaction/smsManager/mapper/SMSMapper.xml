@@ -40,6 +40,7 @@
 		<if test="blackPhone != null and blackPhone != '' ">
 			and a.BLACK_PHONE=#{blackPhone}
 		</if>
+		order by a.UPDATE_TIME desc
 	</select>
 	
 	<update id="updateBlackStatus" parameterType="java.util.Map">
@@ -80,6 +81,7 @@
 		<if test="mouldTitle != null and mouldTitle != '' ">
 			and MOULD_TITLE like '%'||#{mouldTitle}||'%'
 		</if>
+		order by CREATE_TIME desc
 	</select>
 	
 	<insert id="addMould" parameterType="java.util.Map">
@@ -132,17 +134,18 @@
 		<if test="maxaccept != null and maxaccept != '' ">
 			and maxaccept=#{maxaccept}
 		</if>
+		order by CREATE_TIME desc
 	</select>
 	
 	<insert id="insertSmsInfo" parameterType="java.util.Map">
 		insert into T_SMS_LIST (
 			MAXACCEPT,CUST_ID,CUST_NAME,PHONE,
 			SEND_TIME,CREATE_OPR_ID,CREACREATE_OPR_NAME,
-			SMS_CONTENT, DEPT_CODE
+			SMS_CONTENT, DEPT_CODE, CREATE_TIME
 		) values (
 			${maxaccept}, #{custID}, #{custName}, #{phone}, 
 			to_date(#{sendDate}, 'yyyy-mm-dd'), #{oprID}, #{oprName}, 
-			#{smsContent}, #{deptCode}
+			#{smsContent}, #{deptCode}, sysdate
 		)
 	</insert>
 	
@@ -157,6 +160,7 @@
 		<if test="smsPhone != null and smsPhone != '' ">
 			and PHONE=#{smsPhone}
 		</if>
+		order by CREATE_TIME desc
 	</select>
 	
 	<select id="getSmsHisList" resultType="java.util.Map" parameterType="java.util.Map">
@@ -174,5 +178,6 @@
 		<if test="sendFlag != null and sendFlag != '' ">
 			and SEND_FLAG=#{sendFlag}
 		</if>
+		order by CREATE_TIME desc
 	</select>
 </mapper>  
