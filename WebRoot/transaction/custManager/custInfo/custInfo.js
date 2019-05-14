@@ -383,6 +383,8 @@ layui.use(['form', 'layer', 'table', 'upload', 'laydate'], function() {
 			var sendType = data.value;
 			if(sendType == "10502"){
 				$("#send_sms_date_div").show();
+			}else{
+				$("#send_sms_date_div").hide();
 			}
 		});
 		form.on('select(sms_mould)', function(data){

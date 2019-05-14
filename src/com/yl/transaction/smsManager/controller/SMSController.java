@@ -473,4 +473,42 @@ public class SMSController extends BaseController{
 		}
 		return tableResult;
 	}
+	/**
+	 * 
+	 * @param page
+	 * @param limit
+	 * @param smsPhone
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/smsHis")
+	@ResponseBody
+	public LayTableResult<List<Map<String, String>>> smsHis(Integer page, Integer limit, String smsPhone, String sendFlag, HttpServletRequest request, HttpServletResponse response, Model model){
+		LayTableResult<List<Map<String, String>>> tableResult = new LayTableResult<List<Map<String, String>>>();
+		try{
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("row", limit);
+			param.put("page", page);
+			
+			UserView user = this.getUserView(request);
+			param.put("smsPhone",smsPhone);
+			param.put("sendFlag",sendFlag);
+			param.put("deptCode",user.getDeptCode());
+			
+			PageHelper.startPage(page, limit);
+			List<Map<String, String>> smsList = smsService.getSmsHisList(param);
+			PageInfo<Map<String, String>> pageinfo = new PageInfo<Map<String, String>>(smsList);
+			
+			tableResult.setCount((int) pageinfo.getTotal());
+			tableResult.setData(smsList);
+		}catch(Exception e){
+			tableResult.setCode(1);
+			tableResult.setMsg("数据加载失败！");
+			tableResult.setCount(0);
+			tableResult.setData(new ArrayList<Map<String, String>>());
+		}
+		return tableResult;
+	}
 }

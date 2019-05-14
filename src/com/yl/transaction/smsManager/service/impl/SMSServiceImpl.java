@@ -78,5 +78,10 @@ public class SMSServiceImpl implements SMSService{
 		return smsDao.getSmsList(param);
 	}
 
+	@Override
+	public List<Map<String, String>> getSmsHisList(Map<String, Object> param) {
+		return smsDao.getSmsHisList(param);
+	}
+
 	
 }

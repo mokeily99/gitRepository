@@ -149,13 +149,30 @@
 	<select id="getSmsList" resultType="java.util.Map" parameterType="java.util.Map">
 		select 
 			MAXACCEPT,CUST_ID,CUST_NAME,PHONE,to_char(SEND_TIME, 'yyyy-mm-dd HH24:mi:ss') SEND_TIME,
-			CREATE_OPR_ID,CREACREATE_OPR_NAME,SMS_CONTENT,DEPT_CODE
+			CREATE_OPR_ID,CREACREATE_OPR_NAME,SMS_CONTENT,DEPT_CODE,to_char(CREATE_TIME, 'yyyy-mm-dd HH24:mi:ss') CREATE_TIME
 		from T_SMS_LIST where 1=1 
 		<if test="deptCode != null and deptCode != '' ">
 			and DEPT_CODE in (select maxaccept from t_dept start with maxaccept=#{deptCode} connect by prior maxaccept = p_id)
 		</if>
 		<if test="smsPhone != null and smsPhone != '' ">
 			and PHONE=#{smsPhone}
+		</if>
+	</select>
+	
+	<select id="getSmsHisList" resultType="java.util.Map" parameterType="java.util.Map">
+		select 
+			MAXACCEPT,CUST_ID,CUST_NAME,PHONE,to_char(YY_SEND_TIME, 'yyyy-mm-dd HH24:mi:ss') YY_SEND_TIME,to_char(SJ_SEND_TIME, 'yyyy-mm-dd HH24:mi:ss') SJ_SEND_TIME,
+			CREATE_OPR_ID,CREACREATE_OPR_NAME,SMS_CONTENT,DEPT_CODE,to_char(UPDATE_TIME, 'yyyy-mm-dd HH24:mi:ss') UPDATE_TIME, to_char(CREATE_TIME, 'yyyy-mm-dd HH24:mi:ss') CREATE_TIME, 
+			SEND_FLAG, SEND_MARK
+		from T_SMS_LIST_HIS where 1=1 
+		<if test="deptCode != null and deptCode != '' ">
+			and DEPT_CODE in (select maxaccept from t_dept start with maxaccept=#{deptCode} connect by prior maxaccept = p_id)
+		</if>
+		<if test="smsPhone != null and smsPhone != '' ">
+			and PHONE=#{smsPhone}
+		</if>
+		<if test="sendFlag != null and sendFlag != '' ">
+			and SEND_FLAG=#{sendFlag}
 		</if>
 	</select>
 </mapper>  

@@ -28,4 +28,6 @@ public interface SMSService {
 	public void insertSmsInfo(Map<String, String> param);
 	
 	public List<Map<String, String>> getSmsList(Map<String, Object> param);
+	
+	public List<Map<String, String>> getSmsHisList(Map<String, Object> param);
 }
