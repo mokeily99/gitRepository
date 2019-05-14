@@ -29,7 +29,7 @@
 			</transactionManager>
 			<dataSource type="POOLED">
 				<property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
-				<property name="url" value="jdbc:oracle:thin:@192.168.81.180:1521:tmanadb"/>
+				<property name="url" value="jdbc:oracle:thin:@192.168.81.180:1521:orcl"/>
 				<property name="username" value="smsdms"/>
 				<property name="password" value="AA39noway"/>
 				<property name="poolMaximumActiveConnections" value="300"/>
