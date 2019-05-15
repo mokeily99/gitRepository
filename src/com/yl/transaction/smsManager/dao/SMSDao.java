@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.session.RowBounds;
 
 public interface SMSDao {
 
@@ -32,4 +33,8 @@ public interface SMSDao {
 	public List<Map<String, String>> getSmsList(Map<String, Object> param);
 	
 	public List<Map<String, String>> getSmsHisList(Map<String, Object> param);
+	
+	public List<Map<String, String>> getSmsSyncList(Map<String, Object> param, RowBounds rowBounds);
+	
+	public int updateMakeStatus(Map<String, Object> param);
 }

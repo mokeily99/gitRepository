@@ -45,6 +45,12 @@
 	
 	<mappers>
 		<mapper resource="com/yl/transaction/seat/mapper/SeatMapper.xml"/>
+		<mapper resource="com/yl/transaction/code/mapper/CodeMapper.xml"/>
+		<mapper resource="com/yl/transaction/custManager/mapper/CustMapper.xml"/>
+		<mapper resource="com/yl/transaction/dept/mapper/DeptMapper.xml"/>
+		<mapper resource="com/yl/transaction/personnel/mapper/PersonnelMapper.xml"/>
+		<mapper resource="com/yl/transaction/senwords/mapper/SenwordsMapper.xml"/>
+		<mapper resource="com/yl/transaction/smsManager/mapper/SMSMapper.xml"/>
 	</mappers>
 
 </configuration>

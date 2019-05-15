@@ -163,6 +163,21 @@
 		order by CREATE_TIME desc
 	</select>
 	
+	<select id="getSmsSyncList" resultType="java.util.Map" parameterType="java.util.Map">
+		select 
+			MAXACCEPT,CUST_ID,CUST_NAME,PHONE,to_char(SEND_TIME, 'yyyy-mm-dd HH24:mi:ss') SEND_TIME,
+			CREATE_OPR_ID,CREACREATE_OPR_NAME,SMS_CONTENT,DEPT_CODE,to_char(CREATE_TIME, 'yyyy-mm-dd HH24:mi:ss') CREATE_TIME
+		from T_SMS_LIST where sysdate>=SEND_TIME
+		<if test="makeFlag != null and makeFlag != '' ">
+			AND MAKE_STATUS=#{makeFlag}
+		</if>
+	</select>
+	
+	<update id="updateMakeStatus" parameterType="java.util.Map">
+		update T_SMS_LIST set MAKE_STATUS=#{makeStatus} 
+		where MAKE_STATUS=#{oldMakeStatus}
+	</update>
+	
 	<select id="getSmsHisList" resultType="java.util.Map" parameterType="java.util.Map">
 		select 
 			MAXACCEPT,CUST_ID,CUST_NAME,PHONE,to_char(YY_SEND_TIME, 'yyyy-mm-dd HH24:mi:ss') YY_SEND_TIME,to_char(SJ_SEND_TIME, 'yyyy-mm-dd HH24:mi:ss') SJ_SEND_TIME,
