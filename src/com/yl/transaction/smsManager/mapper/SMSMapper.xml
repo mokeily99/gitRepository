@@ -144,18 +144,19 @@
 		insert into T_SMS_LIST (
 			MAXACCEPT,CUST_ID,CUST_NAME,PHONE,
 			SEND_TIME,CREATE_OPR_ID,CREACREATE_OPR_NAME,
-			SMS_CONTENT, DEPT_CODE, CREATE_TIME
+			SMS_CONTENT, DEPT_CODE, CREATE_TIME, MAKE_STATUS, TRY_TIMES
 		) values (
 			${maxaccept}, #{custID}, #{custName}, #{phone}, 
 			to_date(#{sendDate}, 'yyyy-mm-dd'), #{oprID}, #{oprName}, 
-			#{smsContent}, #{deptCode}, sysdate
+			#{smsContent}, #{deptCode}, sysdate, '10702', '0'
 		)
 	</insert>
 	
 	<select id="getSmsList" resultType="java.util.Map" parameterType="java.util.Map">
 		select 
 			MAXACCEPT,CUST_ID,CUST_NAME,PHONE,to_char(SEND_TIME, 'yyyy-mm-dd HH24:mi:ss') SEND_TIME,
-			CREATE_OPR_ID,CREACREATE_OPR_NAME,SMS_CONTENT,DEPT_CODE,to_char(CREATE_TIME, 'yyyy-mm-dd HH24:mi:ss') CREATE_TIME
+			CREATE_OPR_ID,CREACREATE_OPR_NAME,SMS_CONTENT,DEPT_CODE,to_char(CREATE_TIME, 'yyyy-mm-dd HH24:mi:ss') CREATE_TIME, 
+			MAKE_STATUS, TRY_TIMES
 		from T_SMS_LIST where 1=1 
 		<if test="deptCode != null and deptCode != '' ">
 			and DEPT_CODE in (select maxaccept from t_dept start with maxaccept=#{deptCode} connect by prior maxaccept = p_id)
@@ -169,7 +170,8 @@
 	<select id="getSmsSyncList" resultType="java.util.Map" parameterType="java.util.Map">
 		select 
 			MAXACCEPT,CUST_ID,CUST_NAME,PHONE,to_char(SEND_TIME, 'yyyy-mm-dd HH24:mi:ss') SEND_TIME,
-			CREATE_OPR_ID,CREACREATE_OPR_NAME,SMS_CONTENT,DEPT_CODE,to_char(CREATE_TIME, 'yyyy-mm-dd HH24:mi:ss') CREATE_TIME
+			CREATE_OPR_ID,CREACREATE_OPR_NAME,SMS_CONTENT,DEPT_CODE,to_char(CREATE_TIME, 'yyyy-mm-dd HH24:mi:ss') CREATE_TIME, 
+			MAKE_STATUS, TRY_TIMES
 		from T_SMS_LIST where sysdate>=SEND_TIME
 		<if test="makeFlag != null and makeFlag != '' ">
 			AND MAKE_STATUS=#{makeFlag}
@@ -178,7 +180,13 @@
 	
 	<update id="updateMakeStatus" parameterType="java.util.Map">
 		update T_SMS_LIST set MAKE_STATUS=#{makeStatus} 
-		where MAKE_STATUS=#{oldMakeStatus}
+		where 1=1
+		<if test="oldMakeStatus != null and oldMakeStatus != '' ">
+			AND MAKE_STATUS=#{oldMakeStatus}
+		</if>
+		<if test="maxaccept != null and maxaccept != '' ">
+			AND maxaccept=#{maxaccept}
+		</if>
 	</update>
 	
 	<update id="updateTryTimes" parameterType="java.util.Map">
@@ -195,9 +203,9 @@
 			CREACREATE_OPR_NAME, SMS_CONTENT, DEPT_CODE, UPDATE_TIME, SEND_FLAG, 
 			SEND_MARK, SJ_SEND_TIME, CREATE_TIME, TRY_TIMES
 		) values (
-			#{MAXACCEPT}, #{CUST_ID}, #{CUST_NAME}, #{PHONE}, #{SEND_TIME}, #{CREATE_OPR_ID}, 
+			#{MAXACCEPT}, #{CUST_ID}, #{CUST_NAME}, #{PHONE}, to_date(#{SEND_TIME}, 'yyyy-mm-dd HH24:mi:ss'), #{CREATE_OPR_ID}, 
 			#{CREACREATE_OPR_NAME}, #{SMS_CONTENT}, #{DEPT_CODE}, sysdate, #{sendFlag}, 
-			#{errMsg}, sysdate, #{CREATE_TIME}, #{tryTimes}
+			#{errMsg}, sysdate, to_date(#{CREATE_TIME}, 'yyyy-mm-dd HH24:mi:ss'), #{tryTimes}
 		)
 	</insert>
 	

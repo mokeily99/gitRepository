@@ -15,13 +15,8 @@ import com.yl.common.util.LogUtil;
 import com.yl.transaction.smsManager.dao.SMSDao;
 
 public class SendsmsDaemon {
-	private static final String SERVICE_NO = "200064";
-	private static final String BIP_CODE = "BIP5A131";
-	private static final String TRANS_CODE = "T5101015";
-	
+
 	private static final int MAX_TRY_TIMES = 5;
-	/** 和生活业务 **/
-	private static final String BIZ_TYPE = "78";
 	/** 线程池中所保存的线程数 **/
 	private static int CORE_POOL_SIZE = 1;
 	/** 线程池中允许的最大线程数 **/
@@ -40,8 +35,7 @@ public class SendsmsDaemon {
 	public SendsmsDaemon() {
 	}
 
-
-	public SendsmsDaemon(int corePoolSize, int maxPoolSize, int capacity,int recNum, long sleepTime) {
+	public SendsmsDaemon(int corePoolSize, int maxPoolSize, int capacity, int recNum, long sleepTime) {
 		CORE_POOL_SIZE = corePoolSize;
 		MAX_POOL_SIZE = maxPoolSize;
 		CAPACITY = capacity;
@@ -66,8 +60,11 @@ public class SendsmsDaemon {
 		updateSendStatusTo0();
 
 		/** 创建线程池 **/
-		ThreadPoolExecutor pool = new ThreadPoolExecutor(CORE_POOL_SIZE,MAX_POOL_SIZE, ALIVE_TIME, TimeUnit.MILLISECONDS,new ArrayBlockingQueue<Runnable>(CAPACITY, true));
-		pool.setRejectedExecutionHandler(new ThreadPoolExecutor.AbortPolicy()); // 线程池拒绝处理任务时，execute 方法抛出  RejectedExecutionException
+		ThreadPoolExecutor pool = new ThreadPoolExecutor(CORE_POOL_SIZE, MAX_POOL_SIZE, ALIVE_TIME,
+				TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(CAPACITY, true));
+		pool.setRejectedExecutionHandler(new ThreadPoolExecutor.AbortPolicy()); // 线程池拒绝处理任务时，execute
+																				// 方法抛出
+																				// RejectedExecutionException
 		LogUtil.infoLog("同步线程启动完毕！");
 
 		/** 向线程池添加需要同步的数据 **/
@@ -99,7 +96,10 @@ public class SendsmsDaemon {
 								break;
 							} catch (RejectedExecutionException e) {
 								LogUtil.infoLog("线程池已满，暂停提交新的任务，程序休眠！");
-								try { Thread.sleep(5000L);} catch (InterruptedException localInterruptedException) {} // 队列满，程序休眠5秒
+								try {
+									Thread.sleep(5000L);
+								} catch (InterruptedException localInterruptedException) {
+								} // 队列满，程序休眠5秒
 							}
 						}
 					}
@@ -109,8 +109,14 @@ public class SendsmsDaemon {
 				if ((rowNum == 0) || (rowNum < MAX_ROWS)) {
 					LogUtil.infoLog("无订购关系变更信息");
 
-					if (session != null) { session.close();session = null;}
-					try { Thread.sleep(SLEEP_TIME);} catch (InterruptedException localInterruptedException1) {}
+					if (session != null) {
+						session.close();
+						session = null;
+					}
+					try {
+						Thread.sleep(SLEEP_TIME);
+					} catch (InterruptedException localInterruptedException1) {
+					}
 					LogUtil.debugLog("线程池主动执行任务的线程数" + pool.getActiveCount());
 				}
 			} finally {
@@ -161,7 +167,7 @@ public class SendsmsDaemon {
 	 * @param session
 	 * @param syncList
 	 */
-	private void updateMakeStatus(SqlSession session,List<Map<String, String>> syncList) {
+	private void updateMakeStatus(SqlSession session, List<Map<String, String>> syncList) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("makeStatus", "10701");
 		SMSDao mapper = (SMSDao) session.getMapper(SMSDao.class);
@@ -190,24 +196,24 @@ public class SendsmsDaemon {
 				SqlSession session = null;
 				try {
 					session = DBUtil.getDefaultSqlSession();
-					int recNum = this.syncList.size();
-					for (int ix = 0; ix < recNum; ix++) {
-						String errCode = "0000";
-						String errMsg = "success";
+					String errCode = "0000";
+					String errMsg = "success";
+					for (Map<String, String> sync : syncList) {
 						
-						Map<String, String> sync = syncList.get(ix);
 						String phone = sync.get("PHONE");
-						if(isBlackList(session, phone)){
+						if (isBlackList(session, phone)) {
 							errCode = "0001";
 							errMsg = "黑名单用户不能发送短信！";
-						}else{
-							/**发送短信**/
+						} else {
+							/** 发送短信 **/
 							
 						}
-						/** 根据发送结果处理数据 **/
-						moveToHisTable(session, sync, errCode, errMsg);
-						session.commit();
+						sync.put("errCode", errCode);
+						sync.put("errMsg", errMsg);
 					}
+					/** 根据发送结果处理数据 **/
+					moveToHisTable(session, this.syncList);
+					session.commit();
 
 					if (this.syncList.size() == 0) // 如果本次发送同步成功或列表已空，停止发送
 						return;
@@ -217,8 +223,11 @@ public class SendsmsDaemon {
 					if (session != null)
 						session.close();
 				} // end try
-				try {Thread.sleep(5000L);} catch (InterruptedException localInterruptedException) {}
-			}// end while
+				try {
+					Thread.sleep(5000L);
+				} catch (InterruptedException localInterruptedException) {
+				}
+			} // end while
 		}// end run method
 
 		private boolean isBlackList(SqlSession session, String phone) {
@@ -229,10 +238,10 @@ public class SendsmsDaemon {
 				map.put("ableFlag", "10101");
 				SMSDao mapper = (SMSDao) session.getMapper(SMSDao.class);
 				List<Map<String, String>> blackList = mapper.getBlackList(map);
-				if(blackList.size()>0){
+				if (blackList.size() > 0) {
 					blackFlag = true;
 				}
-				
+
 			} catch (Exception e) {
 				LogUtil.errorLog("校验黑名单失败！", e);
 			}
@@ -247,38 +256,46 @@ public class SendsmsDaemon {
 		 * @param errCode
 		 * @param errMsg
 		 */
-		private void moveToHisTable(SqlSession session,Map<String, String> sync, String errCode, String errMsg) {
+		private void moveToHisTable(SqlSession session, List<Map<String, String>> syncList) {
 			SMSDao mapper = (SMSDao) session.getMapper(SMSDao.class);
-			LogUtil.infoLog("短信记录同步[" + errCode + "][" + errMsg + "]");
-			if ("0000".equals(errCode) || "0001".equals(errCode)) { // 发送成功、黑名单数据移送历史记录表
-				// 删除数据
-				mapper.deleteSmsSync(sync.get("MAXACCEPT"));
-				// 记录历史表
-				sync.put("tryTimes", Integer.parseInt(sync.get("TRY_TIMES")) + 1 + "");
-				if("0000".equals(errCode)){
-					sync.put("sendFlag", "10601");
-				}else{
-					sync.put("sendFlag", "10602");
-				}
-				sync.put("errMsg", errMsg);
-				mapper.insertSmsSynchis(sync);
-			} else { //发送同步请求不成功
-				int tryTimes = Integer.parseInt(sync.get("TRY_TIMES")) + 1;
-				if (tryTimes >= MAX_TRY_TIMES) { // 已达最大发送次数
+			for(int ix = 0; ix < syncList.size();){
+				Map<String, String> sync = syncList.get(ix);
+				String errCode = sync.get("errCode");
+				String errMsg = sync.get("errMsg");
+				LogUtil.infoLog("短信记录同步[" +sync.get("MAXACCEPT")+ "][ " + errCode + "][" + errMsg + "]");
+				if ("0000".equals(errCode) || "0001".equals(errCode)) { // 发送成功、黑名单数据移送历史记录表
 					// 删除数据
 					mapper.deleteSmsSync(sync.get("MAXACCEPT"));
+					//清空处理列表
+					this.syncList.remove(sync);
 					// 记录历史表
-					sync.put("tryTimes",String.valueOf(tryTimes));
-					sync.put("sendFlag", "10602");
+					sync.put("tryTimes", Integer.parseInt(sync.get("TRY_TIMES")) + 1 + "");
+					if ("0000".equals(errCode)) {
+						sync.put("sendFlag", "10601");
+					} else {
+						sync.put("sendFlag", "10602");
+					}
 					sync.put("errMsg", errMsg);
 					mapper.insertSmsSynchis(sync);
-				} else {// 未达到最大发送次数，修改发送次数
-					HashMap<String, String> map = new HashMap<String, String>();
-					map.put("tryTimes", String.valueOf(tryTimes));
-					map.put("maxaccept", sync.get("MAXACCEPT"));
-					mapper.updateTryTimes(map);
-					sync.put("TRY_TIMES", String.valueOf(tryTimes));
+				} else { // 发送同步请求不成功
+					int tryTimes = Integer.parseInt(sync.get("TRY_TIMES")) + 1;
+					if (tryTimes >= MAX_TRY_TIMES) { // 已达最大发送次数
+						// 删除数据
+						mapper.deleteSmsSync(sync.get("MAXACCEPT"));
+						// 记录历史表
+						sync.put("tryTimes", String.valueOf(tryTimes));
+						sync.put("sendFlag", "10602");
+						sync.put("errMsg", errMsg);
+						mapper.insertSmsSynchis(sync);
+					} else {// 未达到最大发送次数，修改发送次数
+						HashMap<String, String> map = new HashMap<String, String>();
+						map.put("tryTimes", String.valueOf(tryTimes));
+						map.put("maxaccept", sync.get("MAXACCEPT"));
+						mapper.updateTryTimes(map);
+						sync.put("TRY_TIMES", String.valueOf(tryTimes));
+					}
 				}
+				ix++;
 			}
 		}
 	}
@@ -303,11 +320,10 @@ public class SendsmsDaemon {
 				if ((recNum <= 0) || (sleepTime <= 0)) {
 					f = new SendsmsDaemon();
 				}
-				f = new SendsmsDaemon(corePoolSize, maxPoolSize, capacity,recNum, sleepTime);
+				f = new SendsmsDaemon(corePoolSize, maxPoolSize, capacity, recNum, sleepTime);
 			} catch (Exception e) {
 				LogUtil.errorLog("程序发生异常！退出", e);
-				System.out
-						.println("Usage:F5A131aDaemon <核心线程数> <最大线程数> <等待队列长度> <交易包最大数> <休眠时间>");
+				System.out.println("Usage:F5A131aDaemon <核心线程数> <最大线程数> <等待队列长度> <交易包最大数> <休眠时间>");
 				System.exit(1);
 			}
 		} else
