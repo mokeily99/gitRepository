@@ -37,4 +37,10 @@ public interface SMSDao {
 	public List<Map<String, String>> getSmsSyncList(Map<String, Object> param, RowBounds rowBounds);
 	
 	public int updateMakeStatus(Map<String, Object> param);
+	
+	public void deleteSmsSync(@Param("maxaccept") String maxaccept);
+	
+	public void insertSmsSynchis(Map<String, String> param);
+	
+	public void updateTryTimes(Map<String, String> param);
 }

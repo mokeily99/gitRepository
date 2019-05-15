@@ -40,6 +40,9 @@
 		<if test="blackPhone != null and blackPhone != '' ">
 			and a.BLACK_PHONE=#{blackPhone}
 		</if>
+		<if test="ableFlag != null and ableFlag != '' ">
+			and a.ABLE_FLAG=#{ableFlag}
+		</if>
 		order by a.UPDATE_TIME desc
 	</select>
 	
@@ -177,6 +180,26 @@
 		update T_SMS_LIST set MAKE_STATUS=#{makeStatus} 
 		where MAKE_STATUS=#{oldMakeStatus}
 	</update>
+	
+	<update id="updateTryTimes" parameterType="java.util.Map">
+		update T_SMS_LIST set TRY_TIMES=#{tryTimes} where maxaccept=#{maxaccept}
+	</update>
+	
+	<delete id="deleteSmsSync" parameterType="String">
+		delete from T_SMS_LIST where maxaccept=#{maxaccept}
+	</delete>
+	
+	<insert id="insertSmsSynchis" parameterType="java.util.Map">
+		insert into T_SMS_LIST_HIS (
+			MAXACCEPT, CUST_ID, CUST_NAME, PHONE, YY_SEND_TIME, CREATE_OPR_ID, 
+			CREACREATE_OPR_NAME, SMS_CONTENT, DEPT_CODE, UPDATE_TIME, SEND_FLAG, 
+			SEND_MARK, SJ_SEND_TIME, CREATE_TIME, TRY_TIMES
+		) values (
+			#{MAXACCEPT}, #{CUST_ID}, #{CUST_NAME}, #{PHONE}, #{SEND_TIME}, #{CREATE_OPR_ID}, 
+			#{CREACREATE_OPR_NAME}, #{SMS_CONTENT}, #{DEPT_CODE}, sysdate, #{sendFlag}, 
+			#{errMsg}, sysdate, #{CREATE_TIME}, #{tryTimes}
+		)
+	</insert>
 	
 	<select id="getSmsHisList" resultType="java.util.Map" parameterType="java.util.Map">
 		select 

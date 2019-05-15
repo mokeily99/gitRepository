@@ -18,6 +18,8 @@ public class SendsmsDaemon {
 	private static final String SERVICE_NO = "200064";
 	private static final String BIP_CODE = "BIP5A131";
 	private static final String TRANS_CODE = "T5101015";
+	
+	private static final int MAX_TRY_TIMES = 5;
 	/** 和生活业务 **/
 	private static final String BIZ_TYPE = "78";
 	/** 线程池中所保存的线程数 **/
@@ -63,8 +65,6 @@ public class SendsmsDaemon {
 		LogUtil.infoLog("将所有处于正在处理状态中的数据，修改状态为待处理");
 		updateSendStatusTo0();
 
-		----new Thread(new OrderCfm()).start();
-
 		/** 创建线程池 **/
 		ThreadPoolExecutor pool = new ThreadPoolExecutor(CORE_POOL_SIZE,MAX_POOL_SIZE, ALIVE_TIME, TimeUnit.MILLISECONDS,new ArrayBlockingQueue<Runnable>(CAPACITY, true));
 		pool.setRejectedExecutionHandler(new ThreadPoolExecutor.AbortPolicy()); // 线程池拒绝处理任务时，execute 方法抛出  RejectedExecutionException
@@ -80,7 +80,7 @@ public class SendsmsDaemon {
 				List<Map<String, String>> syncList = readSmsSync(session);
 				int rowNum = syncList != null ? syncList.size() : 0;
 				if (rowNum > 0) { // 有待同步数据
-					updateSendStatus(session, syncList);
+					updateMakeStatus(session, syncList);
 					session.commit();
 					int listlen = MAX_REC_NUM;
 					/** 将待同步数据按照最大记录数分片，提交数据至线程池发送 **/
@@ -161,13 +161,13 @@ public class SendsmsDaemon {
 	 * @param session
 	 * @param syncList
 	 */
-	private void updateSendStatus(SqlSession session,List<Map<String, String>> syncList) {
+	private void updateMakeStatus(SqlSession session,List<Map<String, String>> syncList) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("sendStatus", "x");
-		OrderChgMapper mapper = (OrderChgMapper) session.getMapper(OrderChgMapper.class);
-		for (OrderChgSync sync : syncList) {
-			map.put("maxAccept", sync.getMaxAccept());
-			mapper.updateSendStatus(map);
+		map.put("makeStatus", "10701");
+		SMSDao mapper = (SMSDao) session.getMapper(SMSDao.class);
+		for (Map<String, String> sync : syncList) {
+			map.put("maxaccept", sync.get("MAXACCEPT"));
+			mapper.updateMakeStatus(map);
 		}
 	}
 
@@ -192,15 +192,24 @@ public class SendsmsDaemon {
 					session = DBUtil.getDefaultSqlSession();
 					int recNum = this.syncList.size();
 					for (int ix = 0; ix < recNum; ix++) {
+						String errCode = "0000";
+						String errMsg = "success";
 						
-						/**发送短信**/
-						
-						/** 根据发送结果，处理用户订购关系变更信息 **/
-						moveToHisTable(session, this.syncList, errCode, errMsg);
+						Map<String, String> sync = syncList.get(ix);
+						String phone = sync.get("PHONE");
+						if(isBlackList(session, phone)){
+							errCode = "0001";
+							errMsg = "黑名单用户不能发送短信！";
+						}else{
+							/**发送短信**/
+							
+						}
+						/** 根据发送结果处理数据 **/
+						moveToHisTable(session, sync, errCode, errMsg);
 						session.commit();
 					}
 
-					if ((errCode == 0) || (this.syncList.size() == 0)) // 如果本次发送同步成功或列表已空，停止发送
+					if (this.syncList.size() == 0) // 如果本次发送同步成功或列表已空，停止发送
 						return;
 				} catch (Exception e) {
 					LogUtil.errorLog("发送订购关系同步失败,程序休眠5秒后重新发送！", e);
@@ -212,26 +221,22 @@ public class SendsmsDaemon {
 			}// end while
 		}// end run method
 
-		/**
-		 * 查询业务付费类型
-		 * 
-		 * @param session
-		 * @param spid
-		 * @param bizcode
-		 * @return
-		 */
-		private String getBillFlg(SqlSession session, String spid,String bizcode) {
+		private boolean isBlackList(SqlSession session, String phone) {
+			boolean blackFlag = false;
 			try {
-				HashMap<String, String> map = new HashMap<String, String>();
-				map.put("spId", spid);
-				map.put("bizCode", bizcode);
-				DSMPSpBizInfoMapper mapper = (DSMPSpBizInfoMapper) session.getMapper(DSMPSpBizInfoMapper.class);
-				String billFlag = mapper.getBillingType(map);
-				return StringUtils.isNotBlank(billFlag) ? billFlag : "2";
+				HashMap<String, Object> map = new HashMap<String, Object>();
+				map.put("blackPhone", phone);
+				map.put("ableFlag", "10101");
+				SMSDao mapper = (SMSDao) session.getMapper(SMSDao.class);
+				List<Map<String, String>> blackList = mapper.getBlackList(map);
+				if(blackList.size()>0){
+					blackFlag = true;
+				}
+				
 			} catch (Exception e) {
-				LogUtil.errorLog("查询付费类型失败，默认付费类型为包月", e);
-				return "2";
+				LogUtil.errorLog("校验黑名单失败！", e);
 			}
+			return blackFlag;
 		}
 
 		/**
@@ -242,112 +247,39 @@ public class SendsmsDaemon {
 		 * @param errCode
 		 * @param errMsg
 		 */
-		private void moveToHisTable(SqlSession session,List<OrderChgSync> chgList, int errCode, String errMsg) {
-			OrderChgMapper mapper = (OrderChgMapper) session.getMapper(OrderChgMapper.class);
-			LogUtil.infoLog("订购关系同步[" + errCode + "][" + errMsg + "]");
-			for (int ix = 0; ix < chgList.size();) {
-				OrderChgSync sync = (OrderChgSync) chgList.get(ix);
-				if (errCode == 0) { // 发送同步请求成功
+		private void moveToHisTable(SqlSession session,Map<String, String> sync, String errCode, String errMsg) {
+			SMSDao mapper = (SMSDao) session.getMapper(SMSDao.class);
+			LogUtil.infoLog("短信记录同步[" + errCode + "][" + errMsg + "]");
+			if ("0000".equals(errCode) || "0001".equals(errCode)) { // 发送成功、黑名单数据移送历史记录表
+				// 删除数据
+				mapper.deleteSmsSync(sync.get("MAXACCEPT"));
+				// 记录历史表
+				sync.put("tryTimes", Integer.parseInt(sync.get("TRY_TIMES")) + 1 + "");
+				if("0000".equals(errCode)){
+					sync.put("sendFlag", "10601");
+				}else{
+					sync.put("sendFlag", "10602");
+				}
+				sync.put("errMsg", errMsg);
+				mapper.insertSmsSynchis(sync);
+			} else { //发送同步请求不成功
+				int tryTimes = Integer.parseInt(sync.get("TRY_TIMES")) + 1;
+				if (tryTimes >= MAX_TRY_TIMES) { // 已达最大发送次数
 					// 删除数据
-					mapper.deleteOrderChgSync(sync.getMaxAccept());
+					mapper.deleteSmsSync(sync.get("MAXACCEPT"));
 					// 记录历史表
-					sync.setTryTimes(Integer.valueOf(sync.getTryTimes().intValue() + 1));
-					sync.setSendStatus("1");
-					sync.setMonth(sync.getOpTime().substring(0, 6));
-					mapper.insertOrderChgSynchis(sync);
-				} 
-				 else { //发送同步请求不成功
-					int maxTimes = sync.getMaxTimes().intValue();
-					int tryTimes = sync.getTryTimes().intValue() + 1;
-					if (maxTimes > 0) { // 变更信息有最大发送次数限制
-						if (tryTimes >= maxTimes) { // 已达最大发送次数
-							// 删除数据
-							mapper.deleteOrderChgSync(sync.getMaxAccept());
-							// 记录历史表
-							sync.setTryTimes(Integer.valueOf(tryTimes));
-							sync.setSendStatus("0");
-							sync.setMonth(sync.getOpTime().substring(0, 6));
-							mapper.insertOrderChgSynchis(sync);
-							chgList.remove(ix);
-							continue;
-						} else {// 未达到最大发送次数，修改发送次数
-							HashMap<String, String> map = new HashMap<String, String>();
-							map.put("tryTimes", String.valueOf(tryTimes));
-							map.put("maxAccept", sync.getMaxAccept().toString());
-							mapper.updateTryTimes(map);
-							sync.setTryTimes(Integer.valueOf(tryTimes));
-						}
-					}
-					// 无最大发送次数限制，不做处理
+					sync.put("tryTimes",String.valueOf(tryTimes));
+					sync.put("sendFlag", "10602");
+					sync.put("errMsg", errMsg);
+					mapper.insertSmsSynchis(sync);
+				} else {// 未达到最大发送次数，修改发送次数
+					HashMap<String, String> map = new HashMap<String, String>();
+					map.put("tryTimes", String.valueOf(tryTimes));
+					map.put("maxaccept", sync.get("MAXACCEPT"));
+					mapper.updateTryTimes(map);
+					sync.put("TRY_TIMES", String.valueOf(tryTimes));
 				}
-				ix++;
 			}
-		}
-	}
-
-	/**
-	 * 更新用户订购关系
-	 * 
-	 */
-	public static class OrderCfm implements Runnable {
-		@Override
-		public void run() {
-			// TODO Auto-generated method stub
-			while (true) {
-				SqlSession session = null;
-				try {
-					session = DBUtil.getDefaultSqlSession();
-					while (true) {
-						/** 查询已确认的订购关系变更信息 **/
-						HashMap<String, String> map = new HashMap<String, String>();
-						map.put("bizType", BIZ_TYPE);
-						OrderChgMapper mapper = session.getMapper(OrderChgMapper.class);
-						List<OrderChgCfm> cfmList = mapper.getOrderChgCfmList(map, new RowBounds(0, MAX_REC_NUM * 10));
-						if (cfmList != null && cfmList.size() > 0) {
-							for (int ix = 0; ix < cfmList.size(); ix++) {
-								OrderChgCfm cfm = cfmList.get(ix);
-								// 删除记录
-								mapper.deleteOrderChgCfm(cfm.getMaxAccept());
-								// 备份
-								cfm.setMonth(cfm.getOpTime().substring(0, 6));
-								mapper.insertOrderChgCfmhis(cfm);
-								// 更新用户订购关系
-								if (updateOrderMsg(session, cfm) != 0)
-									throw new BOException(210001, "更新用户订购关系失败");
-
-								if ((ix + 1) % 100 == 0)
-									session.commit();
-							}
-							session.commit();
-					   }
-					   else {
-							LogUtil.infoLog("无已确认订购关系同步！程序休眠");
-							break;
-						}
-					}
-				} catch (Exception e) {
-					LogUtil.errorLog("更新用户订购关系失败", e);
-				} finally {
-					if (session != null)
-						session.close();
-				}
-
-				try {Thread.sleep(SLEEP_TIME);} catch (InterruptedException e) {}
-			}
-		}
-
-		/**
-		 * 更新用户订购关系
-		 * 
-		 * @param session
-		 * @param cfm
-		 */
-		private int updateOrderMsg(SqlSession session, OrderChgCfm cfm)
-				throws Exception {
-			if (!"Y".equals(cfm.getUpdateFlag()))// 无需更新用户订购
-				return 0;
-			
-			return 0;
 		}
 	}
 
@@ -355,7 +287,7 @@ public class SendsmsDaemon {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		F5A131aDaemon f = null;
+		SendsmsDaemon f = null;
 		if (args.length >= 5) {
 			int corePoolSize = 1;
 			int maxPoolSize = 10;
