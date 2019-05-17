@@ -6,3 +6,6 @@
 /mybatis-config.xml
 /spring-mvc.xml
 /spring-mybatis.xml
+/spring-beans-3.1.xsd
+/spring-context-3.1.xsd
+/spring-mvc-4.0.xsd

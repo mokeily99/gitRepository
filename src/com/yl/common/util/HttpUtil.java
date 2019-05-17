@@ -88,7 +88,7 @@ public class HttpUtil {
 		return resultBuffer.toString();
 	}
 
-	public static JSONObject doPostJson(String param, String url) throws UnsupportedEncodingException {
+	public static JSONObject doPostJson(String param, String url, String msg) throws UnsupportedEncodingException {
 //		param = URLEncoder.encode(param, "UTF-8");
 		PrintWriter out = null;
 		BufferedReader in = null;
@@ -106,7 +106,7 @@ public class HttpUtil {
 			conn.setReadTimeout(30000);
 			// 获取URLConnection对象对应的输出流
 			out = new PrintWriter(new OutputStreamWriter(conn.getOutputStream(), "UTF-8"));
-			logger.info("用户资料查询请求参数-REQUEST：" + param);
+			logger.info(msg+"请求参数-REQUEST：" + param);
 			// 发送请求参数
 			out.print(param);
 			// flush输出流的缓冲
@@ -120,13 +120,13 @@ public class HttpUtil {
 			// 解析json对象
 			if(result != null && !"".equals(result)){
 				jsStr = JSONObject.fromObject(result);
-				logger.info("用户资料查询返回参数-RESPONSE：" + jsStr);
+				logger.info(msg+"返回参数-RESPONSE：" + jsStr);
 			}else{
 				jsStr =  JSONObject.fromObject("{\"RESULT_CODE\":\"9999\", \"RESULT_MSG\":\"接口返回参数为空！\"}");
-				logger.info("用户资料查询返回参数-RESPONSE：返回参数为空！" );
+				logger.info(msg+"返回参数-RESPONSE：返回参数为空！" );
 			}
 		} catch (Exception e) {
-			logger.error("用户资料查询失败：" + e);
+			logger.error(msg+"失败：" + e);
 			jsStr = JSONObject.fromObject("{\"RESULT_CODE\":\"9999\", \"RESULT_MSG\":\"系统异常！\"}");
 		}finally{
 			if(out != null){
@@ -136,6 +136,46 @@ public class HttpUtil {
 		}
 		
 		return jsStr;
+	}
+	/**
+	 * API登录
+	 * @param username
+	 * @param password
+	 * @param url
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	public static JSONObject login(String username, String password, String url) throws UnsupportedEncodingException{
+		Map<String, String> param = new HashMap<String, String>();
+		param.put("username", username);
+		param.put("password", MD5Utils.MD5Encode(password, "utf-8"));
+		param.put("url", url);
+		JSONObject resp = doPostJson(JsonUtils.toJsonObj(param), ConfigUtil.getConfigKey("SWITCH_URL")+"/API/login", "API登录");
+		return resp;
+	}
+	/**
+	 * API心跳包
+	 * @param token
+	 * @param url
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	public static JSONObject heartbeat(String token, String url) throws UnsupportedEncodingException{
+		Map<String, String> param = new HashMap<String, String>();
+		param.put("url", url);
+		JSONObject resp = doPostJson(JsonUtils.toJsonObj(param), ConfigUtil.getConfigKey("SWITCH_URL")+"/API/heartbeat?token=" + token, "API心跳包");
+		return resp;
+	}
+	/**
+	 * 登出API
+	 * @param token
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	public static JSONObject logout(String token) throws UnsupportedEncodingException{
+		Map<String, String> param = new HashMap<String, String>();
+		JSONObject resp = doPostJson(JsonUtils.toJsonObj(param), ConfigUtil.getConfigKey("SWITCH_URL")+"/API/logout?token=" + token, "API登出");
+		return resp;
 	}
 	/**
 	 * 查询坐席状态
@@ -150,7 +190,7 @@ public class HttpUtil {
 		param.put("queueid", queueid);
 		param.put("extid", extid);
 		param.put("password", password);
-		JSONObject resp = doPostJson(JsonUtils.toJsonObj(param), ConfigUtil.getConfigKey("SWITCH_URL")+"/API/agent_query?token="+token);
+		JSONObject resp = doPostJson(JsonUtils.toJsonObj(param), ConfigUtil.getConfigKey("SWITCH_URL")+"/API/agent_query?token="+token, "查询坐席状态");
 		return resp;
 	}
 	/**
@@ -167,7 +207,7 @@ public class HttpUtil {
 		param.put("queueid", queueid);
 		param.put("extid", extid);
 		param.put("password", password);
-		JSONObject resp = doPostJson(JsonUtils.toJsonObj(param), ConfigUtil.getConfigKey("SWITCH_URL")+"/API/agent_login?token="+token);
+		JSONObject resp = doPostJson(JsonUtils.toJsonObj(param), ConfigUtil.getConfigKey("SWITCH_URL")+"/API/agent_login?token="+token, "坐席登入");
 		return resp;
 	}
 	/**
@@ -182,7 +222,7 @@ public class HttpUtil {
 		Map<String, String> param = new HashMap<String, String>();
 		param.put("queueid", queueid);
 		param.put("extid", extid);
-		JSONObject resp = doPostJson(JsonUtils.toJsonObj(param), ConfigUtil.getConfigKey("SWITCH_URL")+"/API/agent_break?token="+token);
+		JSONObject resp = doPostJson(JsonUtils.toJsonObj(param), ConfigUtil.getConfigKey("SWITCH_URL")+"/API/agent_break?token="+token, "坐席置忙");
 		return resp;
 	}
 	/**
@@ -197,7 +237,7 @@ public class HttpUtil {
 		Map<String, String> param = new HashMap<String, String>();
 		param.put("queueid", queueid);
 		param.put("extid", extid);
-		JSONObject resp = doPostJson(JsonUtils.toJsonObj(param), ConfigUtil.getConfigKey("SWITCH_URL")+"/API/agent_resume?token="+token);
+		JSONObject resp = doPostJson(JsonUtils.toJsonObj(param), ConfigUtil.getConfigKey("SWITCH_URL")+"/API/agent_resume?token="+token, "坐席置闲");
 		return resp;
 	}
 	public static void main(String[] args) throws Exception {

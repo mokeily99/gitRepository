@@ -21,7 +21,7 @@
 	</insert>
 	
 	<update id="updateSeatStatus" parameterType="java.util.Map">
-		update T_API_TOKEN set TOKEN=#{token}
+		update T_API_TOKEN set TOKEN=#{token}, create_time=sysdate
 	</update>
 	
 	<update id="updateCustInfo" parameterType="java.util.Map">

@@ -71,7 +71,7 @@ public class SeatController extends BaseController {
 			param.put("password", MD5Utils.MD5Encode(ConfigUtil.getConfigKey("API_PWD"), "utf-8"));
 			param.put("url", ConfigUtil.getConfigKey("API_ACCEPT_URL"));
 			String para = JsonUtils.toJsonObj(param);
-			JSONObject resp = HttpUtil.doPostJson(para, ConfigUtil.getConfigKey("SWITCH_URL")+"/API/login");
+			JSONObject resp = HttpUtil.doPostJson(para, ConfigUtil.getConfigKey("SWITCH_URL")+"/API/login", "API登录");
 			
 			if("success".equals(resp.optString("status"))){
 				param.put("token", resp.optString("token"));
