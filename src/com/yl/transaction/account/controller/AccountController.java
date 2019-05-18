@@ -1,4 +1,4 @@
-package com.yl.transaction.dept.controller;
+package com.yl.transaction.account.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,8 +14,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.yl.common.controller.BaseController;
 import com.yl.common.dao.PublicDao;
+import com.yl.common.pojo.LayTableResult;
 import com.yl.common.pojo.Result;
 import com.yl.common.user.pojo.UserView;
 import com.yl.common.util.DBUtil;
@@ -23,66 +26,46 @@ import com.yl.transaction.account.service.AccountService;
 import com.yl.transaction.dept.service.DeptService;
 
 @Controller
-@RequestMapping("/dept")
-public class DeptController extends BaseController{
+@RequestMapping("/account")
+public class AccountController extends BaseController{
 
-	@Resource
-	private DeptService deptService;
-	
 	@Resource
 	private AccountService accountService;
 	
 	@Resource
+	private DeptService deptService;
+	
+	@Resource
 	private PublicDao publicDao;
 	
-	@RequestMapping("/deptList")
+	@RequestMapping("/accountList")
 	@ResponseBody
-	public List<Map<String, Object>> deptList(HttpServletRequest request, HttpServletResponse response, Model model) {
-		
-		List<Map<String, Object>> dataList = null;
+	public LayTableResult<List<Map<String, String>>> deptList(Integer page, Integer limit, String dept_name, HttpServletRequest request, HttpServletResponse response, Model model) {
+		LayTableResult<List<Map<String, String>>> tableResult = new LayTableResult<List<Map<String, String>>>();
 		try{
-			Map<String, Object> param = new HashMap<String, Object>();
 			UserView user = this.getUserView(request);
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("row", limit);
+			param.put("page", page);
 			param.put("deptCode", user.getDeptCode());
+			param.put("deptName", dept_name);
 			
-			List<Map<String, Object>> xtDeptList = deptService.getPageDept(param);//系统管理总部门
-			if(xtDeptList != null && xtDeptList.size()>0){
-				dataList = new ArrayList<Map<String, Object>>();
-				
-				Map<String, Object> xtDept = xtDeptList.get(0);
-				Map<String, Object> para = new HashMap<String, Object>();
-				para.put("parenID", xtDept.get("id"));
-				
-				List<Map<String, Object>> kfDeptList = deptService.getDeptListByPID(para);//客服总公司
-				if(kfDeptList != null){
-					for(int ix=0; ix<kfDeptList.size(); ix++){
-						Map<String, Object> kfDept = kfDeptList.get(ix);
-						para.put("parenID", kfDept.get("id"));
-						
-						List<Map<String, Object>> fgDeptList = deptService.getDeptListByPID(para);//分公司
-						for(int iy=0; iy<fgDeptList.size(); iy++){
-							Map<String, Object> fgDept = fgDeptList.get(iy);
-							para.put("parenID", fgDept.get("id"));
-							
-							List<Map<String, Object>> whDeptList = deptService.getDeptListByPID(para);//维护站
-							fgDept.put("children", whDeptList);
-						}
-						kfDept.put("children", fgDeptList);
-					}
-					xtDept.put("children", kfDeptList);
-				}
-				dataList.add(xtDept);
-			}else{
-				dataList = new ArrayList<Map<String, Object>>();
-			}
+			PageHelper.startPage(page, limit);
+			List<Map<String, String>> accountList = accountService.getAccountList(param);
+			PageInfo<Map<String, String>> pageinfo = new PageInfo<Map<String, String>>(accountList);
+			tableResult.setCount((int) pageinfo.getTotal());
+			tableResult.setData(accountList);
 		}catch(Exception e){
 			logger.error(e.getMessage(),e);
-			dataList = new ArrayList<Map<String, Object>>();
+			tableResult.setCode(1);
+			tableResult.setMsg("数据加载失败！");
+			tableResult.setCount(0);
+			tableResult.setData(new ArrayList<Map<String, String>>());
 		}
-		return dataList;
+		return tableResult;
 	}
 	/**
-	 * 增加部门
+	 * 增加账户
 	 * @param request
 	 * @param response
 	 * @param model
@@ -102,17 +85,12 @@ public class DeptController extends BaseController{
 			param.put("pDeptCode", pDeptCode);
 			param.put("deptName", deptName);
 			param.put("deptDes", deptDes);
-			String maxaccept = DBUtil.getMaxaccept(publicDao);
-			param.put("maxaccept", maxaccept);
+			param.put("maxaccept", DBUtil.getMaxaccept(publicDao));
 			
 			deptService.addDept(param);
 			
-			//增加账户
-			param.put("maxaccept", DBUtil.getMaxaccept(publicDao));
-			param.put("balance", "0");
-			param.put("ableFalg", "10101");
-			param.put("deptCode", maxaccept);
-			accountService.addAccount(param);
+			//添加账户
+			
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
 			result.setResultCode("9999");
@@ -141,12 +119,6 @@ public class DeptController extends BaseController{
 			}
 			deptService.delDeptInIDS(ids);
 			deptService.delDeptInPIDS(ids);
-			
-			//账户设置失效
-			Map<String, String> param = new HashMap<String, String>();
-			param.put("ids", ids);
-			param.put("ableFlag", "10102");
-			accountService.updateAccountByIds(param);
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
 			result.setResultCode("9999");
