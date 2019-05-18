@@ -77,11 +77,17 @@ public class AccountController extends BaseController{
 		result.setResultCode("0000");
 		result.setResultMsg("操作成功！");
 		try {
-			Map<String, String> param = new HashMap<String, String>();
-			param.put("maxaccept", maxaccept);
-			param.put("balance", balance);
-			
-			accountService.updateAccountBalance(param);
+			UserView user = this.getUserView(request);
+			if("10201".equals(user.getRoleLevel())){
+				Map<String, String> param = new HashMap<String, String>();
+				param.put("maxaccept", maxaccept);
+				param.put("balance", balance);
+				
+				accountService.updateAccountBalance(param);
+			}else{
+				result.setResultCode("0001");
+				result.setResultMsg("权限不足无法操作！");
+			}
 			
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);

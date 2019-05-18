@@ -92,6 +92,10 @@ layui.use(['form', 'layer', 'table', 'upload', 'laydate'], function() {
 					if (resultCode == "0000") {
 						layer.msg('操作成功！');
 						accountTable = table.reload("account_grid_list");
+					}else if(resultCode == "0001"){
+						layer.alert(data1.resulMsg, {
+							icon : 2
+						});
 					} else {
 						layer.alert('操作失败，请重新操作！', {
 							icon : 2
