@@ -13,6 +13,8 @@ public interface AccountDao {
 	
 	public void updateAccountByIds(Map<String, String> param);
 	
+	public void updateAccountBalance(Map<String, String> param);
+	
 	public void delDeptInIDS(@Param("ids") String ids);
 	
 	public void delDeptInPIDS(@Param("ids") String ids);

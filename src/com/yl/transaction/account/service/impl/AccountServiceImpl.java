@@ -24,6 +24,11 @@ public class AccountServiceImpl implements AccountService{
 	public void updateAccountByIds(Map<String, String> param){
 		accountDao.updateAccountByIds(param);
 	}
+	
+	@Override
+	public void updateAccountBalance(Map<String, String> param) {
+		accountDao.updateAccountBalance(param);
+	}
 
 	public void delDeptInIDS(String ids) {
 		accountDao.delDeptInIDS(ids);
@@ -85,4 +90,5 @@ public class AccountServiceImpl implements AccountService{
 	public void delDeptInPIDS(String ids) {
 		accountDao.delDeptInPIDS(ids);
 	}
+
 }

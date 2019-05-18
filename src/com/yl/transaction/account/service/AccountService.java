@@ -11,6 +11,8 @@ public interface AccountService {
 	
 	public void updateAccountByIds(Map<String, String> param);
 	
+	public void updateAccountBalance(Map<String, String> param);
+	
 	public void delDeptInIDS(String ids);
 	
 	public void delDeptInPIDS(String ids);

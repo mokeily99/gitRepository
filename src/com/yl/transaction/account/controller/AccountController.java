@@ -65,31 +65,23 @@ public class AccountController extends BaseController{
 		return tableResult;
 	}
 	/**
-	 * 增加账户
+	 * 修改账户金额
 	 * @param request
 	 * @param response
 	 * @param model
 	 */
-	@RequestMapping("/addDept")
+	@RequestMapping("/setAccountBalance")
 	@ResponseBody
-	public Result addDept(HttpServletRequest request, HttpServletResponse response, Model model) {
-		String pDeptCode = request.getParameter("add_dept_pid");
-		String deptName = request.getParameter("add_dept_name");
-		String deptDes = request.getParameter("add_dept_des");
-		
+	public Result setAccountBalance(String maxaccept, String balance, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Result result = new Result();
 		result.setResultCode("0000");
 		result.setResultMsg("操作成功！");
 		try {
 			Map<String, String> param = new HashMap<String, String>();
-			param.put("pDeptCode", pDeptCode);
-			param.put("deptName", deptName);
-			param.put("deptDes", deptDes);
-			param.put("maxaccept", DBUtil.getMaxaccept(publicDao));
+			param.put("maxaccept", maxaccept);
+			param.put("balance", balance);
 			
-			deptService.addDept(param);
-			
-			//添加账户
+			accountService.updateAccountBalance(param);
 			
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);

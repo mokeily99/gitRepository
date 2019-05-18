@@ -4,7 +4,7 @@
 
 	<!--获取账户列表 -->
 	<select id="getAccountList" resultType="java.util.Map" parameterType="java.util.Map">
-		select a.MAXACCEPT,a.dept_code,a.acc_balance,to_char(a.create_time, 'yyyy-mm-dd HH24:mi:ss') create_time,a.able_flag,b.dept_name
+		select a.MAXACCEPT,a.dept_code,trim(to_char(a.acc_balance/10/10/10, '9999999999999999999990.000')) acc_balance,to_char(a.create_time, 'yyyy-mm-dd HH24:mi:ss') create_time,a.able_flag,b.dept_name
 	    from t_account a left join t_dept b on a.dept_code=b.maxaccept
 	    where 1=1
 	    <if test="deptName != null and deptName != ''">
@@ -21,6 +21,10 @@
 			<if test="ableFlag != null and ableFlag != '' ">ABLE_FLAG=#{ableFlag},</if>
 		</trim>
 		where dept_code in (${ids})
+	</update>
+	
+	<update id="updateAccountBalance" parameterType="java.util.Map">
+		update t_account set ACC_BALANCE=#{balance}*10*10*10 where maxaccept=#{maxaccept}
 	</update>
 	
 	<select id="getDeptListByPID" resultType="java.util.Map" parameterType="java.util.Map">

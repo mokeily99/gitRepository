@@ -41,7 +41,13 @@
 		</fieldset>
 		<fieldset class="layui-elem-field site-demo-button" style="margin: 30px;padding-top:20px;padding-bottom:20px;">
 			<legend>工作区域</legend>
-			
+			<%if("10201".equals(user.getRoleLevel())){ %>
+				<div style="width:99%;margin:auto;">
+					<div class="layui-btn-group">
+				    	<button class="layui-btn" id="add_fee_btn">账户充值</button>
+				  	</div>
+			  	</div>
+			<%} %>
 		  	<div style="width:99%;margin:auto;">
 			  	<table class="layui-hide" id="account_grid_list"></table>
 		  	</div>
@@ -50,173 +56,25 @@
 </body>
 </html>
 
-<div id="add_cust_div"  style="display:none;">
-	<form lay-filter="add_cust_form" class="layui-form" action="" id="add_cust_form">
+<div id="add_fee_div"  style="display:none;">
+	<form lay-filter="add_fee_form" class="layui-form" action="" id="add_fee_form">
 	  <div class="layui-form-item" style="margin-top:15px;">
-	    <label class="layui-form-label">客户姓名</label>
+	    <label class="layui-form-label">部门账户名</label>
 	    <div class="layui-input-block">
-	      <input type="text" placeholder="请输入客户姓名" name="add_cust_name" id="add_cust_name" required  lay-verify="required" autocomplete="off" class="layui-input" style="width:300px;">
-	    </div>
-	  </div>
-	  <div class="layui-form-item" style="margin-top:15px;width: 411px;">
-	    <label class="layui-form-label">性别</label>
-	    <div class="layui-input-block">
-	      <select id="add_cust_sex" name="add_cust_sex" lay-verify="required"></select>
+	      <input type="text" name="add_dept_name" id="add_dept_name" required  lay-verify="required" autocomplete="off" class="layui-input" style="width:300px;" disabled="disabled">
 	    </div>
 	  </div>
 	  <div class="layui-form-item" style="margin-top:15px;">
-	    <label class="layui-form-label">年龄</label>
+	    <label class="layui-form-label">余额</label>
 	    <div class="layui-input-block">
-	      <input type="text" placeholder="请输入客户年龄" name="add_cust_age" id="add_cust_age" required  lay-verify="required|number" autocomplete="off" class="layui-input" style="width:300px;">
-	    </div>
-	  </div>
-	  <div class="layui-form-item" style="margin-top:15px;">
-	    <label class="layui-form-label">联系电话</label>
-	    <div class="layui-input-block">
-	      <input type="text" placeholder="请输入联系电话" name="add_conn_phone" id="add_conn_phone" required  lay-verify="required|connPhone" autocomplete="off" class="layui-input" style="width:300px;">
-	    </div>
-	  </div>
-	  <div class="layui-form-item" style="margin-top:15px;">
-	    <label class="layui-form-label">地址</label>
-	    <div class="layui-input-block">
-	      <input type="text" placeholder="请输入客户地址" name="add_cust_addr" id="add_cust_addr" autocomplete="off" class="layui-input" style="width:300px;">
-	    </div>
-	  </div>
-	  <div class="layui-form-item" style="margin-top:15px;width: 411px;">
-	    <label class="layui-form-label">客户类型</label>
-	    <div class="layui-input-block">
-	      <select id="add_cust_type" name="add_cust_type" style="width:300px;"></select>
-	    </div>
-	  </div>
-	  <div class="layui-form-item" style="margin-top:15px;">
-	    <label class="layui-form-label">备注</label>
-	    <div class="layui-input-block">
-	      <textarea placeholder="请输入备注" class="layui-textarea" id="add_cust_mark" name="add_cust_mark" style="width:300px;"></textarea>
+	      <input type="text" name="add_balance_fee" id="add_balance_fee" required  lay-verify="required|fee" autocomplete="off" class="layui-input" style="width:300px;">
 	    </div>
 	  </div>
       <div class="layui-form-item">
 		<div class="layui-input-block" style="float:right;margin-right:20px;margin-top:15px;">
-		  <a class="layui-btn" lay-submit lay-filter="add_cust_form_sub">提交</a>
+		  <a class="layui-btn" lay-submit lay-filter="add_fee_form_sub">提交</a>
 		  <a class="layui-btn layui-btn-danger" id="cancelBtn" href="javascript:closeDialog()">取消</a>
 		</div>
 	  </div>
-	</form>
-</div>
-
-<div id="bat_cust_div" style="display:none;">
-	<form lay-filter="bat_cust_form" class="layui-form" action="" id="bat_cust_form">
-		<div style="width:90%;margin:auto;">
-			<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
-				<legend>客户资料文件上传</legend>
-			</fieldset>
-			<div class="layui-upload-drag" id="test10">
-				<i class="layui-icon"></i>
-				<p>点击上传，或将文件拖拽到此处</p>
-			</div>
-			
-			<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
-				<legend>客户资料模板下载</legend>
-			</fieldset>
-			<a href="<%=webpath%>/cust/downlodCustFile.action" style="color:blue;text-decoration:underline;">点击下载资料模板</a>
-		</div>
-		<div class="layui-form-item">
-			<div class="layui-input-block"
-				style="float:right;margin-right:20px;margin-top:15px;">
-				<a class="layui-btn" lay-submit lay-filter="bat_cust_form_sub" id="bat_cust_form_sub">提交</a>
-				<a class="layui-btn layui-btn-danger" id="cancelBtn"
-					href="javascript:closeDialog()">取消</a>
-			</div>
-		</div>
-	</form>
-</div>
-
-<div id="edit_cust_div"  style="display:none;">
-	<form lay-filter="edit_cust_form" class="layui-form" action="" id="edit_cust_form">
-	  <input type="hidden" id="edit_cust_id" name="edit_cust_id">
-	  <div class="layui-form-item" style="margin-top:15px;">
-	    <label class="layui-form-label">客户姓名</label>
-	    <div class="layui-input-block">
-	      <input type="text" placeholder="请输入客户姓名" name="edit_cust_name" id="edit_cust_name" required  lay-verify="required" autocomplete="off" class="layui-input" style="width:300px;">
-	    </div>
-	  </div>
-	  <div class="layui-form-item" style="margin-top:15px;width: 411px;">
-	    <label class="layui-form-label">性别</label>
-	    <div class="layui-input-block">
-	      <select id="edit_cust_sex" name="edit_cust_sex" lay-verify="required"></select>
-	    </div>
-	  </div>
-	  <div class="layui-form-item" style="margin-top:15px;">
-	    <label class="layui-form-label">年龄</label>
-	    <div class="layui-input-block">
-	      <input type="text" placeholder="请输入客户年龄" name="edit_cust_age" id="edit_cust_age" required  lay-verify="required|number" autocomplete="off" class="layui-input" style="width:300px;">
-	    </div>
-	  </div>
-	  <div class="layui-form-item" style="margin-top:15px;">
-	    <label class="layui-form-label">联系电话</label>
-	    <div class="layui-input-block">
-	      <input type="text" placeholder="请输入联系电话" name="edit_conn_phone" id="edit_conn_phone" required  lay-verify="required|connPhone" autocomplete="off" class="layui-input" style="width:300px;">
-	    </div>
-	  </div>
-	  <div class="layui-form-item" style="margin-top:15px;">
-	    <label class="layui-form-label">地址</label>
-	    <div class="layui-input-block">
-	      <input type="text" placeholder="请输入客户地址" name="edit_cust_addr" id="edit_cust_addr" autocomplete="off" class="layui-input" style="width:300px;">
-	    </div>
-	  </div>
-	  <div class="layui-form-item" style="margin-top:15px;width: 411px;">
-	    <label class="layui-form-label">客户类型</label>
-	    <div class="layui-input-block">
-	      <select id="edit_cust_type" name="edit_cust_type" style="width:300px;"></select>
-	    </div>
-	  </div>
-	  <div class="layui-form-item" style="margin-top:15px;">
-	    <label class="layui-form-label">备注</label>
-	    <div class="layui-input-block">
-	      <textarea placeholder="请输入备注" class="layui-textarea" id="edit_cust_mark" name="edit_cust_mark" style="width:300px;"></textarea>
-	    </div>
-	  </div>
-      <div class="layui-form-item">
-		<div class="layui-input-block" style="float:right;margin-right:20px;margin-top:15px;">
-		  <a class="layui-btn" lay-submit lay-filter="edit_cust_form_sub">提交</a>
-		  <a class="layui-btn layui-btn-danger" id="cancelBtn" href="javascript:closeDialog()">取消</a>
-		</div>
-	  </div>
-	</form>
-</div>
-
-<div id="send_sms_div" style="display:none;">
-	<form lay-filter="send_sms_form" class="layui-form" action="" id="esend_sms_form">
-		<input type="hidden" id="cust_ids" name="cust_ids">
-		<div class="layui-form-item" style="margin-top:15px;width: 411px;">
-			<label class="layui-form-label">发送方式</label>
-			<div class="layui-input-block">
-				<select id="send_sms_type" name="send_sms_type" lay-verify="required" lay-filter="send_type"></select>
-			</div>
-		</div>
-		<div class="layui-form-item" id="send_sms_date_div" style="margin-top:15px;width: 411px;display:none;">
-			<label class="layui-form-label">发送日期</label>
-			<div class="layui-input-block">
-				<input type="text" class="layui-input" id="send_sms_date" name="send_sms_date">
-			</div>
-		</div>
-		<div class="layui-form-item" style="margin-top:15px;width: 411px;">
-			<label class="layui-form-label">插入模板</label>
-			<div class="layui-input-block">
-				<select id="sms_mould_type" name="sms_mould_type" lay-filter="sms_mould"></select>
-			</div>
-		</div>
-		<div class="layui-form-item layui-form-text">
-			<label class="layui-form-label">短信内容</label>
-			<div class="layui-input-block">
-				<textarea class="layui-textarea" id="send_sms_content" name="send_sms_content" lay-verify="required" style="width:300px;"></textarea>
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<div class="layui-input-block"
-				style="float:right;margin-right:20px;margin-top:15px;">
-				<a class="layui-btn" lay-submit lay-filter="send_sms_form_sub">提交</a>
-				<a class="layui-btn layui-btn-danger" id="cancelBtn" href="javascript:closeDialog()">取消</a>
-			</div>
-		</div>
 	</form>
 </div>
