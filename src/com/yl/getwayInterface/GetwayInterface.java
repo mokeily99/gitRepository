@@ -26,9 +26,9 @@ public class GetwayInterface extends BaseController{
 	@Resource
 	private CodeService codeService;
 	
-	@RequestMapping(value="report", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value="report",consumes="application/json;charset=utf-8",produces="application/json;charset=utf-8")
 	@ResponseBody
-	public Map<String, String> report(@RequestBody Entity json) {
+	public Map<String, String> report(HttpServletRequest request, HttpServletResponse response, Model model, @RequestBody Map<String, String> json) {
 		logger.error("=============="+json);
 		
 		Map<String, String> result = new HashMap<String, String>();

@@ -12,22 +12,34 @@
 	<!-- 自动扫描该包，使SpringMVC认为包下用了@controller注解的类是控制器 -->
 	<context:component-scan base-package="com.yl" />
 
+	
+	<!-- 用于将对象转换为 JSON  -->  
+	<bean id="stringConverter"  
+	    class="org.springframework.http.converter.StringHttpMessageConverter">  
+	    <property name="supportedMediaTypes">  
+	        <list>  
+	            <value>text/plain;charset=UTF-8</value>  
+	        </list>  
+	    </property>  
+	</bean>  
+	<bean id="jsonConverter"   class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"></bean>  
+	
+	<bean      class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">  
+	    <property name="messageConverters">  
+	        <list>  
+	            <ref bean="stringConverter" />  
+	            <ref bean="jsonConverter" />  
+	            <ref bean="mappingJacksonHttpMessageConverter" /> <!-- JSON转换器 -->
+	        </list>  
+	    </property>  
+	</bean>  
+
 	<!--避免IE执行AJAX时，返回JSON出现下载文件 -->
 	<bean id="mappingJacksonHttpMessageConverter"
 		class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
 		<property name="supportedMediaTypes">
 			<list>
-				<value>text/html;charset=UTF-8</value>
 				<value>text/json;charset=UTF-8</value>
-			</list>
-		</property>
-	</bean>
-	<!-- 启动SpringMVC的注解功能，完成请求和注解POJO的映射 -->
-	<bean
-		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
-		<property name="messageConverters">
-			<list>
-				<ref bean="mappingJacksonHttpMessageConverter" /> <!-- JSON转换器 -->
 			</list>
 		</property>
 	</bean>

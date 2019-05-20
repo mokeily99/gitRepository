@@ -69,10 +69,9 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/log4j-core-2.11.2.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/log4j-web-2.11.2.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-codec-1.9.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jackson-annotations-2.6.0-xh.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jackson-core-2.6.0-xh.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jackson-databind-2.6.0-xh.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jackson-jr-all-2.4.3-xh.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jackson-mapper-asl-1.9.13.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jackson-annotations-2.8.0.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jackson-core-2.8.0.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jackson-databind-2.8.0.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>
