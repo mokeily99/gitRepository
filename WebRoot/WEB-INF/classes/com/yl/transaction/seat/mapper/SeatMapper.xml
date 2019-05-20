@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yl.transaction.seat.dao.SeatDao">
+	
+	<select id="getSeatFreeBusyInfo" resultType="java.util.Map" parameterType="java.util.Map">
+		select 
+		MAXACCEPT, SEAT_ID, STATUS, CREATE_TIME
+		from T_FREE_BUSY_STATUS where SEAT_ID=#{seatID} order by CREATE_TIME desc
+	</select>
+	
+	<update id="setBusyFree" parameterType="java.util.Map">
+		update T_FREE_BUSY_STATUS set STATUS=#{status} where SEAT_ID=#{seatID}
+	</update>
+	
+	<insert id="insertSeatInfo" parameterType="java.util.Map">
+		insert into T_FREE_BUSY_STATUS (
+			MAXACCEPT,SEAT_ID,STATUS,CREATE_TIME
+		) values (
+			#{maxaccept},#{seatID},#{status}, sysdate
+		)
+	</insert>
+	
+	<update id="updateSeatStatus" parameterType="java.util.Map">
+		update T_API_TOKEN set TOKEN=#{token}, create_time=sysdate
+	</update>
+	
+	<update id="updateCustInfo" parameterType="java.util.Map">
+		update T_CUST 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="custName != null and custName != '' ">CUST_NAME=#{custName},</if>
+			<if test="custSex != null and custSex != '' ">SEX=#{custSex},</if>
+			<if test="custAge != null and custAge != '' ">CUST_AGE=#{custAge},</if>
+			<if test="connPhone != null and connPhone != '' ">CONN_PHONE=#{connPhone},</if>
+			<if test="custAddr != null and custAddr != '' ">CUST_ADDR=#{custAddr},</if>
+			<if test="custType != null and custType != '' ">CUST_TYPE=#{custType},</if>
+			<if test="custMark != null and custMark != '' ">MARK=#{custMark},</if>
+			<if test="oprID != null and oprID != '' ">UPDATE_OPR_ID=#{oprID},</if>
+			UPDATE_TIME=sysdate
+		</trim>
+		where MAXACCEPT=#{maxaccept}
+	</update>
+	
+	<update id="delCustInIDS" parameterType="String">
+		update T_CUST set able_flag='10102' where maxaccept in (${ids})
+	</update>
+</mapper>  

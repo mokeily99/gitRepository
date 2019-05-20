@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yl.transaction.account.dao.AccountDao">
+
+	<!--获取账户列表 -->
+	<select id="getAccountList" resultType="java.util.Map" parameterType="java.util.Map">
+		select a.MAXACCEPT,a.dept_code,trim(to_char(a.acc_balance/10/10/10, '9999999999999999999990.000')) acc_balance,to_char(a.create_time, 'yyyy-mm-dd HH24:mi:ss') create_time,a.able_flag,b.dept_name
+	    from t_account a left join t_dept b on a.dept_code=b.maxaccept
+	    where 1=1
+	    <if test="deptName != null and deptName != ''">
+	    	and b.dept_name like '%'||#{deptName}||'%'
+	    </if>
+	    start with b.maxaccept=#{deptCode}
+	    connect by prior b.maxaccept = b.p_id
+		ORDER BY a.CREATE_TIME desc
+	</select>
+	
+	<update id="updateAccountByIds" parameterType="java.util.Map">
+		update t_account  
+		<trim prefix="set" suffixOverrides=",">
+			<if test="ableFlag != null and ableFlag != '' ">ABLE_FLAG=#{ableFlag},</if>
+		</trim>
+		where dept_code in (${ids})
+	</update>
+	
+	<update id="updateAccountBalance" parameterType="java.util.Map">
+		update t_account set ACC_BALANCE=#{balance}*10*10*10 where maxaccept=#{maxaccept}
+	</update>
+	
+	<select id="getDeptListByPID" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT a.MAXACCEPT "id",a.DEPT_NAME "label",a.DEPT_NAME "name", 'true' "open", 
+		a.DEPT_DES,a.DEPT_TYPE, b.code_name DEPT_TYPE_NAME,a.P_ID FROM T_DEPT a left join t_common_code b on a.dept_type=b.code_id
+		WHERE 1=1 
+		<if test="parenID != null and parenID != ''">
+			AND a.P_ID=${parenID}
+		</if>
+		ORDER BY a.MAXACCEPT ASC
+	</select>
+	
+	<select id="getDeptTreeByPID" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT MAXACCEPT as "id",DEPT_NAME as "text" FROM T_DEPT 
+		WHERE 1=1 
+		<if test="parenID != null and parenID != ''">
+			AND P_ID=${parenID}
+		</if>
+		ORDER BY MAXACCEPT ASC
+	</select>
+	
+	<!--分页查询总部门 -->
+	<select id="getTotalDept" resultType="String">
+		select count(1) TOTAL from t_dept
+	</select>
+
+	<!-- 增加账户 -->
+	<insert id="addAccount"  parameterType="java.util.Map">
+		insert into T_ACCOUNT (MAXACCEPT,DEPT_CODE,ACC_BALANCE,CREATE_TIME,ABLE_FLAG) values (${maxaccept},#{deptCode}, #{balance},sysdate,#{ableFalg})
+	</insert>
+	
+	<!--删除部门 -->
+	<delete id="delDeptInIDS" parameterType="String">
+		delete from t_dept where maxaccept in (${ids})
+	</delete>
+	
+	<!--删除部门 -->
+	<delete id="delDeptInPIDS" parameterType="String">
+		delete from t_dept where p_id in (${ids})
+	</delete>
+	
+	<!-- 修改部门 -->
+	<insert id="updateDeptByID"  parameterType="java.util.Map">
+		update t_dept set dept_name=#{deptName},dept_des=#{deptDes} where maxaccept=${maxaccept}
+	</insert>
+	
+	<!--根据登录账户获取用户信息 -->
+	<select id="getPersonnelByAccount" resultType="java.util.Map" parameterType="String">
+		select maxaccept,user_account,user_pwd,user_level,dept_code,user_name,phone,tel,address,user_role from t_user where user_account=#{account}
+	</select>
+	<!-- 获取所有部门信息 -->
+	<select id="getAllDept" resultType="java.util.Map" parameterType="java.util.Map">
+		<!-- select MAXACCEPT,DEPT_NAME,DEPT_DES from t_dept order by MAXACCEPT asc -->
+		select MAXACCEPT,DEPT_NAME,DEPT_DES from t_dept where 1=1 
+		<if test="pid != null and pid != ''">
+			AND P_ID = #{pid} 
+		</if>
+		order by MAXACCEPT asc
+	</select>
+	
+	<select id="getDepttype" resultType="java.util.Map">
+		select code_id,code_name
+		from T_COMMON_CODE where code_key = 'DEPT_TYPE'
+	</select>
+	
+	<!-- 根据部门类型获取部门信息 -->
+	<select id="getDeptByType" resultType="java.util.Map" parameterType="String">
+		SELECT MAXACCEPT, DEPT_NAME, DEPT_DES, DEPT_TYPE FROM T_DEPT WHERE DEPT_TYPE=#{deptType} order by maxaccept asc
+	</select>
+	
+	<!-- 判断管理员是否可接单 -->
+	<select id="getOnlineUserByDeptCode" parameterType="java.util.Map" resultType="java.util.Map">
+		select a.MAXACCEPT, a.USER_ACCOUNT, a.USER_PWD, a.USER_LEVEL, a.DEPT_CODE, a.USER_NAME, a.PHONE, 
+		a.TEL, a.ADDRESS, a.USER_ROLE, a.VOS_ACCOUNT, a.VOS_PWD, a.IS_ONLINE from t_user a, t_role b, T_WX_CIRCULATION c where 
+		a.user_role=b.maxaccept  and a.maxaccept=c.opr_id 
+		<if test="deptCode != null and deptCode != ''">
+			and a.dept_code=#{deptCode}
+		</if>
+		<if test="roleLevel != null and roleLevel != ''">
+			and role_level=#{roleLevel}
+		</if>
+		<if test="cirType != null and cirType != ''">
+			and CIR_TYPE=${cirType}
+		</if>
+		and a.is_online='0'
+	</select>
+	
+	<!-- 获取部门下可接单用户 -->
+	<select id="isAdminAccept" parameterType="java.util.Map" resultType="java.util.Map">
+		select a.MAXACCEPT, a.USER_ACCOUNT, a.USER_PWD, a.USER_LEVEL, a.DEPT_CODE, a.USER_NAME, a.PHONE, 
+		a.TEL, a.ADDRESS, a.USER_ROLE, a.VOS_ACCOUNT, a.VOS_PWD, a.IS_ONLINE from t_user a, t_role b where 
+		a.user_role=b.maxaccept 
+		<if test="deptCode != null and deptCode != ''">
+			and a.dept_code=#{deptCode}
+		</if>
+		<if test="roleLevel != null and roleLevel != ''">
+			and role_level=#{roleLevel}
+		</if>
+		and a.is_online=${isOnlineStatus}
+	</select>
+	
+	<!-- 获取维护基站列表 -->
+	<select id="getjzList" resultType="java.util.Map" parameterType="java.util.Map">
+		select maxaccept, dept_name from t_dept where  p_id=#{maxaccept}
+	</select>
+	
+	<!-- 手机端：获取某个部门 -->
+	<select id="getDept" parameterType="java.util.Map" resultType="String">
+		select DEPT_NAME from t_dept where maxaccept = #{deptId}
+	</select>
+	
+	<!-- 递归查询所有子元素和本身 -->
+	<select id="deptDaogetSonList" resultType="java.util.Map" parameterType="java.util.Map">
+		select MAXACCEPT, DEPT_NAME, DEPT_DES, DEPT_TYPE, P_ID
+		from t_dept    
+		start with maxaccept=${maxaccept}
+		connect by prior maxaccept = p_id
+	</select>
+	
+	<select id="getSonDept" resultType="java.util.Map" parameterType="java.util.Map">
+		select MAXACCEPT, DEPT_NAME, DEPT_DES, DEPT_TYPE, P_ID
+		from t_dept    
+		start with maxaccept=${maxaccept}
+		connect by prior maxaccept = p_id
+	</select>
+</mapper>  
