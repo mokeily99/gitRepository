@@ -1,10 +1,7 @@
 package com.yl.getwayInterface;
 
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -12,14 +9,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yl.common.controller.BaseController;
+import com.yl.common.pojo.Entity;
 import com.yl.common.pojo.Result;
-import com.yl.common.user.pojo.UserView;
 import com.yl.transaction.code.service.CodeService;
 
 @Controller
@@ -29,15 +26,10 @@ public class GetwayInterface extends BaseController{
 	@Resource
 	private CodeService codeService;
 	
-	@RequestMapping("/report")
+	@RequestMapping(value="report", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public Map<String, String> report(@RequestParam Map<String,String> params) {
-		logger.error("=============="+params);
-		Iterator<Entry<String, String>> entries = params.entrySet().iterator(); 
-		while (entries.hasNext()) { 
-		  Map.Entry<String, String> entry = entries.next(); 
-		  logger.error("Key = " + entry.getKey() + ", Value = " + entry.getValue()); 
-		}
+	public Map<String, String> report(@RequestBody Entity json) {
+		logger.error("=============="+json);
 		
 		Map<String, String> result = new HashMap<String, String>();
 		result.put("status", "success");

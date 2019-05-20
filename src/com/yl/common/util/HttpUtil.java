@@ -104,6 +104,7 @@ public class HttpUtil {
 			conn.setDoInput(true);
 			conn.setConnectTimeout(30000);
 			conn.setReadTimeout(30000);
+			conn.setRequestProperty("Content-Type","application/json; charset=UTF-8");
 			// 获取URLConnection对象对应的输出流
 			out = new PrintWriter(new OutputStreamWriter(conn.getOutputStream(), "UTF-8"));
 			logger.info(msg+"请求参数-REQUEST：" + param);
@@ -241,7 +242,8 @@ public class HttpUtil {
 		return resp;
 	}
 	public static void main(String[] args) throws Exception {
-		String parameterData = "cdkey=7SDK-LHW-0588-RBRUM&password=352064&phone=18686530251&message=欢迎使用同鑫热力投诉系统，您的短信验证码是0000，请确保由您本人完成操作。如非本人操作，请忽略本短信。【同鑫热力】&seqid=123&addserial=";
-		System.out.println(doPost(parameterData));
+		Map<String, String> param = new HashMap<String, String>();
+		
+		doPostJson("{\"event\":\"ANSWER\",\"callid\":\"87180740-d388-11e8-8421-55df9da9116c\"}", "http://localhost:8080/sms-dms/getwayInterface/report.action", "sss");
 	}
 }

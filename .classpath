@@ -14,8 +14,6 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-logging-1.1.1.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-pool-1.6.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/ezmorph-1.0.6.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jackson-core-asl-1.9.8.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jackson-mapper-asl-1.9.8.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/json-lib-2.2.3-jdk13.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jsontools-core.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jsqlparser-0.9.5.jar"/>
@@ -71,5 +69,10 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/log4j-core-2.11.2.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/log4j-web-2.11.2.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-codec-1.9.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jackson-annotations-2.6.0-xh.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jackson-core-2.6.0-xh.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jackson-databind-2.6.0-xh.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jackson-jr-all-2.4.3-xh.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jackson-mapper-asl-1.9.13.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>

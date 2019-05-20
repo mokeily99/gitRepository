@@ -1,153 +1,52 @@
-2019-05-17 15:16:28,905 DEBUG [org.apache.ibatis.logging.LogFactory] - Logging initialized using 'org.apache.ibatis.logging.commons.JakartaCommonsLoggingImpl' adapter.
-2019-05-17 15:16:29,034 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:16:29,034 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:16:29,034 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:16:29,034 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:16:29,034 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:16:29,034 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:16:29,034 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:16:29,034 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:16:29,034 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:16:29,034 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:16:29,034 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:16:29,350 DEBUG [root] - com.yl.common.util.DBUtil create default sqlsessionfactory success!
-2019-05-17 15:19:06,771 DEBUG [org.apache.ibatis.logging.LogFactory] - Logging initialized using 'org.apache.ibatis.logging.commons.JakartaCommonsLoggingImpl' adapter.
-2019-05-17 15:19:06,899 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:19:06,899 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:19:06,899 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:19:06,899 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:19:06,899 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:19:06,899 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:19:06,899 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:19:06,899 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:19:06,900 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:19:06,900 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:19:06,900 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:19:07,203 DEBUG [root] - com.yl.common.util.DBUtil create default sqlsessionfactory success!
-2019-05-17 15:22:15,472 DEBUG [org.apache.ibatis.logging.LogFactory] - Logging initialized using 'org.apache.ibatis.logging.commons.JakartaCommonsLoggingImpl' adapter.
-2019-05-17 15:22:15,599 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:22:15,599 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:22:15,599 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:22:15,599 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:22:15,599 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:22:15,600 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:22:15,600 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:22:15,600 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:22:15,600 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:22:15,600 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:22:15,600 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:22:15,909 DEBUG [root] - com.yl.common.util.DBUtil create default sqlsessionfactory success!
-2019-05-17 15:23:57,203 DEBUG [org.apache.ibatis.logging.LogFactory] - Logging initialized using 'org.apache.ibatis.logging.commons.JakartaCommonsLoggingImpl' adapter.
-2019-05-17 15:23:57,338 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:23:57,338 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:23:57,338 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:23:57,338 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:23:57,339 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:23:57,339 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:23:57,339 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:23:57,339 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:23:57,339 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:23:57,339 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:23:57,339 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:23:57,673 DEBUG [root] - com.yl.common.util.DBUtil create default sqlsessionfactory success!
-2019-05-17 15:23:57,706 DEBUG [org.apache.ibatis.transaction.jdbc.JdbcTransaction] - Openning JDBC Connection
-2019-05-17 15:23:58,022 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - Created connection 863947255.
-2019-05-17 15:23:58,025 DEBUG [com.yl.common.dao.PublicDao.getToken] - ooo Using Connection [oracle.jdbc.driver.T4CConnection@337ec9f7]
-2019-05-17 15:23:58,025 DEBUG [com.yl.common.dao.PublicDao.getToken] - ==>  Preparing: select TOKEN from T_API_TOKEN 
-2019-05-17 15:23:58,122 DEBUG [com.yl.common.dao.PublicDao.getToken] - ==> Parameters: 
-2019-05-17 15:23:58,257 INFO [com.yl.common.util.HttpUtil] - API心跳包请求参数-REQUEST：{"url":"http://36.97.156.181:8090/sms-dms/getwayInterface/report.action"}
-2019-05-17 15:23:58,426 INFO [com.yl.common.util.HttpUtil] - API心跳包返回参数-RESPONSE：{"status":"fail","errno":"4"}
-2019-05-17 15:23:58,441 INFO [com.yl.common.util.HttpUtil] - API登录请求参数-REQUEST：{"queueid":"api","password":"8a5da52ed126447d359e70c05721a8aa","url":"http://36.97.156.181:8090/sms-dms/getwayInterface/report.action"}
-2019-05-17 15:23:58,597 INFO [com.yl.common.util.HttpUtil] - API登录返回参数-RESPONSE：{"status":"fail","errno":"2"}
-2019-05-17 15:23:58,612 DEBUG [com.yl.transaction.seat.dao.SeatDao.updateSeatStatus] - ooo Using Connection [oracle.jdbc.driver.T4CConnection@337ec9f7]
-2019-05-17 15:23:58,613 DEBUG [com.yl.transaction.seat.dao.SeatDao.updateSeatStatus] - ==>  Preparing: update T_API_TOKEN set TOKEN=?, create_time=sysdate 
-2019-05-17 15:23:58,614 DEBUG [com.yl.transaction.seat.dao.SeatDao.updateSeatStatus] - ==> Parameters: 4faad3e5b4aac47ea504f997d04d9f20(String)
-2019-05-17 15:23:58,618 DEBUG [org.apache.ibatis.transaction.jdbc.JdbcTransaction] - Rolling back JDBC Connection [oracle.jdbc.driver.T4CConnection@337ec9f7]
-2019-05-17 15:23:58,619 DEBUG [org.apache.ibatis.transaction.jdbc.JdbcTransaction] - Resetting autocommit to true on JDBC Connection [oracle.jdbc.driver.T4CConnection@337ec9f7]
-2019-05-17 15:23:58,620 DEBUG [org.apache.ibatis.transaction.jdbc.JdbcTransaction] - Closing JDBC Connection [oracle.jdbc.driver.T4CConnection@337ec9f7]
-2019-05-17 15:23:58,620 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - Returned connection 863947255 to pool.
-2019-05-17 15:26:13,924 DEBUG [org.apache.ibatis.logging.LogFactory] - Logging initialized using 'org.apache.ibatis.logging.commons.JakartaCommonsLoggingImpl' adapter.
-2019-05-17 15:26:14,061 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:26:14,062 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:26:14,062 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:26:14,062 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:26:14,062 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:26:14,062 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:26:14,062 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:26:14,062 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:26:14,062 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:26:14,062 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:26:14,062 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:26:14,405 DEBUG [root] - com.yl.common.util.DBUtil create default sqlsessionfactory success!
-2019-05-17 15:26:14,440 DEBUG [org.apache.ibatis.transaction.jdbc.JdbcTransaction] - Openning JDBC Connection
-2019-05-17 15:26:14,766 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - Created connection 2115673371.
-2019-05-17 15:26:14,768 DEBUG [com.yl.common.dao.PublicDao.getToken] - ooo Using Connection [oracle.jdbc.driver.T4CConnection@7e1a9d1b]
-2019-05-17 15:26:14,769 DEBUG [com.yl.common.dao.PublicDao.getToken] - ==>  Preparing: select TOKEN from T_API_TOKEN 
-2019-05-17 15:26:14,868 DEBUG [com.yl.common.dao.PublicDao.getToken] - ==> Parameters: 
-2019-05-17 15:26:15,010 INFO [com.yl.common.util.HttpUtil] - API心跳包请求参数-REQUEST：{"url":"http://36.97.156.181:8090/sms-dms/getwayInterface/report.action"}
-2019-05-17 15:26:15,150 INFO [com.yl.common.util.HttpUtil] - API心跳包返回参数-RESPONSE：{"status":"fail","errno":"4"}
-2019-05-17 15:26:15,164 INFO [com.yl.common.util.HttpUtil] - API登录请求参数-REQUEST：{"username":"api","password":"8a5da52ed126447d359e70c05721a8aa","url":"http://36.97.156.181:8090/sms-dms/getwayInterface/report.action"}
-2019-05-17 15:26:15,452 INFO [com.yl.common.util.HttpUtil] - API登录返回参数-RESPONSE：{"status":"success","token":"93894371305ba79286d0794ab6660c5b"}
-2019-05-17 15:26:15,466 DEBUG [com.yl.transaction.seat.dao.SeatDao.updateSeatStatus] - ooo Using Connection [oracle.jdbc.driver.T4CConnection@7e1a9d1b]
-2019-05-17 15:26:15,467 DEBUG [com.yl.transaction.seat.dao.SeatDao.updateSeatStatus] - ==>  Preparing: update T_API_TOKEN set TOKEN=?, create_time=sysdate 
-2019-05-17 15:26:15,468 DEBUG [com.yl.transaction.seat.dao.SeatDao.updateSeatStatus] - ==> Parameters: 93894371305ba79286d0794ab6660c5b(String)
-2019-05-17 15:26:15,471 DEBUG [org.apache.ibatis.transaction.jdbc.JdbcTransaction] - Rolling back JDBC Connection [oracle.jdbc.driver.T4CConnection@7e1a9d1b]
-2019-05-17 15:26:15,472 DEBUG [org.apache.ibatis.transaction.jdbc.JdbcTransaction] - Resetting autocommit to true on JDBC Connection [oracle.jdbc.driver.T4CConnection@7e1a9d1b]
-2019-05-17 15:26:15,473 DEBUG [org.apache.ibatis.transaction.jdbc.JdbcTransaction] - Closing JDBC Connection [oracle.jdbc.driver.T4CConnection@7e1a9d1b]
-2019-05-17 15:26:15,473 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - Returned connection 2115673371 to pool.
-2019-05-17 15:27:52,423 DEBUG [org.apache.ibatis.logging.LogFactory] - Logging initialized using 'org.apache.ibatis.logging.commons.JakartaCommonsLoggingImpl' adapter.
-2019-05-17 15:27:52,552 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:27:52,552 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:27:52,552 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:27:52,552 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:27:52,552 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:27:52,552 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:27:52,552 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:27:52,552 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:27:52,552 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:27:52,552 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:27:52,553 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:27:52,902 DEBUG [root] - com.yl.common.util.DBUtil create default sqlsessionfactory success!
-2019-05-17 15:27:52,936 DEBUG [org.apache.ibatis.transaction.jdbc.JdbcTransaction] - Openning JDBC Connection
-2019-05-17 15:27:53,259 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - Created connection 1715150648.
-2019-05-17 15:27:53,262 DEBUG [com.yl.common.dao.PublicDao.getToken] - ooo Using Connection [oracle.jdbc.driver.T4CConnection@663b1f38]
-2019-05-17 15:27:53,262 DEBUG [com.yl.common.dao.PublicDao.getToken] - ==>  Preparing: select TOKEN from T_API_TOKEN 
-2019-05-17 15:27:53,363 DEBUG [com.yl.common.dao.PublicDao.getToken] - ==> Parameters: 
-2019-05-17 15:27:53,502 INFO [com.yl.common.util.HttpUtil] - API心跳包请求参数-REQUEST：{"url":"http://36.97.156.181:8090/sms-dms/getwayInterface/report.action"}
-2019-05-17 15:27:53,641 INFO [com.yl.common.util.HttpUtil] - API心跳包返回参数-RESPONSE：{"status":"fail","errno":"3"}
-2019-05-17 15:27:53,654 INFO [com.yl.common.util.HttpUtil] - API登录请求参数-REQUEST：{"username":"api","password":"8a5da52ed126447d359e70c05721a8aa","url":"http://36.97.156.181:8090/sms-dms/getwayInterface/report.action"}
-2019-05-17 15:27:53,944 INFO [com.yl.common.util.HttpUtil] - API登录返回参数-RESPONSE：{"status":"success","token":"ba41099664888778f1e5d37b717143d6"}
-2019-05-17 15:27:53,953 DEBUG [com.yl.transaction.seat.dao.SeatDao.updateSeatStatus] - ooo Using Connection [oracle.jdbc.driver.T4CConnection@663b1f38]
-2019-05-17 15:27:53,954 DEBUG [com.yl.transaction.seat.dao.SeatDao.updateSeatStatus] - ==>  Preparing: update T_API_TOKEN set TOKEN=?, create_time=sysdate 
-2019-05-17 15:27:53,954 DEBUG [com.yl.transaction.seat.dao.SeatDao.updateSeatStatus] - ==> Parameters: ba41099664888778f1e5d37b717143d6(String)
-2019-05-17 15:27:53,956 DEBUG [org.apache.ibatis.transaction.jdbc.JdbcTransaction] - Committing JDBC Connection [oracle.jdbc.driver.T4CConnection@663b1f38]
-2019-05-17 15:27:53,959 DEBUG [org.apache.ibatis.transaction.jdbc.JdbcTransaction] - Resetting autocommit to true on JDBC Connection [oracle.jdbc.driver.T4CConnection@663b1f38]
-2019-05-17 15:27:53,959 DEBUG [org.apache.ibatis.transaction.jdbc.JdbcTransaction] - Closing JDBC Connection [oracle.jdbc.driver.T4CConnection@663b1f38]
-2019-05-17 15:27:53,959 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - Returned connection 1715150648 to pool.
-2019-05-17 15:28:20,445 DEBUG [org.apache.ibatis.logging.LogFactory] - Logging initialized using 'org.apache.ibatis.logging.commons.JakartaCommonsLoggingImpl' adapter.
-2019-05-17 15:28:20,584 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:28:20,584 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:28:20,584 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:28:20,584 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:28:20,584 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:28:20,584 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:28:20,584 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:28:20,585 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:28:20,585 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:28:20,585 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:28:20,585 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
-2019-05-17 15:28:20,947 DEBUG [root] - com.yl.common.util.DBUtil create default sqlsessionfactory success!
-2019-05-17 15:28:20,986 DEBUG [org.apache.ibatis.transaction.jdbc.JdbcTransaction] - Openning JDBC Connection
-2019-05-17 15:28:21,312 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - Created connection 1715150648.
-2019-05-17 15:28:21,314 DEBUG [com.yl.common.dao.PublicDao.getToken] - ooo Using Connection [oracle.jdbc.driver.T4CConnection@663b1f38]
-2019-05-17 15:28:21,314 DEBUG [com.yl.common.dao.PublicDao.getToken] - ==>  Preparing: select TOKEN from T_API_TOKEN 
-2019-05-17 15:28:21,421 DEBUG [com.yl.common.dao.PublicDao.getToken] - ==> Parameters: 
-2019-05-17 15:28:21,560 INFO [com.yl.common.util.HttpUtil] - API心跳包请求参数-REQUEST：{"url":"http://36.97.156.181:8090/sms-dms/getwayInterface/report.action"}
-2019-05-17 15:28:21,836 INFO [com.yl.common.util.HttpUtil] - API心跳包返回参数-RESPONSE：{"status":"success"}
-2019-05-17 15:28:21,851 DEBUG [com.yl.transaction.seat.dao.SeatDao.updateSeatStatus] - ooo Using Connection [oracle.jdbc.driver.T4CConnection@663b1f38]
-2019-05-17 15:28:21,851 DEBUG [com.yl.transaction.seat.dao.SeatDao.updateSeatStatus] - ==>  Preparing: update T_API_TOKEN set TOKEN=?, create_time=sysdate 
-2019-05-17 15:28:21,853 DEBUG [com.yl.transaction.seat.dao.SeatDao.updateSeatStatus] - ==> Parameters: ba41099664888778f1e5d37b717143d6(String)
-2019-05-17 15:28:21,855 DEBUG [org.apache.ibatis.transaction.jdbc.JdbcTransaction] - Committing JDBC Connection [oracle.jdbc.driver.T4CConnection@663b1f38]
-2019-05-17 15:28:21,859 DEBUG [org.apache.ibatis.transaction.jdbc.JdbcTransaction] - Resetting autocommit to true on JDBC Connection [oracle.jdbc.driver.T4CConnection@663b1f38]
-2019-05-17 15:28:21,859 DEBUG [org.apache.ibatis.transaction.jdbc.JdbcTransaction] - Closing JDBC Connection [oracle.jdbc.driver.T4CConnection@663b1f38]
-2019-05-17 15:28:21,859 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - Returned connection 1715150648 to pool.
+2019-05-18 16:02:16,984 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：req=11111111111111
+2019-05-18 16:02:17,154 INFO [com.yl.common.util.HttpUtil] - sss返回参数-RESPONSE：{"status":"success"}
+2019-05-18 16:03:48,142 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
+2019-05-18 16:03:48,357 INFO [com.yl.common.util.HttpUtil] - sss返回参数-RESPONSE：{"status":"success"}
+2019-05-18 16:03:58,012 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
+2019-05-18 16:03:58,183 INFO [com.yl.common.util.HttpUtil] - sss返回参数-RESPONSE：{"status":"success"}
+2019-05-18 16:04:01,042 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
+2019-05-18 16:04:01,233 INFO [com.yl.common.util.HttpUtil] - sss返回参数-RESPONSE：{"status":"success"}
+2019-05-18 16:06:47,967 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
+2019-05-18 16:06:57,002 INFO [com.yl.common.util.HttpUtil] - sss返回参数-RESPONSE：{"status":"success"}
+2019-05-18 16:10:44,604 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
+2019-05-18 16:10:44,731 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
+2019-05-18 16:15:54,963 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
+2019-05-18 16:15:55,099 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
+2019-05-18 16:17:03,540 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
+2019-05-18 16:17:03,663 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
+2019-05-18 16:18:58,318 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
+2019-05-18 16:18:58,325 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
+2019-05-18 16:19:11,237 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
+2019-05-18 16:19:11,244 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
+2019-05-18 16:21:54,360 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
+2019-05-18 16:21:54,367 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
+2019-05-18 16:25:27,128 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：body={"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
+2019-05-18 16:25:27,141 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
+2019-05-18 16:30:22,127 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
+2019-05-18 16:30:22,262 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
+2019-05-18 16:36:14,880 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
+2019-05-18 16:36:15,113 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
+2019-05-18 17:20:22,085 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
+2019-05-18 17:20:22,260 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
+2019-05-18 17:24:44,146 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
+2019-05-18 17:24:44,327 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
+2019-05-18 17:27:11,704 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
+2019-05-18 17:27:11,898 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
+2019-05-18 17:27:28,674 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
+2019-05-18 17:27:28,682 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
+2019-05-18 17:29:55,264 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
+2019-05-18 17:29:55,457 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
+2019-05-18 17:32:28,898 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
+2019-05-18 17:32:29,088 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
+2019-05-18 17:34:45,123 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
+2019-05-18 17:34:45,304 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
+2019-05-18 17:43:29,395 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
+2019-05-18 17:43:29,576 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
+2019-05-18 17:46:23,596 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
+2019-05-18 17:46:23,779 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
+2019-05-18 17:46:43,959 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
+2019-05-18 17:46:43,982 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
+2019-05-18 17:47:49,252 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
+2019-05-18 17:47:49,276 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
+2019-05-18 17:49:24,426 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
+2019-05-18 17:49:24,432 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
