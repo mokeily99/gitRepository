@@ -121,27 +121,42 @@ public class SeatController extends BaseController {
 				}else{
 					status = seatStatus;
 				}
+			}else{
+				JSONObject loginRsp = HttpUtil.login(ConfigUtil.getConfigKey("API_USER_NAME"), ConfigUtil.getConfigKey("API_PWD"), ConfigUtil.getConfigKey("API_ACCEPT_URL"));
+				String loginStatus = loginRsp.optString("status");
+				if("success".equals(loginStatus)){
+					Map<String, String> para = new HashMap<String, String>();
+					para.put("token", loginRsp.optString("token"));
+					seatService.updateSeatStatus(para);
+					JSONObject resp3 = HttpUtil.agentQuery(ConfigUtil.getConfigKey("QUEUEID"), user.getSeatNO(), ConfigUtil.getConfigKey("QUEUE_PWD"), publicDao.getToken());
+					status = resp3.optString("agentstatus");
+				}else{
+					result.setResultCode("0001");
+					result.setResultMsg("坐席账号密码错误!");
+				}
 			}
 			
-			Map<String, String> param = new HashMap<String, String>();
-			param.put("seatID", user.getMaxaccept());
-			List<Map<String, String>> seatList = seatService.getSeatFreeBusyInfo(param);
-			if(seatList.size() > 0){
-				if(status == null){
-					status = seatList.get(0).get("STATUS");
-				}else{
-					if("logged in".equals(status)){
-						param.put("status", "1");
-					}else {
-						param.put("status", "0");
+			if("0000".equals(result.getResultCode())){
+				Map<String, String> param = new HashMap<String, String>();
+				param.put("seatID", user.getMaxaccept());
+				List<Map<String, String>> seatList = seatService.getSeatFreeBusyInfo(param);
+				if(seatList.size() > 0){
+					if(status == null){
+						status = seatList.get(0).get("STATUS");
+					}else{
+						if("logged in".equals(status)){
+							param.put("status", "1");
+						}else {
+							param.put("status", "0");
+						}
+						seatService.setBusyFree(param);
 					}
-					seatService.setBusyFree(param);
+				}else{
+					param.put("maxaccept", DBUtil.getMaxaccept(publicDao));
+					seatService.insertSeatInfo(param);
 				}
-			}else{
-				param.put("maxaccept", DBUtil.getMaxaccept(publicDao));
-				seatService.insertSeatInfo(param);
+				result.setResultData(status);
 			}
-			result.setResultData(status);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			result.setResultCode("9999");

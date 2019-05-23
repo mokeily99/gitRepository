@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.yl.common.controller.BaseController;
 import com.yl.common.pojo.Entity;
 import com.yl.common.pojo.Result;
+import com.yl.common.util.JsonUtils;
 import com.yl.transaction.code.service.CodeService;
 
 @Controller
@@ -31,8 +32,9 @@ public class GetwayInterface extends BaseController{
 	
 	@RequestMapping(value="report",consumes="application/json;charset=utf-8",produces="application/json;charset=utf-8")
 	@ResponseBody
-	public Map<String, String> report(HttpServletRequest request, HttpServletResponse response, Model model, @RequestBody Map<String, String> json) {
-		logger.error("=============="+json);
+	public Map<String, String> report(HttpServletRequest request, HttpServletResponse response, Model model, @RequestBody Map<String, Object> param) {
+		logger.error("事件event=============="+param.get("event"));
+		logger.error("全部参数=============="+JsonUtils.toJsonObj(param));
 		
 		Map<String, String> result = new HashMap<String, String>();
 		result.put("status", "success");

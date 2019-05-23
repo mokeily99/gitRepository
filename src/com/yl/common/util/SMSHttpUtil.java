@@ -140,7 +140,7 @@ public class SMSHttpUtil {
     public static void main(String[] args) {
     	SMSHttpUtil am = new SMSHttpUtil();
 		try {
-			am.sendSMS("18686530251", "【秒嘀科技】您的验证码为123456，该验证码5分钟内有效。请勿泄漏于他人。");
+			am.sendSMS("18088645703", "【弘昇服务】生日快乐！");//【弘昇服务】您的验证码为1111，该验证码五分钟内有效，请勿泄露他人。
 		}catch (Exception e){
 			e.printStackTrace();
 		}

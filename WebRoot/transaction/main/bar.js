@@ -40,6 +40,10 @@ function getSeatFreeBusyStatus(){
 						}
 					}
 				}
+			}else{
+				layer.alert('坐席账号密码错误！', {
+					icon : 2
+				});
 			}
 		}
 	});
