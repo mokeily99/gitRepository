@@ -53,4 +53,9 @@ public class PersonnelServiceImpl implements PersonnelService{
 	public void updateUserInfoByID(Map<String, String> param) {
 		personnelDao.updateUserInfoByID(param);
 	}
+
+	@Override
+	public List<Map<String, String>> isMySeat(Map<String, String> param) {
+		return personnelDao.isMySeat(param);
+	}
 }

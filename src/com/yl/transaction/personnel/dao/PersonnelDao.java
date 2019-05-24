@@ -24,4 +24,6 @@ public interface PersonnelDao {
 	public void updatePassByMax(Map<String, String> param);
 	
 	public void updateUserInfoByID(Map<String, String> param);
+	
+	public List<Map<String, String>> isMySeat(Map<String, String> param);
 }

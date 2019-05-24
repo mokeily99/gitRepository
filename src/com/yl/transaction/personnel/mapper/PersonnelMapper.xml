@@ -97,4 +97,8 @@
 		</trim>
 		where maxaccept=${maxaccept}
 	</update> 
+	
+	<select id="isMySeat" parameterType="java.util.Map" resultType="java.util.Map">
+		select maxaccept,user_account,user_pwd,user_level,dept_code,user_name,phone,tel,address,user_role from t_user where seat_no = #{seatNO}
+	</select>
 </mapper>  

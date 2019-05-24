@@ -22,4 +22,6 @@ public interface PersonnelService {
 	public List<Map<String, String>> getPersonnelByParam(Map<String, String> param);
 	
 	public void updateUserInfoByID(Map<String, String> param);
+	
+	public List<Map<String, String>> isMySeat(Map<String, String> param);
 }

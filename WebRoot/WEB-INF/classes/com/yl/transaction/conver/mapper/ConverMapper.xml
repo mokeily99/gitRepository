@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yl.transaction.conver.dao.ConverDao">
+
+	<!-- 增加通话 -->
+	<insert id="insertConver" parameterType="java.util.Map">
+		insert into T_CONVERSATION (
+			MAXACCEPT, CALLER_NO, CALLED_NO, TALK_FLAG, CALL_FORWARD, 
+			CALL_ID, SEAT_ID, SEAT_NAME, CREATE_TIME
+		) VALUES (
+			#{maxaccept}, #{callerNO}, #{calledNO}, #{talkFlag}, #{callForward}, 
+			#{callID}, #{seatID}, #{seatName}, sysdate
+		)
+	</insert>
+	
+	<select id="getConverByCallID" parameterType="java.util.Map" resultType="java.util.Map">
+		select 
+		MAXACCEPT, CALLER_NO, CALLED_NO, CALL_TIME, ANSWER_TIME,
+		HANGUP_TIME, TALK_TIME, DOWNLOAD_PATH, TALK_FLAG, HANGUP_TAR,
+		CALL_FORWARD, CALL_ID, SEAT_ID, SEAT_NAME, RECORD_PATH, 
+		CREATE_TIME, UPDATE_TIME
+		from T_CONVERSATION where CALL_ID=#{callID} order by create_time desc
+	</select>
+	
+	<update id="updateTalkFlag" parameterType="java.util.Map">
+		update T_CONVERSATION set TALK_FLAG='1', UPDATE_TIME=sysdate where maxaccept=#{maxaccept}
+	</update>
+	
+	<update id="updateHangupTar" parameterType="java.util.Map">
+		update T_CONVERSATION set HANGUP_TAR=#{hangupTar} where maxaccept=#{maxaccept}
+	</update>
+	
+	<update id="finashConver" parameterType="java.util.Map">
+		update T_CONVERSATION set CALL_TIME=#{callTime}, ANSWER_TIME=#{answerTime}, HANGUP_TIME=#{hangupTime},
+		TALK_TIME=#{talkTime}, DOWNLOAD_PATH=#{downloadPath} , UPDATE_TIME=sysdate
+		where maxaccept=#{maxaccept}
+	</update>
+</mapper>  
