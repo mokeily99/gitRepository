@@ -100,17 +100,42 @@ public class GetwayInterface extends BaseController {
 				param.put("callID", callID);
 				param.put("seatID", seatID);
 				param.put("seatName", seatName);
+				param.put("deptCode", deptCode);
 
 				converService.insertConver(param);
 				
 			} else if ("ANSWER".equals(event)) {// 设置接通状态
-				List<Map<String, String>> converList = converService
-						.getConverByCallID(callid);
+				List<Map<String, String>> converList = converService.getConverByCallID(callid);
 
 				if (converList.size() > 0) {
 					// 修改通话状态
 					Map<String, String> conver = converList.get(0);
 					converService.updateTalkFlag(conver.get("MAXACCEPT"));
+					
+					
+					/**插入呼叫状态表**/
+					String callForward = conver.get("CALL_FORWARD");
+					String phone = "";
+					Map<String, String> param = new HashMap<String, String>();
+					if("0".equals(callForward)){
+						phone = conver.get("CALLER_NO");
+					}else{
+						phone = conver.get("CALLED_NO");
+					}
+					
+					param.put("phone", phone);
+					param.put("showFlag", "0");
+					param.put("seatID", conver.get("SEAT_ID"));
+					
+					//判断坐席状态数据是否存在
+					List<Map<String, String>> callLsit = converService.getCallStatusBySeatID(conver.get("SEAT_ID"));
+					if(callLsit.size()>0){
+						param.put("maxaccept", callLsit.get(0).get("MAXACCEPT"));
+						converService.updateCallStatus(param);
+					}else{
+						param.put("maxaccept", publicDao.getMaxaccept());
+						converService.insertCallStatus(param);
+					}
 					
 				} else {// 垃圾数据
 					return null;

@@ -43,4 +43,19 @@ public class ConverServiceImpl implements ConverService{
 	public List<Map<String, String>> getConverList(Map<String, Object> param) {
 		return converDao.getConverList(param);
 	}
+
+	@Override
+	public List<Map<String, String>> getCallStatusBySeatID(String seatID) {
+		return converDao.getCallStatusBySeatID(seatID);
+	}
+
+	@Override
+	public void insertCallStatus(Map<String, String> param) {
+		converDao.insertCallStatus(param);
+	}
+
+	@Override
+	public void updateCallStatus(Map<String, String> param) {
+		converDao.updateCallStatus(param);
+	}
 }

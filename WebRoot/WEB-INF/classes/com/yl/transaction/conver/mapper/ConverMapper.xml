@@ -58,4 +58,20 @@
 		TALK_TIME=#{talkTime}, DOWNLOAD_PATH=#{downloadPath} , UPDATE_TIME=sysdate
 		where maxaccept=#{maxaccept}
 	</update>
+	
+	<insert id="insertCallStatus" parameterType="java.util.Map">
+		insert into T_CALL_STATUS (
+			MAXACCEPT, SEAT_ID, PHONE, SHOW_FLAG, CREATE_TIME
+		) values (
+			${maxaccept}, #{seatID}, #{phone}, #{showFlag}, sysdate
+		)
+	</insert>
+	
+	<update id="updateCallStatus" parameterType="java.util.Map">
+		update T_CALL_STATUS set PHONE=#{phone}, SHOW_FLAG=#{showFlag}, CREATE_TIME=sysdate where maxaccept=#{maxaccept}
+	</update>
+	
+	<select id="getCallStatusBySeatID" parameterType="java.util.Map" resultType="java.util.Map">
+		select MAXACCEPT, SEAT_ID, PHONE, SHOW_FLAG, CREATE_TIME from T_CALL_STATUS where SEAT_ID=#{seatID}
+	</select>
 </mapper>  

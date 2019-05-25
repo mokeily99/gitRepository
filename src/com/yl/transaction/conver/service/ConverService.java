@@ -16,4 +16,10 @@ public interface ConverService {
 	public void finashConver(Map<String, String> param);
 	
 	public List<Map<String, String>> getConverList(Map<String, Object> param);
+	
+	public List<Map<String, String>> getCallStatusBySeatID(String seatID);
+	
+	public void insertCallStatus(Map<String, String> param);
+	
+	public void updateCallStatus(Map<String, String> param);
 }
