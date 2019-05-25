@@ -2,14 +2,37 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.yl.transaction.conver.dao.ConverDao">
 
+	<select id="getConverList" parameterType="java.util.Map" resultType="java.util.Map">
+		select 
+			MAXACCEPT,CALLER_NO,CALLED_NO,CALL_TIME,ANSWER_TIME,HANGUP_TIME,TALK_TIME,
+			DOWNLOAD_PATH,TALK_FLAG,HANGUP_TAR,CALL_FORWARD,CALL_ID,SEAT_ID,SEAT_NAME,
+			RECORD_PATH,TO_CHAR(CREATE_TIME, 'yyyy-mm-dd HH24:mi:ss') CREATE_TIME,TO_CHAR(UPDATE_TIME, 'yyyy-mm-dd HH24:mi:ss') UPDATE_TIME,DEPT_CODE,DEPT_NAME
+		from T_CONVERSATION 
+		where 1=1
+		<if test="seatID != null and seatID != ''">
+			and SEAT_ID=#{seatID}
+		</if>
+		<if test="deptCode != null and deptCode != ''">
+			and DEPT_CODE=#{deptCode}
+		</if>
+		<if test="callerPhone != null and callerPhone != ''">
+			and CALLER_NO=#{callerPhone}
+		</if>
+		<if test="calledPhone != null and calledPhone != ''">
+			and CALLED_NO=#{calledPhone}
+		</if>
+		
+		order by CALL_TIME desc
+	</select>
+	
 	<!-- 增加通话 -->
 	<insert id="insertConver" parameterType="java.util.Map">
 		insert into T_CONVERSATION (
 			MAXACCEPT, CALLER_NO, CALLED_NO, TALK_FLAG, CALL_FORWARD, 
-			CALL_ID, SEAT_ID, SEAT_NAME, CREATE_TIME
+			CALL_ID, SEAT_ID, SEAT_NAME, CREATE_TIME, DEPT_CODE
 		) VALUES (
 			#{maxaccept}, #{callerNO}, #{calledNO}, #{talkFlag}, #{callForward}, 
-			#{callID}, #{seatID}, #{seatName}, sysdate
+			#{callID}, #{seatID}, #{seatName}, sysdate, #{deptCode}
 		)
 	</insert>
 	

@@ -201,7 +201,8 @@
 
 <div id="send_sms_div" style="display:none;">
 	<form lay-filter="send_sms_form" class="layui-form" action="" id="esend_sms_form">
-		<input type="hidden" id="cust_ids" name="cust_ids">
+		<input type="hidden" id="cust_names" name="cust_names">
+		<input type="hidden" id="send_phones" name="send_phones">
 		<div class="layui-form-item" style="margin-top:15px;width: 411px;">
 			<label class="layui-form-label">发送方式</label>
 			<div class="layui-input-block">

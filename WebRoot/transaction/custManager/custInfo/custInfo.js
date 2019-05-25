@@ -323,17 +323,20 @@ layui.use(['form', 'layer', 'table', 'upload', 'laydate'], function() {
 			return;
 		}
 		var sendData = checkData.data;
-		var ids = "";
+		var custNames = "";
+		var sendPhones = "";
 		for(var ix=0; ix<sendData.length; ix++){
 			if(blackQuery(sendData[ix].CONN_PHONE)){
 				layer.msg('黑名单客户不能发送短信！',{icon:0});
 				return;
 			}
-			ids = sendData[ix].CUST_ID + "," + ids;
+			custNames = sendData[ix].CUST_NAME + "," + custNames;
+			sendPhones = sendData[ix].CONN_PHONE + "," + sendPhones;
 		}
 		
-		//客户信息赋值
-		$("#cust_ids").val(ids);
+		//客户名、号码赋值
+		$("#cust_names").val(custNames);
+		$("#send_phones").val(sendPhones);
 		
 		dialogIndex = layer.open({
 			type : 1,

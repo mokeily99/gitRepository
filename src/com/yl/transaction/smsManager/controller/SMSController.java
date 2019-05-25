@@ -398,36 +398,41 @@ public class SMSController extends BaseController{
 		result.setResultCode("0000");
 		result.setResultMsg("操作成功！");
 		
-		String ids = request.getParameter("cust_ids");
+		String custNames = request.getParameter("cust_names");
+		String sendPhones = request.getParameter("send_phones");
 		String sendType = request.getParameter("send_sms_type");
 		String sendDate = request.getParameter("send_sms_date");
 		String smsContent = request.getParameter("send_sms_content");
 		try {
-			if(ids.contains(",")){
-				ids = ids.substring(0, ids.length()-1);
+			if(custNames != null && custNames.contains(",")){
+				custNames = custNames.substring(0, custNames.length()-1);
 			}
-			String[] idArr = ids.split(",");
-			for(int ix=0; ix<idArr.length; ix++){
-				String custID = idArr[ix];
+			if(sendPhones != null && sendPhones.contains(",")){
+				sendPhones = sendPhones.substring(0, sendPhones.length()-1);
+			}
+			
+			String[] phoneArr = sendPhones.split(",");
+			
+			String[] custArr = new String[phoneArr.length];
+			if(custNames != null){
+				custArr = custNames.split(",");
+			}
+			for(int ix=0; ix<phoneArr.length; ix++){
 				Map<String, String> param = new HashMap<String, String>();
-				param.put("custID",custID);
-				Map<String, String> custInfo = custService.getCustInfo(param);
-				if(custInfo != null){
-					UserView user = this.getUserView(request);
-					param.put("maxaccept", DBUtil.getMaxaccept(publicDao));
-					param.put("custName", custInfo.get("CUST_NAME"));
-					param.put("phone", custInfo.get("CONN_PHONE"));
-					param.put("oprID", user.getMaxaccept());
-					param.put("oprName", user.getUserName());
-					param.put("deptCode", user.getDeptCode());
-					if("10501".equals(sendType)){
-						param.put("sendDate", DateUtils.dateFormat(new Date(), DateUtils.DATE_PATTERN));
-					}else{
-						param.put("sendDate", sendDate);
-					}
-					param.put("smsContent", smsContent);
-					smsService.insertSmsInfo(param);
+				UserView user = this.getUserView(request);
+				param.put("maxaccept", DBUtil.getMaxaccept(publicDao));
+				param.put("custName", custArr[ix]);
+				param.put("phone", phoneArr[ix]);
+				param.put("oprID", user.getMaxaccept());
+				param.put("oprName", user.getUserName());
+				param.put("deptCode", user.getDeptCode());
+				if("10501".equals(sendType)){
+					param.put("sendDate", DateUtils.dateFormat(new Date(), DateUtils.HOUR_PATTERN));
+				}else{
+					param.put("sendDate", sendDate);
 				}
+				param.put("smsContent", smsContent);
+				smsService.insertSmsInfo(param);
 			}
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);

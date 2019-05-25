@@ -142,11 +142,19 @@
 	
 	<insert id="insertSmsInfo" parameterType="java.util.Map">
 		insert into T_SMS_LIST (
-			MAXACCEPT,CUST_ID,CUST_NAME,PHONE,
+			MAXACCEPT,
+			<if test="custName != null and custName != '' ">
+				CUST_NAME,
+			</if>
+			PHONE,
 			SEND_TIME,CREATE_OPR_ID,CREACREATE_OPR_NAME,
 			SMS_CONTENT, DEPT_CODE, CREATE_TIME, MAKE_STATUS, TRY_TIMES
 		) values (
-			${maxaccept}, #{custID}, #{custName}, #{phone}, 
+			${maxaccept}, 
+			<if test="custName != null and custName != '' ">
+				#{custName}, 
+			</if>
+			#{phone}, 
 			to_date(#{sendDate}, 'yyyy-mm-dd'), #{oprID}, #{oprName}, 
 			#{smsContent}, #{deptCode}, sysdate, '10702', '0'
 		)

@@ -33,4 +33,38 @@ public class ConverController extends BaseController{
 	@Resource
 	private ConverService converService;
 	
+	@RequestMapping("/getConverList")
+	@ResponseBody
+	public LayTableResult<List<Map<String, String>>> getConverList(Integer page, Integer limit, String callerPhone, String calledPhone, HttpServletRequest request, HttpServletResponse response, Model model) {
+		LayTableResult<List<Map<String, String>>> tableResult = new LayTableResult<List<Map<String, String>>>();
+		try {
+			UserView user = this.getUserView(request);
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("row", limit);
+			param.put("page", page);
+
+			param.put("callerPhone", callerPhone);
+			param.put("calledPhone", calledPhone);
+			
+			if("10203".equals(user.getRoleLevel())){//分销商工作人员只能看自己的通话
+				param.put("seatID", user.getMaxaccept());
+			}else if("10202".equals(user.getRoleLevel())){//分销商管理员看自己部门所有通话
+				param.put("deptCode", user.getDeptCode());
+			}
+
+			PageHelper.startPage(page, limit);
+			List<Map<String, String>> converList = converService.getConverList(param);
+			PageInfo<Map<String, String>> pageinfo = new PageInfo<Map<String, String>>(converList);
+
+			tableResult.setCount((int) pageinfo.getTotal());
+			tableResult.setData(converList);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			tableResult.setCode(1);
+			tableResult.setMsg("数据加载失败！");
+			tableResult.setCount(0);
+			tableResult.setData(new ArrayList<Map<String, String>>());
+		}
+		return tableResult;
+	}
 }

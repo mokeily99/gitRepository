@@ -38,4 +38,9 @@ public class ConverServiceImpl implements ConverService{
 	public void finashConver(Map<String, String> param) {
 		converDao.finashConver(param);
 	}
+
+	@Override
+	public List<Map<String, String>> getConverList(Map<String, Object> param) {
+		return converDao.getConverList(param);
+	}
 }

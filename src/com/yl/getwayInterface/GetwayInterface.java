@@ -64,6 +64,7 @@ public class GetwayInterface extends BaseController {
 				String callID = (String) callid;// 通话唯一标识
 				String seatID = "";// 坐席编码
 				String seatName = "";// 坐席名称
+				String deptCode = "";//所属部门
 
 				// 判断呼叫方向
 				Map<String, String> param = new HashMap<String, String>();
@@ -78,12 +79,14 @@ public class GetwayInterface extends BaseController {
 					Map<String, String> seatInfo = fromList.get(0);
 					seatID = seatInfo.get("MAXACCEPT");
 					seatName = seatInfo.get("USER_NAME");
+					deptCode = seatInfo.get("DEPT_CODE");
 				} else if (toList.size() > 0) {
 					callForward = "0";
 
 					Map<String, String> seatInfo = toList.get(0);
 					seatID = seatInfo.get("MAXACCEPT");
 					seatName = seatInfo.get("USER_NAME");
+					deptCode = seatInfo.get("DEPT_CODE");
 				} else {// 垃圾数据
 					return null;
 				}

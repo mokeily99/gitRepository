@@ -15,4 +15,6 @@ public interface ConverDao {
 	public void updateHangupTar(Map<String, String> param);
 	
 	public void finashConver(Map<String, String> param);
+	
+	public List<Map<String, String>> getConverList(Map<String, Object> param);
 }
