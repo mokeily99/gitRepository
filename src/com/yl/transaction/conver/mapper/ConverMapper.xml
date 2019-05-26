@@ -74,4 +74,12 @@
 	<select id="getCallStatusBySeatID" parameterType="java.util.Map" resultType="java.util.Map">
 		select MAXACCEPT, SEAT_ID, PHONE, SHOW_FLAG, CREATE_TIME from T_CALL_STATUS where SEAT_ID=#{seatID}
 	</select>
+	
+	<select id="getCallStatus" parameterType="java.util.Map" resultType="java.util.Map">
+		select MAXACCEPT, SEAT_ID, PHONE, SHOW_FLAG, SHOW_FLAG from T_CALL_STATUS where SEAT_ID=#{seatID} and SHOW_FLAG=#{showFlag} order by create_time desc
+	</select>
+	
+	<update id="updateShowStauts" parameterType="java.util.Map">
+		update T_CALL_STATUS set SHOW_FLAG='1' where SEAT_ID=#{seatID}
+	</update>
 </mapper>  

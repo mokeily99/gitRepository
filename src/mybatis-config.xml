@@ -52,6 +52,7 @@
 		<mapper resource="com/yl/transaction/senwords/mapper/SenwordsMapper.xml"/>
 		<mapper resource="com/yl/transaction/smsManager/mapper/SMSMapper.xml"/>
 		<mapper resource="com/yl/common/mapper/PublicMapper.xml"/>
+		<mapper resource="com/yl/transaction/conver/mapper/ConverMapper.xml"/>
 	</mappers>
 
 </configuration>

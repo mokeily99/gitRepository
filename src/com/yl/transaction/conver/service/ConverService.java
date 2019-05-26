@@ -22,4 +22,8 @@ public interface ConverService {
 	public void insertCallStatus(Map<String, String> param);
 	
 	public void updateCallStatus(Map<String, String> param);
+	
+	public List<Map<String, String>> getCallStatus(Map<String, String> param);
+	
+	public void updateShowStauts(String seatID);
 }
