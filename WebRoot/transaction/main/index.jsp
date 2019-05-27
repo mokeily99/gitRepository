@@ -6,6 +6,7 @@
 	
 	UserView user = (UserView) session.getAttribute("userInfo");
 	String userame = user.getUserName();
+	String maxaccept = user.getMaxaccept();
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -19,6 +20,7 @@
 <link rel="stylesheet" href="<%=webpath%>/transaction/main/css/main.css" media="all" />
 
 <script src="<%=webpath%>/common/ui/hAdmin/js/jquery.min.js?v=2.1.4"></script>
+<script src="<%=webpath%>/common/ui/hAdmin/js/plugins/layer/layer.min.js"></script>
 <script src="<%=webpath%>/transaction/main/bar.js"></script>
 
 <style type="text/css">
@@ -31,7 +33,9 @@
 </style>
 <script type="text/javascript">
 	var webpath = '<%=webpath%>';
+	var seatID = '<%=maxaccept%>';
 </script>
+<script src="<%=webpath%>/transaction/bombScreen/callStatus/callStatus.js"></script>
 </head>
 
 <body class="main_body">
@@ -196,3 +200,32 @@
 	<script type="text/javascript" src="js/index.js"></script>
 </body>
 </html>
+
+<!-- 弹屏 -->
+<div id="show_screen_div" style="display:none;">
+	<div id="call_phone" style="font-size:36px;font-weight:bold;padding:10px 10px 0px;text-align:center;color:cadetblue;"></div>
+	<fieldset class="layui-elem-field site-demo-button" style=";padding:20px;border:1px solid rgba(26, 159, 147, 1);">
+		<legend>工单创建</legend>
+		
+		<form class="layui-form layui-form-pane" action="">
+		   	<div class="layui-inline">
+			    <label class="layui-form-label">客户姓名</label>
+			    <div class="layui-input-inline">
+			      <input type="text" name="cust_name" id="cust_name" placeholder="请输入" autocomplete="off" class="layui-input">
+			    </div>
+		  	</div>
+		  	<div class="layui-inline" style="float:right;">
+			    <label class="layui-form-label">联系电话</label>
+			    <div class="layui-input-inline">
+			      <input type="text" name="conn_phone" id="conn_phone" lay-verify="required|phone" placeholder="请输入" autocomplete="off" class="layui-input">
+			    </div>
+		  	</div>
+		  	<div class="layui-form-item">
+			    <label class="layui-form-label">住址</label>
+			    <div class="layui-input-block">
+			      <input type="text" name="title" autocomplete="off" placeholder="请输入" class="layui-input">
+			    </div>
+  			</div>
+		</form>
+	</fieldset>
+</div>

@@ -3,7 +3,6 @@ $(function(){
 	/*loginVal();*/
 	//获取坐席闲忙
 	getSeatFreeBusyStatus();
-	
 })
 
 //登录验证
