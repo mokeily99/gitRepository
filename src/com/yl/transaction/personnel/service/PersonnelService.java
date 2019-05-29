@@ -24,4 +24,6 @@ public interface PersonnelService {
 	public void updateUserInfoByID(Map<String, String> param);
 	
 	public List<Map<String, String>> isMySeat(Map<String, String> param);
+	
+	public List<Map<String, String>> getDeptPerson(Map<String, String> param);
 }

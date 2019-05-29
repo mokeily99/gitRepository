@@ -334,4 +334,25 @@ public class PersonnelController extends BaseController{
 		}
 		return result;
 	}
+	/**
+	 * 获取派发人员
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/getSendPersonList")
+	@ResponseBody
+	public List<Map<String, String>> getSendPersonList(HttpServletRequest request, HttpServletResponse response, Model model) {
+		List<Map<String, String>> userList = new ArrayList<Map<String, String>>();
+		try {
+			Map<String, String> param = new HashMap<String, String>();
+			UserView user = this.getUserView(request);
+			param.put("deptCode", user.getDeptCode());
+			userList = personnelService.getDeptPerson(param);
+		} catch (Exception e) {
+			logger.error(e);
+		}
+		return userList;
+	}
 }

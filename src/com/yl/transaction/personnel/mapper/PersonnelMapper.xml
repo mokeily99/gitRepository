@@ -101,4 +101,11 @@
 	<select id="isMySeat" parameterType="java.util.Map" resultType="java.util.Map">
 		select maxaccept,user_account,user_pwd,user_level,dept_code,user_name,phone,tel,address,user_role from t_user where seat_no = #{seatNO}
 	</select>
+	
+	<select id="getDeptPerson" parameterType="java.util.Map" resultType="java.util.Map">
+		select 
+			MAXACCEPT, USER_ACCOUNT, USER_PWD, USER_LEVEL, DEPT_CODE, USER_NAME, PHONE, 
+			TEL, ADDRESS, USER_ROLE, IS_ONLINE, PHOTO_HEAD, ABLE_FLAG, SEAT_NO, SEAT_PWD
+		from T_USER WHERE ABLE_FLAG='10101' and DEPT_CODE=#{deptCode}
+	</select>
 </mapper>  

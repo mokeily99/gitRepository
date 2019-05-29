@@ -58,4 +58,9 @@ public class PersonnelServiceImpl implements PersonnelService{
 	public List<Map<String, String>> isMySeat(Map<String, String> param) {
 		return personnelDao.isMySeat(param);
 	}
+
+	@Override
+	public List<Map<String, String>> getDeptPerson(Map<String, String> param) {
+		return personnelDao.getDeptPerson(param);
+	}
 }

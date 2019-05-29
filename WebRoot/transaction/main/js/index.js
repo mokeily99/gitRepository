@@ -2,9 +2,9 @@ var $,tab,skyconsWeather;
 layui.config({
 	base : "js/"
 }).use(['bodyTab','form','element','layer','jquery'],function(){
-	var form = layui.form(),
+	var form = layui.form,
 		layer = layui.layer,
-		element = layui.element();
+		element = layui.element;
 		$ = layui.jquery;
 		tab = layui.bodyTab();
 
@@ -132,6 +132,31 @@ layui.config({
 		}
 	}
 
+	/******************************弹屏模块BEGIN******************************************/
+	LayerSelect.initLayerSelect({
+		dom : "order_send_opr",
+		url : webpath + "/personnel/getSendPersonList.action",
+		type : "post",
+		dataType : "json",
+		text : "USER_NAME",
+		id : "MAXACCEPT"
+	});
+	form.render();
+	
+	window.bombScreen=function(phone){
+		$("#call_phone").html(event.data);
+		layer.open({
+			title : '来电弹窗',
+			type : 1,
+			skin : 'layui-layer-demo', // 样式类名
+			anim : 2,
+			area : [ '700px', '500px' ],
+			shadeClose : false, // 开启遮罩关闭
+			content : $("#show_screen_div").html()
+		});
+		form.render();
+	}
+	/******************************弹屏模块END  ******************************************/
 })
 
 //打开新窗口

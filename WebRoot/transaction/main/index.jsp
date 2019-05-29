@@ -19,8 +19,7 @@
 <link rel="stylesheet" href="<%=webpath%>/transaction/main/css/font_eolqem241z66flxr.css" media="all" />
 <link rel="stylesheet" href="<%=webpath%>/transaction/main/css/main.css" media="all" />
 
-<script src="<%=webpath%>/common/ui/hAdmin/js/jquery.min.js?v=2.1.4"></script>
-<script src="<%=webpath%>/common/ui/hAdmin/js/plugins/layer/layer.min.js"></script>
+<script type="text/javascript" src="<%=webpath%>/common/js/jquery-1.10.2.min.js"></script>
 <script src="<%=webpath%>/transaction/main/bar.js"></script>
 
 <style type="text/css">
@@ -35,7 +34,7 @@
 	var webpath = '<%=webpath%>';
 	var seatID = '<%=maxaccept%>';
 </script>
-<script src="<%=webpath%>/transaction/bombScreen/callStatus/callStatus.js"></script>
+
 </head>
 
 <body class="main_body">
@@ -194,10 +193,12 @@
 	</div>
 	<div class="site-mobile-shade"></div>
 
-	<script type="text/javascript" src="layui/layui.js"></script>
+	<script src="<%=webpath%>/common/ui/treeselect/assets/layui/layui.js"></script>
+	<script type="text/javascript" src="<%=webpath%>/common/ui/layui/layui.extends.js"></script>
 	<!-- <script type="text/javascript" src="js/nav.js"></script> -->
 	<script type="text/javascript" src="js/leftNav.js"></script>
 	<script type="text/javascript" src="js/index.js"></script>
+	<script src="<%=webpath%>/transaction/bombScreen/callStatus/callStatus.js"></script>
 </body>
 </html>
 
@@ -220,12 +221,33 @@
 			      <input type="text" name="conn_phone" id="conn_phone" lay-verify="required|phone" placeholder="请输入" autocomplete="off" class="layui-input">
 			    </div>
 		  	</div>
-		  	<div class="layui-form-item">
+		  	<div class="layui-form-item" style="margin-top:10px;">
 			    <label class="layui-form-label">住址</label>
 			    <div class="layui-input-block">
 			      <input type="text" name="title" autocomplete="off" placeholder="请输入" class="layui-input">
 			    </div>
   			</div>
+  			<div class="layui-form-item layui-form-text">
+			    <label class="layui-form-label">工单备注</label>
+			    <div class="layui-input-block">
+			      <textarea class="layui-textarea"></textarea>
+			    </div>
+			</div>
+			<div class="layui-inline">
+			    <label class="layui-form-label">是否派单</label>
+			    <div class="layui-input-block">
+			      <select name="is_send" lay-filter="is_send">
+			        <option value="0" selected="selected">否</option>
+			        <option value="1" >是</option>
+			      </select>
+			    </div>
+		  	</div>
+		  	<div class="layui-inline" style="float:right;">
+			    <label class="layui-form-label">派发人员</label>
+			    <div class="layui-input-inline">
+			    	<select id="order_send_opr" name="order_send_opr" style="width:300px;"></select>
+			    </div>
+		  	</div>
 		</form>
 	</fieldset>
 </div>
