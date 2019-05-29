@@ -26,4 +26,6 @@ public interface PersonnelService {
 	public List<Map<String, String>> isMySeat(Map<String, String> param);
 	
 	public List<Map<String, String>> getDeptPerson(Map<String, String> param);
+	
+	public Map<String, String> getPersonnelByMax(String maxaccept);
 }

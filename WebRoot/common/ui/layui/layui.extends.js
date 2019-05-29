@@ -165,7 +165,6 @@ var LayerSelect = {
 				selectHtml.push("<option value=\"" +value[selectObj.id]+ "\">" +value[selectObj.text]+ "</option>")
 			}
 		});
-		debugger;
 		$("#"+selectObj.dom).html(selectHtml.join(""));
 	}
 }

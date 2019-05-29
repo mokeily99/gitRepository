@@ -1,4 +1,4 @@
-var $,tab,skyconsWeather;
+var $,tab,skyconsWeather,dialogIndex;
 layui.config({
 	base : "js/"
 }).use(['bodyTab','form','element','layer','jquery'],function(){
@@ -133,6 +133,7 @@ layui.config({
 	}
 
 	/******************************弹屏模块BEGIN******************************************/
+	//加载派发人员
 	LayerSelect.initLayerSelect({
 		dom : "order_send_opr",
 		url : webpath + "/personnel/getSendPersonList.action",
@@ -143,19 +144,70 @@ layui.config({
 	});
 	form.render();
 	
+	//弹窗方法
 	window.bombScreen=function(phone){
-		$("#call_phone").html(event.data);
-		layer.open({
+		$("#call_phone").html(phone);
+		
+		form.val("show_screen_form", {
+			"conn_phone": phone
+		});
+		dialogIndex = layer.open({
 			title : '来电弹窗',
 			type : 1,
 			skin : 'layui-layer-demo', // 样式类名
 			anim : 2,
 			area : [ '700px', '500px' ],
 			shadeClose : false, // 开启遮罩关闭
-			content : $("#show_screen_div").html()
+			content : $("#show_screen_div")
 		});
+		
+		form.on('select(is_send)', function(data){
+			if(data.value == "1"){
+				$("#order_send_opr_div").show();
+			}else{
+				$("#order_send_opr_div").hide();
+			}
+		});
+		
 		form.render();
 	}
+	
+	//表单提交
+	form.on('submit(order_submit_btn)', function(data) {
+		
+		$.ajax({
+			url : webpath + "/order/saveOrder.action",
+			method : 'post',
+			data : data.field,
+			dataType : "json",
+			success : function(data1) {
+				var resultCode = data1.resultCode;
+				if (resultCode == "0000") {
+					layer.close(dialogIndex);
+					layer.msg('工单创建成功！');
+				} else {
+					layer.alert('工单创建失败！', {
+						icon : 2
+					});
+				}
+			}
+		});
+
+	});
+	
+	//表单校验
+  	form.verify({
+  		connPhone : function(value, item) { //value：表单的值、item：表单的DOM对象
+  			if(value != ""){
+  				var tel1= /^((0\d{2,3}-\d{7,8})|(1[3584]\d{9}))$/;
+  				var tel2= /^((0\d{2,3}\d{7,8})|(1[3584]\d{9}))$/;
+  				var phone=/^1[34578]\d{9}$/;
+  				if (!tel1.test(value) && !tel2.test(value) && !phone.test(value)) {
+  					return '联系电话格式错误！';
+  				}
+  			}
+  		}
+  	});
 	/******************************弹屏模块END  ******************************************/
 })
 
@@ -176,4 +228,9 @@ function donation(){
 			content : "<div style='padding:30px;overflow:hidden;background:#d2d0d0;'><img src='images/alipay.jpg'></div>"
 		}]
 	})
+}
+
+//弹窗关闭
+function closeDialog() {
+	layer.close(dialogIndex);
 }

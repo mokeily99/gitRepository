@@ -24,634 +24,110 @@
 		order by a.create_time desc
 	</select>
 	
-	<select id="getOutTimeOrder" parameterType="java.util.Map" resultType="java.util.Map">
-		select 
-			maxaccept, patient_id, patient_name, project_type, (sysdate - order_start_time)*24*60 times 
-		from t_order where opr_id=#{oprID} and able_flag=#{ableFlag} and order_status=#{orderStatus}
-	</select>
-	
-	<select id="getOrderPatientDet" parameterType="java.util.Map" resultType="java.util.Map">
-		select 
-			a.MAXACCEPT A_MAXACCEPT,
-			a.PATIENT_ID A_PATIENT_ID,
-			a.PATIENT_NAME A_PATIENT_NAME,
-			a.OPR_ID A_OPR_ID,
-			a.OPR_NAME A_OPR_NAME,
-			a.PROJECT_TYPE A_PROJECT_TYPE,
-			a.PAY_TYPE A_PAY_TYPE,
-			a.PAY_FEE A_PAY_FEE,
-			a.KF_BEFORE_PHONE A_KF_BEFORE_PHONE,
-			to_char(a.KF_BEFORE_TIME, 'yyyy-mm-dd HH24:mi:ss') A_KF_BEFORE_TIME,
-			a.KF_MIDDLE_PHONE A_KF_MIDDLE_PHONE,
-			to_char(a.KF_MIDDLE_TIME, 'yyyy-mm-dd HH24:mi:ss') A_KF_MIDDLE_TIME,
-			a.KF_END_PHONE A_KF_END_PHONE,
-			to_char(a.KF_END_TIME, 'yyyy-mm-dd HH24:mi:ss') A_KF_END_TIME,
-			a.PATIENT_SIGN_PHONE A_PATIENT_SIGN_PHONE,
-			to_char(a.ORDER_START_TIME, 'yyyy-mm-dd HH24:mi:ss') A_ORDER_START_TIME,
-			to_char(a.ORDER_END_TIME, 'yyyy-mm-dd HH24:mi:ss') A_ORDER_END_TIME,
-			a.KF_TIMES A_KF_TIMES,
-			to_char(a.CREATE_TIME, 'yyyy-mm-dd HH24:mi:ss') A_CREATE_TIME,
-			to_char(a.UPDATE_TIME, 'yyyy-mm-dd HH24:mi:ss') A_UPDATE_TIME,
-			a.ORDER_STATUS A_ORDER_STATUS,
-			a.ABLE_FLAG A_ABLE_FLAG,
-			a.EMPTY_CODE_REASON A_EMPTY_CODE_REASON, 
-			a.CREATE_OPR_NAME A_CREATE_OPR_NAME, 
-			a.ORDER_TYPE A_ORDER_TYPE, 
-			
-			b.MAXACCEPT B_MAXACCEPT,
-			b.PATIENT_TYPE B_PATIENT_TYPE,  
-			b.PATIENT_NAME B_PATIENT_NAME,  
-			b.PATIENT_SEX B_PATIENT_SEX,
-			b.PATENT_NATION B_PATENT_NATION,
-			b.CARD_ID B_CARD_ID,
-			b.TEL B_TEL,
-			b.PHONE B_PHONE,
-			b.ADDRESS B_ADDRESS,
-			b.STREET_COMM B_STREET_COMM,
-			b.PATHOGENY B_PATHOGENY,
-			b.NOW_PRESENT B_NOW_PRESENT,
-			b.HIS_PRESENT B_HIS_PRESENT,
-			b.C_CARD_ID B_C_CARD_ID,
-			b.C_CARD_SUB B_C_CARD_SUB,
-			b.GU_NAME B_GU_NAME,
-			b.GU_TEL B_GU_TEL,
-			b.GU_RELATIVE B_GU_RELATIVE,
-			b.EM_NAME B_EM_NAME,
-			b.EM_TEL B_EM_TEL,
-			b.EM_RELATIVE B_EM_RELATIVE,
-			b.CARD_POSITIVE B_CARD_POSITIVE,
-			b.CARD_OTHER B_CARD_OTHER,
-			b.C_CARD_INDEX B_C_CARD_INDEX,
-			b.C_CARD_PHOTO B_C_CARD_PHOTO,
-			b.HB_INDEX B_HB_INDEX,
-			b.HB_SELF B_HB_SELF,
-			b.TOGETHER_PHONE B_TOGETHER_PHONE,
-			to_char(b.CREATE_TIME, 'yyyy-mm-dd HH24:mi:ss') B_CREATE_TIME, 
-			to_char(b.UPDATE_TIME, 'yyyy-mm-dd HH24:mi:ss') B_UPDATE_TIME, 
-			b.UPDATE_OPR B_UPDATE_OPR, 
-			b.UPDATE_OPR_NAME B_UPDATE_OPR_NAME, 
-			b.MAKE_FLAG B_MAKE_FLAG,  
-			b.ABLE_FLAG B_ABLE_FLAG,  
-			b.FW_TIMES B_FW_TIMES,  
-			to_char(b.SERVER_TIME, 'yyyy-mm-dd HH24:mi:ss') B_SERVER_TIME,  
-			b.SERVER_OPR B_SERVER_OPR,
-			b.SERVER_OPR_NAME B_SERVER_OPR_NAME,
-			b.VERSION B_VERSION
-		from t_order a, t_patient b
-		where a.patient_id=b.maxaccept
-		<if test="orderAbleFlag != null and orderAbleFlag !='' ">
-			and a.ABLE_FLAG=#{orderAbleFlag}
-		</if>
-		<if test="patientAbleFlag != null and patientAbleFlag !='' ">
-			and b.ABLE_FLAG=#{patientAbleFlag}
-		</if>
-		<if test="makeFlag != null and makeFlag !='' ">
-			and b.MAKE_FLAG in (${makeFlag})
-		</if>
-		<if test="maxaccept != null and maxaccept !='' ">
-			and a.maxaccept=#{maxaccept}
-		</if>
-		<if test="oprID != null and oprID !='' ">
-			and a.OPR_ID=#{oprID}
-		</if>
-		<if test="orderStatus != null and orderStatus !='' ">
-			and a.ORDER_STATUS=#{orderStatus}
-		</if>
-		order by b.server_time desc
-	</select>
-	
-	<select id="getPageOrder" parameterType="java.util.Map" resultType="java.util.Map">
-		select 
-			a.MAXACCEPT A_MAXACCEPT,
-			a.PATIENT_ID A_PATIENT_ID,
-			a.PATIENT_NAME A_PATIENT_NAME,
-			a.OPR_ID A_OPR_ID,
-			a.OPR_NAME A_OPR_NAME,
-			a.PROJECT_TYPE A_PROJECT_TYPE,
-			a.PAY_TYPE A_PAY_TYPE,
-			a.PAY_FEE A_PAY_FEE,
-			a.KF_BEFORE_PHONE A_KF_BEFORE_PHONE,
-			a.KF_BEFORE_TIME A_KF_BEFORE_TIME,
-			a.KF_MIDDLE_PHONE A_KF_MIDDLE_PHONE,
-			a.KF_MIDDLE_TIME A_KF_MIDDLE_TIME,
-			a.KF_END_PHONE A_KF_END_PHONE,
-			a.KF_END_TIME A_KF_END_TIME,
-			to_char(a.ORDER_START_TIME, 'yyyy-mm-dd HH24:mi:ss') A_ORDER_START_TIME,
-			to_char(a.ORDER_END_TIME, 'yyyy-mm-dd HH24:mi:ss') A_ORDER_END_TIME,
-			a.KF_TIMES A_KF_TIMES,
-			to_char(a.CREATE_TIME, 'yyyy-mm-dd HH24:mi:ss') A_CREATE_TIME,
-			to_char(a.UPDATE_TIME, 'yyyy-mm-dd HH24:mi:ss') A_UPDATE_TIME,
-			a.ORDER_STATUS A_ORDER_STATUS,
-			a.ABLE_FLAG A_ABLE_FLAG,
-			
-			c.MAXACCEPT C_MAXACCEPT, 
-			c.USER_ACCOUNT C_USER_ACCOUNT, 
-			c.USER_PWD C_USER_PWD, 
-			c.USER_LEVEL C_USER_LEVEL,
-			c.DEPT_CODE C_DEPT_CODE, 
-			c.USER_NAME C_USER_NAME, 
-			c.PHONE C_PHONE, 
-			c.ADDRESS C_ADDRESS, 
-			c.USER_ROLE C_USER_ROLE, 
-			c.IS_ONLINE C_IS_ONLINE
-		from t_order a, t_user c 
-		where a.opr_id=c.maxaccept 
-		<if test="orderAbleFlag != null and orderAbleFlag !='' ">
-			and a.ABLE_FLAG=#{orderAbleFlag}
-		</if>
-		<if test="maxaccept != null and maxaccept !='' ">
-			and a.maxaccept=#{maxaccept}
-		</if>
-		<if test="orderStatus != null and orderStatus !='' ">
-			and a.ORDER_STATUS=#{orderStatus}
-		</if>
-		<if test="deptCode != null and deptCode !='' ">
-			and c.DEPT_CODE in (${deptCode})
-		</if>
-		<if test="orderOprID != null and orderOprID !='' ">
-			and a.OPR_ID=#{orderOprID}
-		</if>
-		<if test="projectType != null and projectType !='' ">
-			and a.PROJECT_TYPE=#{projectType}
-		</if>
-		<if test="beginTime != null and beginTime !='' ">
-			and a.CREATE_TIME>=#{beginTime}
-		</if>
-		<if test="endTime != null and endTime !='' ">
-			<![CDATA[and a.CREATE_TIME<=#{endTime}]]>
-		</if>
-		order by a.create_time desc
-	</select>
-	
-	<select id="getOrderList" parameterType="java.util.Map" resultType="java.util.Map">
-		select 
-			a.MAXACCEPT A_MAXACCEPT,
-			a.PATIENT_ID A_PATIENT_ID,
-			a.PATIENT_NAME A_PATIENT_NAME,
-			a.OPR_ID A_OPR_ID,
-			a.OPR_NAME A_OPR_NAME,
-			a.PROJECT_TYPE A_PROJECT_TYPE,
-			a.PAY_TYPE A_PAY_TYPE,
-			a.PAY_FEE A_PAY_FEE,
-			a.KF_BEFORE_PHONE A_KF_BEFORE_PHONE,
-			a.KF_BEFORE_TIME A_KF_BEFORE_TIME,
-			a.KF_MIDDLE_PHONE A_KF_MIDDLE_PHONE,
-			a.KF_MIDDLE_TIME A_KF_MIDDLE_TIME,
-			a.KF_END_PHONE A_KF_END_PHONE,
-			a.KF_END_TIME A_KF_END_TIME,
-			a.PATIENT_SIGN_PHONE A_PATIENT_SIGN_PHONE,
-			to_char(a.ORDER_START_TIME, 'yyyy-mm-dd HH24:mi:ss') A_ORDER_START_TIME,
-			to_char(a.ORDER_END_TIME, 'yyyy-mm-dd HH24:mi:ss') A_ORDER_END_TIME,
-			a.KF_TIMES A_KF_TIMES,
-			to_char(a.CREATE_TIME, 'yyyy-mm-dd HH24:mi:ss') A_CREATE_TIME,
-			to_char(a.UPDATE_TIME, 'yyyy-mm-dd HH24:mi:ss') A_UPDATE_TIME,
-			a.ORDER_STATUS A_ORDER_STATUS,
-			a.ABLE_FLAG A_ABLE_FLAG,
-			
-			b.MAXACCEPT B_MAXACCEPT,
-			b.PATIENT_TYPE B_PATIENT_TYPE,  
-			b.PATIENT_NAME B_PATIENT_NAME,  
-			b.PATIENT_SEX B_PATIENT_SEX,
-			b.PATENT_NATION B_PATENT_NATION,
-			b.CARD_ID B_CARD_ID,
-			b.TEL B_TEL,
-			b.PHONE B_PHONE,
-			b.ADDRESS B_ADDRESS,
-			b.STREET_COMM B_STREET_COMM,
-			b.PATHOGENY B_PATHOGENY,
-			b.NOW_PRESENT B_NOW_PRESENT,
-			b.HIS_PRESENT B_HIS_PRESENT,
-			b.C_CARD_ID B_C_CARD_ID,
-			b.C_CARD_SUB B_C_CARD_SUB,
-			b.GU_NAME B_GU_NAME,
-			b.GU_TEL B_GU_TEL,
-			b.GU_RELATIVE B_GU_RELATIVE,
-			b.EM_NAME B_EM_NAME,
-			b.EM_TEL B_EM_TEL,
-			b.EM_RELATIVE B_EM_RELATIVE,
-			b.CARD_POSITIVE B_CARD_POSITIVE,
-			b.CARD_OTHER B_CARD_OTHER,
-			b.C_CARD_INDEX B_C_CARD_INDEX,
-			b.C_CARD_PHOTO B_C_CARD_PHOTO,
-			b.HB_INDEX B_HB_INDEX,
-			b.HB_SELF B_HB_SELF,
-			b.TOGETHER_PHONE B_TOGETHER_PHONE,
-			b.CREATE_TIME B_CREATE_TIME, 
-			b.UPDATE_TIME B_UPDATE_TIME, 
-			b.UPDATE_OPR B_UPDATE_OPR, 
-			b.UPDATE_OPR_NAME B_UPDATE_OPR_NAME, 
-			b.MAKE_FLAG B_MAKE_FLAG,  
-			b.ABLE_FLAG B_ABLE_FLAG,  
-			b.FW_TIMES B_FW_TIMES,  
-			to_char(b.SERVER_TIME, 'yyyy-mm-dd HH24:mi:ss') B_SERVER_TIME,  
-			b.SERVER_OPR B_SERVER_OPR,
-			b.SERVER_OPR_NAME B_SERVER_OPR_NAME,
-			b.VERSION B_VERSION,
-			
-			c.MAXACCEPT C_MAXACCEPT, 
-			c.USER_ACCOUNT C_USER_ACCOUNT, 
-			c.USER_PWD C_USER_PWD, 
-			c.USER_LEVEL C_USER_LEVEL,
-			c.DEPT_CODE C_DEPT_CODE, 
-			c.USER_NAME C_USER_NAME, 
-			c.PHONE C_PHONE, 
-			c.ADDRESS C_ADDRESS, 
-			c.USER_ROLE C_USER_ROLE, 
-			c.IS_ONLINE C_IS_ONLINE
-		from t_order a, t_patient b, t_user c 
-		where a.patient_id=b.maxaccept and a.opr_id=c.maxaccept 
-		<if test="orderAbleFlag != null and orderAbleFlag !='' ">
-			and a.ABLE_FLAG=#{orderAbleFlag}
-		</if>
-		<if test="patientAbleFlag != null and patientAbleFlag !='' ">
-			and b.ABLE_FLAG=#{patientAbleFlag}
-		</if>
-		<if test="makeFlag != null and makeFlag !='' ">
-			and b.MAKE_FLAG in (${makeFlag})
-		</if>
-		<if test="maxaccept != null and maxaccept !='' ">
-			and a.maxaccept=#{maxaccept}
-		</if>
-		<if test="oprID != null and oprID !='' ">
-			and b.UPDATE_OPR=#{oprID}
-		</if>
-		<if test="orderStatus != null and orderStatus !='' ">
-			and a.ORDER_STATUS=#{orderStatus}
-		</if>
-		<if test="deptCode != null and deptCode !='' ">
-			and c.DEPT_CODE in (${deptCode})
-		</if>
-		<if test="orderOprID != null and orderOprID !='' ">
-			and a.OPR_ID=#{orderOprID}
-		</if>
-		<if test="projectType != null and projectType !='' ">
-			and a.PROJECT_TYPE=#{projectType}
-		</if>
-		<if test="beginTime != null and beginTime !='' ">
-			and a.CREATE_TIME>=#{beginTime}
-		</if>
-		<if test="endTime != null and endTime !='' ">
-			<![CDATA[and a.CREATE_TIME<=#{endTime}]]>
-		</if>
-		order by a.create_time desc
-	</select>
-	
-	<select id="getOrderBasePatientDet" parameterType="java.util.Map" resultType="java.util.Map">
-		select 
-			a.MAXACCEPT A_MAXACCEPT,
-			a.PATIENT_ID A_PATIENT_ID,
-			a.PATIENT_NAME A_PATIENT_NAME,
-			a.OPR_ID A_OPR_ID,
-			a.OPR_NAME A_OPR_NAME,
-			a.PROJECT_TYPE A_PROJECT_TYPE,
-			a.PAY_TYPE A_PAY_TYPE,
-			a.PAY_FEE A_PAY_FEE,
-			a.KF_BEFORE_PHONE A_KF_BEFORE_PHONE,
-			a.KF_BEFORE_TIME A_KF_BEFORE_TIME,
-			a.KF_MIDDLE_PHONE A_KF_MIDDLE_PHONE,
-			a.KF_MIDDLE_TIME A_KF_MIDDLE_TIME,
-			a.KF_END_PHONE A_KF_END_PHONE,
-			a.KF_END_TIME A_KF_END_TIME,
-			a.PATIENT_SIGN_PHONE A_PATIENT_SIGN_PHONE,
-			a.ORDER_START_TIME A_ORDER_START_TIME,
-			a.ORDER_END_TIME A_ORDER_END_TIME,
-			a.KF_TIMES A_KF_TIMES,
-			a.CREATE_TIME A_CREATE_TIME,
-			a.UPDATE_TIME A_UPDATE_TIME,
-			a.ORDER_STATUS A_ORDER_STATUS,
-			a.ABLE_FLAG A_ABLE_FLAG,
-			
-			b.MAXACCEPT B_MAXACCEPT,
-			b.PATIENT_TYPE B_PATIENT_TYPE,  
-			b.PATIENT_NAME B_PATIENT_NAME,  
-			b.PATIENT_SEX B_PATIENT_SEX,
-			b.PATENT_NATION B_PATENT_NATION,
-			b.CARD_ID B_CARD_ID,
-			b.TEL B_TEL,
-			b.PHONE B_PHONE,
-			b.ADDRESS B_ADDRESS,
-			b.STREET_COMM B_STREET_COMM,
-			b.PATHOGENY B_PATHOGENY,
-			b.NOW_PRESENT B_NOW_PRESENT,
-			b.HIS_PRESENT B_HIS_PRESENT,
-			b.C_CARD_ID B_C_CARD_ID,
-			b.C_CARD_SUB B_C_CARD_SUB,
-			b.GU_NAME B_GU_NAME,
-			b.GU_TEL B_GU_TEL,
-			b.GU_RELATIVE B_GU_RELATIVE,
-			b.EM_NAME B_EM_NAME,
-			b.EM_TEL B_EM_TEL,
-			b.EM_RELATIVE B_EM_RELATIVE,
-			b.CARD_POSITIVE B_CARD_POSITIVE,
-			b.CARD_OTHER B_CARD_OTHER,
-			b.C_CARD_INDEX B_C_CARD_INDEX,
-			b.C_CARD_PHOTO B_C_CARD_PHOTO,
-			b.HB_INDEX B_HB_INDEX,
-			b.HB_SELF B_HB_SELF,
-			b.TOGETHER_PHONE B_TOGETHER_PHONE,
-			b.CREATE_TIME B_CREATE_TIME, 
-			b.UPDATE_TIME B_UPDATE_TIME, 
-			b.UPDATE_OPR B_UPDATE_OPR, 
-			b.UPDATE_OPR_NAME B_UPDATE_OPR_NAME, 
-			b.MAKE_FLAG B_MAKE_FLAG,  
-			b.ABLE_FLAG B_ABLE_FLAG,  
-			b.FW_TIMES B_FW_TIMES,  
-			b.SERVER_TIME B_SERVER_TIME,  
-			b.SERVER_OPR B_SERVER_OPR,
-			b.SERVER_OPR_NAME B_SERVER_OPR_NAME,
-			b.VERSION B_VERSION
-		from t_order a, t_patient_temp b
-		where a.patient_id=b.maxaccept
-		<if test="orderAbleFlag != null and orderAbleFlag !='' ">
-			and a.ABLE_FLAG=#{orderAbleFlag}
-		</if>
-		<if test="patientAbleFlag != null and patientAbleFlag !='' ">
-			and b.ABLE_FLAG=#{patientAbleFlag}
-		</if>
-		<if test="maxaccept != null and maxaccept !='' ">
-			and a.maxaccept=#{maxaccept}
-		</if>
-		<if test="oprID != null and oprID !='' ">
-			and b.UPDATE_OPR=#{oprID}
-		</if>
-	</select>
-	
-	<select id="getOrderByParam" parameterType="java.util.Map" resultType="java.util.Map">
-		select 
-		  a.MAXACCEPT,a.PATIENT_ID,a.PATIENT_NAME,a.OPR_ID,OPR_NAME,
-		  PROJECT_TYPE,a.PAY_TYPE,a.PAY_FEE,a.KF_BEFORE_PHONE,a.KF_BEFORE_TIME,
-		  a.KF_MIDDLE_PHONE,a.KF_MIDDLE_TIME,a.KF_END_PHONE,a.KF_END_TIME,a.PATIENT_SIGN_PHONE,
-		  a.ORDER_START_TIME,a.ORDER_END_TIME,a.KF_TIMES,a.CREATE_TIME,a.UPDATE_TIME,a.ORDER_STATUS,a.ABLE_FLAG
-		from t_order a where 1=1
-		and maxaccept=#{maxaccept}
-	</select>
-	
-	<insert id="insertOrder" parameterType="java.util.Map">
-		insert into t_order (
-			MAXACCEPT,CREATE_TIME,UPDATE_TIME
-			<if test="patientID != null and patientID !='' ">
-				,PATIENT_ID
+	<insert id="saveInitOrder" parameterType="java.util.Map">
+		insert into t_order(
+			MAXACCEPT, 
+			<if test="custName != null and custName !='' ">
+				CUST_NAME, 
 			</if>
-			<if test="patientName != null and patientName !='' ">
-				,PATIENT_NAME
+			<if test="connPhone != null and connPhone !='' ">
+				CONN_PHONE, 
+			</if>
+			<if test="custAdr != null and custAdr !='' ">
+				CUST_ADR,
+			</if>
+			<if test="markContent != null and markContent !='' ">
+				MARK_CONTENT,
+			</if>
+			<if test="isSend != null and isSend !='' ">
+				IS_SEND,
 			</if>
 			<if test="oprID != null and oprID !='' ">
-				,OPR_ID
+				CREATE_OPR_ID,
 			</if>
 			<if test="oprName != null and oprName !='' ">
-				,OPR_NAME
+				CREATE_OPR_NAME,
 			</if>
-			<if test="projectType != null and projectType !='' ">
-				,PROJECT_TYPE
+			<if test="sendOprID != null and sendOprID !='' ">
+				SEND_OPR_ID,
 			</if>
-			<if test="payType != null and payType !='' ">
-				,PAY_TYPE
+			<if test="sendOprName != null and sendOprName !='' ">
+				SEND_OPR_NAME,
 			</if>
-			<if test="payFee != null and payFee !='' ">
-				,PAY_FEE
+			<if test="sendOprID != null and sendOprID !='' ">
+				SEND_TIME,
 			</if>
-			<if test="kfBeforePhotoPath != null and kfBeforePhotoPath !='' ">
-				,KF_BEFORE_PHONE, KF_BEFORE_TIME
+			<if test="markContent != null and markContent !='' ">
+				SEND_MARK,
 			</if>
-			<if test="kfMiddlePhoto != null and kfMiddlePhoto !='' ">
-				,KF_MIDDLE_PHONE, KF_MIDDLE_TIME
+			<if test="oprDeptID != null and oprDeptID !='' ">
+				OPR_DEPT,
 			</if>
-			<if test="kfEndPhoto != null and kfEndPhoto !='' ">
-				,KF_END_PHONE, KF_END_TIME
+			<if test="oprDeptName != null and oprDeptName !='' ">
+				OPR_DEPT_NAME,
 			</if>
-			<if test="beginTime != null and beginTime !='' ">
-				,ORDER_START_TIME
+			<if test="sendDeptCode != null and sendDeptCode !='' ">
+				SEDN_OPR_DEPT,
 			</if>
-			<if test="endTime != null and endTime !='' ">
-				,ORDER_END_TIME
+			<if test="sendDeptName != null and sendDeptName !='' ">
+				SEDN_OPR_DEPT_NAME,
 			</if>
-			<if test="orderStatus != null and orderStatus !='' ">
-				,ORDER_STATUS
-			</if>
-			<if test="ableFlag != null and ableFlag !='' ">
-				,ABLE_FLAG
-			</if>
-			<if test="patientSign != null and patientSign !='' ">
-				,PATIENT_SIGN_PHONE
-			</if>
-			<if test="orderType != null and orderType !='' ">
-				,ORDER_TYPE
-			</if>
-			<if test="createOpr != null and createOpr !='' ">
-				,CREATE_OPR
-			</if>
-			<if test="createOprName != null and createOprName !='' ">
-				,CREATE_OPR_NAME
-			</if>
+			CREATE_TIME
 		) values (
-			#{maxaccept},sysdate,sysdate
-			<if test="patientID != null and patientID !='' ">
-				,#{patientID}
+			#{maxaccept}, 
+			<if test="custName != null and custName !='' ">
+				#{custName}, 
 			</if>
-			<if test="patientName != null and patientName !='' ">
-				,#{patientName}
+			<if test="connPhone != null and connPhone !='' ">
+				#{connPhone}, 
+			</if>
+			<if test="custAdr != null and custAdr !='' ">
+				#{custAdr},
+			</if>
+			<if test="markContent != null and markContent !='' ">
+				#{markContent},
+			</if>
+			<if test="isSend != null and isSend !='' ">
+				#{isSend},
 			</if>
 			<if test="oprID != null and oprID !='' ">
-				,#{oprID}
+				#{oprID},
 			</if>
 			<if test="oprName != null and oprName !='' ">
-				,#{oprName}
+				#{oprName},
 			</if>
-			<if test="projectType != null and projectType !='' ">
-				,#{projectType}
+			<if test="sendOprID != null and sendOprID !='' ">
+				#{sendOprID},
 			</if>
-			<if test="payType != null and payType !='' ">
-				,#{payType}
+			<if test="sendOprName != null and sendOprName !='' ">
+				#{sendOprName},
 			</if>
-			<if test="payFee != null and payFee !='' ">
-				,#{payFee}
+			<if test="sendOprID != null and sendOprID !='' ">
+				sysdate,
 			</if>
-			<if test="kfBeforePhotoPath != null and kfBeforePhotoPath !='' ">
-				,#{kfBeforePhotoPath}, sysdate
+			<if test="markContent != null and markContent !='' ">
+				#{markContent},
 			</if>
-			<if test="kfMiddlePhoto != null and kfMiddlePhoto !='' ">
-				,#{kfMiddlePhoto}, sysdate
+			<if test="oprDeptID != null and oprDeptID !='' ">
+				#{oprDeptID},
 			</if>
-			<if test="kfEndPhoto != null and kfEndPhoto !='' ">
-				,#{kfEndPhoto}, sysdate
+			<if test="oprDeptName != null and oprDeptName !='' ">
+				#{oprDeptName},
 			</if>
-			<if test="beginTime != null and beginTime !='' ">
-				,to_date(#{beginTime}, 'yyyy-mm-dd HH24:mi:ss')
+			<if test="sendDeptCode != null and sendDeptCode !='' ">
+				#{sendDeptCode},
 			</if>
-			<if test="endTime != null and endTime !='' ">
-				,to_date(#{endTime}, 'yyyy-mm-dd HH24:mi:ss')
+			<if test="sendDeptName != null and sendDeptName !='' ">
+				#{sendDeptName},
 			</if>
-			<if test="orderStatus != null and orderStatus !='' ">
-				,#{orderStatus}
-			</if>
-			<if test="ableFlag != null and ableFlag !='' ">
-				,#{ableFlag}
-			</if>
-			<if test="patientSign != null and patientSign !='' ">
-				,#{patientSign}
-			</if>
-			<if test="orderType != null and orderType !='' ">
-				,#{orderType}
-			</if>
-			<if test="createOpr != null and createOpr !='' ">
-				,#{createOpr}
-			</if>
-			<if test="createOprName != null and createOprName !='' ">
-				,#{createOprName}
-			</if>
+			sysdate
 		)
 	</insert>
 	
-	<update id="updateOrderInfoApp" parameterType="java.util.Map">
-		update t_order 
-		<trim prefix="set" suffixOverrides=",">
-			<if test="ableFlag != null and ableFlag != '' ">ABLE_FLAG=#{ableFlag},</if>
-			<if test="imgBase64 != null and imgBase64 != '' ">PATIENT_SIGN_PHONE=#{imgBase64},</if>
-			<if test="orderStatus != null and orderStatus != '' ">ORDER_STATUS=#{orderStatus},</if>
-			
-			<!-- 暂时保存、保存修改以下参数 -->
-			<if test="projectType != null and projectType != '' ">PROJECT_TYPE=#{projectType},</if>
-			<if test="payType != null and payType != '' ">PAY_TYPE=#{payType},</if>
-			<if test="payFee != null and payFee != '' ">PAY_FEE=#{payFee},</if>
-			<if test="kfBeforePhoto != null and kfBeforePhoto != '' ">KF_BEFORE_PHONE=#{kfBeforePhoto},</if>
-			<if test="kfBeforePhoto != null and kfBeforePhoto != '' ">KF_BEFORE_TIME=sysdate,</if>
-			<if test="kfMiddlePhoto != null and kfMiddlePhoto != '' ">KF_MIDDLE_PHONE=#{kfMiddlePhoto},</if>
-			<if test="kfMiddlePhoto != null and kfMiddlePhoto != '' ">KF_MIDDLE_TIME=sysdate,</if>
-			<if test="kfEndPhoto != null and kfEndPhoto != '' ">KF_END_PHONE=#{kfEndPhoto},</if>
-			<if test="kfEndPhoto != null and kfEndPhoto != '' ">KF_END_TIME=sysdate,</if>
-			<if test='saveFlag != null and saveFlag != "" and saveFlag == "1" '>ORDER_END_TIME=sysdate,</if>
-			<if test='saveFlag != null and saveFlag != "" and saveFlag == "1" '>KF_TIMES=KF_TIMES+1,</if>
-			UPDATE_TIME=sysdate,
-			<if test='saveFlag != null and saveFlag != "" and saveFlag == "0" '>ORDER_STATUS='10600',</if>
-			<if test='saveFlag != null and saveFlag != "" and saveFlag == "1" '>ORDER_STATUS='10601',</if>
-			<if test="codeError != null and codeError != '' ">EMPTY_CODE_REASON=#{codeError},</if>
-			
-			<!-- 后台工单修改修改参数 -->
-			<if test="patientID != null and patientID != '' ">PATIENT_ID=#{patientID},</if>
-			<if test="patientName != null and patientName != '' ">PATIENT_NAME=#{patientName},</if>
-			<if test="serverBeginTime != null and serverBeginTime != '' ">ORDER_START_TIME=to_date(#{serverBeginTime}, 'yyyy-mm-dd HH24:mi:ss'),</if>
-			<if test="serverEndTime != null and serverEndTime != '' ">ORDER_END_TIME=to_date(#{serverEndTime}, 'yyyy-mm-dd HH24:mi:ss'),</if>
-			<if test="oprID != null and oprID != '' ">OPR_ID=#{oprID},</if>
-			<if test="oprName != null and oprName != '' ">OPR_NAME=#{oprName},</if>
-			<if test="createOpr != null and createOpr != '' ">CREATE_OPR=#{createOpr},</if>
-			<if test="createOprName != null and createOprName != '' ">CREATE_OPR_NAME=#{createOprName},</if>
-			<if test="patientSign != null">PATIENT_SIGN_PHONE=#{patientSign},</if>
-		</trim>
-		where maxaccept=#{maxaccept}
-	</update>
-	
-	<update id="updateOrderInfo" parameterType="java.util.Map">
-		update t_order 
-		<trim prefix="set" suffixOverrides=",">
-			<if test="ableFlag != null and ableFlag != '' ">ABLE_FLAG=#{ableFlag},</if>
-			<if test="imgBase64 != null and imgBase64 != '' ">PATIENT_SIGN_PHONE=#{imgBase64},</if>
-			<if test="orderStatus != null and orderStatus != '' ">ORDER_STATUS=#{orderStatus},</if>
-			
-			<!-- 暂时保存、保存修改以下参数 -->
-			<if test="projectType != null and projectType != '' ">PROJECT_TYPE=#{projectType},</if>
-			<if test="payType != null and payType != '' ">PAY_TYPE=#{payType},</if>
-			<if test="payFee != null and payFee != '' ">PAY_FEE=#{payFee},</if>
-			<if test="kfBeforePhoto != null">KF_BEFORE_PHONE=#{kfBeforePhoto},</if>
-			<if test="kfBeforePhoto != null">KF_BEFORE_TIME=sysdate,</if>
-			<if test="kfMiddlePhoto != null">KF_MIDDLE_PHONE=#{kfMiddlePhoto},</if>
-			<if test="kfMiddlePhoto != null">KF_MIDDLE_TIME=sysdate,</if>
-			<if test="kfEndPhoto != null">KF_END_PHONE=#{kfEndPhoto},</if>
-			<if test="kfEndPhoto != null">KF_END_TIME=sysdate,</if>
-			<if test='saveFlag != null and saveFlag != "" and saveFlag == "1" '>ORDER_END_TIME=sysdate,</if>
-			<if test='saveFlag != null and saveFlag != "" and saveFlag == "1" '>KF_TIMES=KF_TIMES+1,</if>
-			UPDATE_TIME=sysdate,
-			<if test='saveFlag != null and saveFlag != "" and saveFlag == "0" '>ORDER_STATUS='10600',</if>
-			<if test='saveFlag != null and saveFlag != "" and saveFlag == "1" '>ORDER_STATUS='10601',</if>
-			<if test="codeError != null and codeError != '' ">EMPTY_CODE_REASON=#{codeError},</if>
-			
-			<!-- 后台工单修改修改参数 -->
-			<if test="patientID != null and patientID != '' ">PATIENT_ID=#{patientID},</if>
-			<if test="patientName != null and patientName != '' ">PATIENT_NAME=#{patientName},</if>
-			<if test="serverBeginTime != null and serverBeginTime != '' ">ORDER_START_TIME=to_date(#{serverBeginTime}, 'yyyy-mm-dd HH24:mi:ss'),</if>
-			<if test="serverEndTime != null and serverEndTime != '' ">ORDER_END_TIME=to_date(#{serverEndTime}, 'yyyy-mm-dd HH24:mi:ss'),</if>
-			<if test="oprID != null and oprID != '' ">OPR_ID=#{oprID},</if>
-			<if test="oprName != null and oprName != '' ">OPR_NAME=#{oprName},</if>
-			<if test="createOpr != null and createOpr != '' ">CREATE_OPR=#{createOpr},</if>
-			<if test="createOprName != null and createOprName != '' ">CREATE_OPR_NAME=#{createOprName},</if>
-			<if test="patientSign != null">PATIENT_SIGN_PHONE=#{patientSign},</if>
-		</trim>
-		where maxaccept=#{maxaccept}
-	</update>
-	
-	<select id="getCodeNum" parameterType="java.util.Map" resultType="java.util.Map">
-		select maxaccept, phone, code_num, create_time, order_id, rownum rn from (
-			select maxaccept, phone, code_num, create_time, order_id from 
-			t_code_num 
-			where order_id=#{maxaccept} and code_num=#{codeNum} 
-			order by create_time desc
-		) where rownum=1
-	</select>
-	
-	<update id="updateStartTime" parameterType="java.util.Map">
-		update t_order set ORDER_START_TIME=decode(ORDER_START_TIME, '', sysdate, ORDER_START_TIME), ORDER_STATUS='10600' 
-		where maxaccept=#{maxaccept}
-	</update>
-	
-	<delete id="delOrder" parameterType="java.util.Map">
-		delete from t_order where maxaccept in (${maxaccept})
-	</delete>
-	
-	<select id="getStatisticsList" parameterType="java.util.Map" resultType="java.util.Map">
-		select distinct d.user_name,d.maxaccept,
-      		sum(decode(project_type, '10400',1,0)) HMB_CONUT, 
-       		sum(decode(project_type, '10401',1,0)) ZJ_COUNT, 
-       		sum(decode(project_type, '10402',1,0)) BG_COUNT, 
-       		sum(decode(project_type, '10403',1,0)) ZTKF_COUNT, 
-       		sum(decode(project_type, '10404',1,0)) QT_COUNT
-		from (select c.role_level, b.dept_code, b.maxaccept,b.user_name from t_user b left join t_role c on b.user_role = c.maxaccept 
-		where 1=1
-		<if test="deptCode != null and deptCode !='' ">
- 			and b.DEPT_CODE in (${deptCode})
-		</if> )d 
-		left join  (select a.order_status,a.opr_id,a.able_flag,project_type from t_order a 
- 		where a.able_flag='10900' 
- 		<if test="orderStatus !=null and orderStatus !=''">
-			and a.ORDER_STATUS in (${orderStatus})
- 		</if>
- 		<if test="beginTime != null and beginTime != ''">
-			and a.CREATE_TIME >=#{beginTime}
-		</if>
-		<if test="endTime != null and endTime != ''">
-			<![CDATA[and a.CREATE_TIME<=#{endTime}]]>
-		</if>
-		)c on c.opr_id=d.maxaccept
-		where d.role_level = '11302' 
-		group by d.user_name,d.maxaccept  order by d.user_name
- 	</select>
-	
-	<select id="getStatisticsTotal" parameterType="java.util.Map" resultType="java.util.Map">
-		select project_type, count( project_type)as sum from t_order a left join 
-		(select c.role_level,b.dept_code,b.maxaccept,b.user_name from t_user b left join t_role c on b.user_role =c.maxaccept) d on a.opr_id=d.maxaccept
-		where a.able_flag='10900' 
-		and d.role_level = '11302'
-		<if test="orderStatus !=null and orderStatus !=''">
-		 	AND a.ORDER_STATUS in (${orderStatus})
-		</if>
-	    <if test="beginTime != null and beginTime != ''">
-	    	and a.CREATE_TIME >=#{beginTime}
-	    </if>
-	    <if test="endTime != null and endTime != ''">
-	    	<![CDATA[and a.CREATE_TIME<=#{endTime}]]>
-	    </if>
-    	<if test="deptCode != null and deptCode !='' ">
-    		and d.DEPT_CODE in (${deptCode})
-   		</if> 
-		group by project_type
-			<!-- select project_type, count( project_type)as sum from (t_order a left join t_user b on a.opr_id=b.maxaccept)
-			left join t_role c  on c.maxaccept=b.user_role
-			where a.able_flag='10900' 
-			AND a.CREATE_TIME >=#{beginTime} <![CDATA[and a.CREATE_TIME<=#{endTime}]]>
-			<if test="orderStatus !=null and orderStatus !=''">
-		 		AND a.ORDER_STATUS in (${orderStatus})
-			</if>
-			<if test="deptCode != null and deptCode !='' ">
-		 		and b.DEPT_CODE in (${deptCode})
-			</if>
-		group by project_type  -->
-	</select>
+	<insert id="saveOrderList" parameterType="java.util.Map">
+		insert into t_order_list 
+		select MAXACCEPT,CUST_NAME,CONN_PHONE,CUST_ADR,MARK_CONTENT,IS_SEND,CREATE_OPR_ID,CREATE_OPR_NAME,CREATE_TIME, 
+			#{sendOprID},#{sendOprName},sysdate,#{markContent},#{oprDeptID},#{oprDeptName},#{sendDeptCode},#{sendDeptName}
+		from t_order where maxaccept=#{maxaccept}
+	</insert>
 </mapper>  

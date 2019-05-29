@@ -92,8 +92,13 @@ public class OrderServiceImpl implements OrderService {
 		return orderDao.getStatisticsTotal(param);
 	}
 
+	@Override
+	public void saveInitOrder(Map<String, String> param) {
+		orderDao.saveInitOrder(param);
+	}
 
-
-
-	
+	@Override
+	public void saveOrderList(Map<String, String> param) {
+		orderDao.saveOrderList(param);
+	}
 }

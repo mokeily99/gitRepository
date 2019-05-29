@@ -208,7 +208,7 @@
 	<fieldset class="layui-elem-field site-demo-button" style=";padding:20px;border:1px solid rgba(26, 159, 147, 1);">
 		<legend>工单创建</legend>
 		
-		<form class="layui-form layui-form-pane" action="">
+			<form lay-filter="show_screen_form" class="layui-form" action="" id="show_screen_form">
 		   	<div class="layui-inline">
 			    <label class="layui-form-label">客户姓名</label>
 			    <div class="layui-input-inline">
@@ -218,19 +218,19 @@
 		  	<div class="layui-inline" style="float:right;">
 			    <label class="layui-form-label">联系电话</label>
 			    <div class="layui-input-inline">
-			      <input type="text" name="conn_phone" id="conn_phone" lay-verify="required|phone" placeholder="请输入" autocomplete="off" class="layui-input">
+			      <input type="text" placeholder="请输入" name="conn_phone" id="conn_phone" required  lay-verify="required|connPhone" autocomplete="off" class="layui-input">
 			    </div>
 		  	</div>
 		  	<div class="layui-form-item" style="margin-top:10px;">
 			    <label class="layui-form-label">住址</label>
 			    <div class="layui-input-block">
-			      <input type="text" name="title" autocomplete="off" placeholder="请输入" class="layui-input">
+			      <input type="text" name="cust_address" id="cust_address" autocomplete="off" placeholder="请输入" class="layui-input">
 			    </div>
   			</div>
   			<div class="layui-form-item layui-form-text">
 			    <label class="layui-form-label">工单备注</label>
 			    <div class="layui-input-block">
-			      <textarea class="layui-textarea"></textarea>
+			      <textarea class="layui-textarea" id="order_mark_content" name="order_mark_content"></textarea>
 			    </div>
 			</div>
 			<div class="layui-inline">
@@ -242,12 +242,18 @@
 			      </select>
 			    </div>
 		  	</div>
-		  	<div class="layui-inline" style="float:right;">
+		  	<div class="layui-inline" id="order_send_opr_div" style="float:right;display:none;">
 			    <label class="layui-form-label">派发人员</label>
 			    <div class="layui-input-inline">
 			    	<select id="order_send_opr" name="order_send_opr" style="width:300px;"></select>
 			    </div>
 		  	</div>
+		  	<div class="layui-form-item">
+				<div class="layui-input-block" style="float:right;margin-right:20px;margin-top:15px;">
+				  <a class="layui-btn" lay-submit lay-filter="order_submit_btn">提交</a>
+				  <a class="layui-btn layui-btn-danger" id="cancelBtn" href="javascript:closeDialog()">取消</a>
+				</div>
+			</div>
 		</form>
 	</fieldset>
 </div>

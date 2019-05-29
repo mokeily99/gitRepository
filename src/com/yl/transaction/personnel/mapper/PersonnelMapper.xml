@@ -108,4 +108,10 @@
 			TEL, ADDRESS, USER_ROLE, IS_ONLINE, PHOTO_HEAD, ABLE_FLAG, SEAT_NO, SEAT_PWD
 		from T_USER WHERE ABLE_FLAG='10101' and DEPT_CODE=#{deptCode}
 	</select>
+	
+	<select id="getPersonnelByMax" parameterType="java.util.Map" resultType="java.util.Map">
+		select a.MAXACCEPT, a.USER_ACCOUNT, a.USER_PWD, a.USER_LEVEL, a.DEPT_CODE, b.dept_name, a.USER_NAME, a.PHONE, 
+			a.TEL, a.ADDRESS, a.USER_ROLE, a.IS_ONLINE, a.PHOTO_HEAD, a.ABLE_FLAG, a.SEAT_NO, a.SEAT_PWD
+		from T_USER a left join t_dept b on a.dept_code=b.maxaccept WHERE a.MAXACCEPT=#{maxaccept}
+	</select>
 </mapper>  

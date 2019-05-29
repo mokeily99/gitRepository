@@ -35,4 +35,8 @@ public interface OrderService {
 	public List<Map<String, Object>> getStatisticsList(Map<String, Object> param);
 
 	public List<Map<String, Object>> getStatisticsTotal(Map<String, Object> param);
+	
+	public void saveInitOrder(Map<String, String> param);
+	
+	public void saveOrderList(Map<String, String> param);
 }
