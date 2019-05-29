@@ -1,52 +1,37 @@
-2019-05-18 16:02:16,984 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：req=11111111111111
-2019-05-18 16:02:17,154 INFO [com.yl.common.util.HttpUtil] - sss返回参数-RESPONSE：{"status":"success"}
-2019-05-18 16:03:48,142 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
-2019-05-18 16:03:48,357 INFO [com.yl.common.util.HttpUtil] - sss返回参数-RESPONSE：{"status":"success"}
-2019-05-18 16:03:58,012 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
-2019-05-18 16:03:58,183 INFO [com.yl.common.util.HttpUtil] - sss返回参数-RESPONSE：{"status":"success"}
-2019-05-18 16:04:01,042 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
-2019-05-18 16:04:01,233 INFO [com.yl.common.util.HttpUtil] - sss返回参数-RESPONSE：{"status":"success"}
-2019-05-18 16:06:47,967 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
-2019-05-18 16:06:57,002 INFO [com.yl.common.util.HttpUtil] - sss返回参数-RESPONSE：{"status":"success"}
-2019-05-18 16:10:44,604 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
-2019-05-18 16:10:44,731 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
-2019-05-18 16:15:54,963 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
-2019-05-18 16:15:55,099 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
-2019-05-18 16:17:03,540 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
-2019-05-18 16:17:03,663 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
-2019-05-18 16:18:58,318 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
-2019-05-18 16:18:58,325 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
-2019-05-18 16:19:11,237 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
-2019-05-18 16:19:11,244 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
-2019-05-18 16:21:54,360 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
-2019-05-18 16:21:54,367 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
-2019-05-18 16:25:27,128 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：body={"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
-2019-05-18 16:25:27,141 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
-2019-05-18 16:30:22,127 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
-2019-05-18 16:30:22,262 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
-2019-05-18 16:36:14,880 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
-2019-05-18 16:36:15,113 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
-2019-05-18 17:20:22,085 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
-2019-05-18 17:20:22,260 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
-2019-05-18 17:24:44,146 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
-2019-05-18 17:24:44,327 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
-2019-05-18 17:27:11,704 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
-2019-05-18 17:27:11,898 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
-2019-05-18 17:27:28,674 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
-2019-05-18 17:27:28,682 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
-2019-05-18 17:29:55,264 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
-2019-05-18 17:29:55,457 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
-2019-05-18 17:32:28,898 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
-2019-05-18 17:32:29,088 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
-2019-05-18 17:34:45,123 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
-2019-05-18 17:34:45,304 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
-2019-05-18 17:43:29,395 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
-2019-05-18 17:43:29,576 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
-2019-05-18 17:46:23,596 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
-2019-05-18 17:46:23,779 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
-2019-05-18 17:46:43,959 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
-2019-05-18 17:46:43,982 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
-2019-05-18 17:47:49,252 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
-2019-05-18 17:47:49,276 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
-2019-05-18 17:49:24,426 INFO [com.yl.common.util.HttpUtil] - sss请求参数-REQUEST：{"event":"ANSWER","callid":"87180740-d388-11e8-8421-55df9da9116c"}
-2019-05-18 17:49:24,432 ERROR [com.yl.common.util.HttpUtil] - sss失败：java.io.IOException: Server returned HTTP response code: 415 for URL: http://localhost:8080/sms-dms/getwayInterface/report.action
+2019-05-29 10:14:42,803 DEBUG [org.apache.ibatis.logging.LogFactory] - Logging initialized using 'org.apache.ibatis.logging.commons.JakartaCommonsLoggingImpl' adapter.
+2019-05-29 10:14:42,926 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:42,927 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:42,927 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:42,927 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:42,927 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:42,930 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:42,930 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:42,930 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:42,930 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:42,930 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:42,930 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:43,160 DEBUG [root] - com.yl.common.util.DBUtil create default sqlsessionfactory success!
+2019-05-29 10:14:43,190 DEBUG [org.apache.ibatis.transaction.jdbc.JdbcTransaction] - Openning JDBC Connection
+2019-05-29 10:14:57,988 INFO [root] - com.yl.daemon.sendSMS.SendsmsDaemon 程序开始运行...
+2019-05-29 10:14:57,989 INFO [root] - com.yl.daemon.sendSMS.SendsmsDaemon 开始同步订购关系...
+2019-05-29 10:14:57,989 INFO [root] - com.yl.daemon.sendSMS.SendsmsDaemon 启动同步线程...
+2019-05-29 10:14:57,989 INFO [root] - com.yl.daemon.sendSMS.SendsmsDaemon 核心线程数:1
+2019-05-29 10:14:57,989 INFO [root] - com.yl.daemon.sendSMS.SendsmsDaemon 最大线程数:10
+2019-05-29 10:14:57,989 INFO [root] - com.yl.daemon.sendSMS.SendsmsDaemon 队列长度:100
+2019-05-29 10:14:57,989 INFO [root] - com.yl.daemon.sendSMS.SendsmsDaemon 同步报文最大记录条数:300
+2019-05-29 10:14:57,989 INFO [root] - com.yl.daemon.sendSMS.SendsmsDaemon 无数据程序休眠时间（毫秒）:15000
+2019-05-29 10:14:57,989 INFO [root] - com.yl.daemon.sendSMS.SendsmsDaemon 将所有处于正在处理状态中的数据，修改状态为待处理
+2019-05-29 10:14:58,063 DEBUG [org.apache.ibatis.logging.LogFactory] - Logging initialized using 'org.apache.ibatis.logging.commons.JakartaCommonsLoggingImpl' adapter.
+2019-05-29 10:14:58,180 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:58,180 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:58,180 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:58,180 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:58,180 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:58,180 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:58,180 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:58,180 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:58,181 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:58,181 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:58,181 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:58,394 DEBUG [root] - com.yl.common.util.DBUtil create default sqlsessionfactory success!
+2019-05-29 10:14:58,446 DEBUG [org.apache.ibatis.transaction.jdbc.JdbcTransaction] - Openning JDBC Connection
