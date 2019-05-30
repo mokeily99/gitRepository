@@ -20,6 +20,8 @@ public interface OrderService {
 	
 	public void insertOrderList(Map<String, String> param);
 	
+	public List<Map<String, String>> getPendingOrder(Map<String, Object> param);
+	
 	
 	public List<Map<String, String>> getOrderByStatusAndAble(Map<String, Object> param);
 	

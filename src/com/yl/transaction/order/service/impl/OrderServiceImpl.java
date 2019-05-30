@@ -111,4 +111,9 @@ public class OrderServiceImpl implements OrderService {
 	public void insertOrderList(Map<String, String> param) {
 		orderDao.insertOrderList(param);
 	}
+
+	@Override
+	public List<Map<String, String>> getPendingOrder(Map<String, Object> param) {
+		return orderDao.getPendingOrder(param);
+	}
 }

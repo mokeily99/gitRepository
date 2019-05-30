@@ -41,4 +41,6 @@ public interface OrderDao {
 	public void sendOrder(Map<String, String> param);
 	
 	public void insertOrderList(Map<String, String> param);
+	
+	public List<Map<String, String>> getPendingOrder(Map<String, Object> param);
 }

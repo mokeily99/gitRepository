@@ -11,47 +11,46 @@ layui.use(['form', 'layer', 'table' ], function() {
 		elem : '#order_grid_list',
 		url : webpath + "/order/getPendingOrder.action",
 		method: "post",
-		where: {blackPhone: $("#black_phone").val()},
+		where: {order_phone: $("#order_phone").val(), cust_name: $("#cust_name").val()},
 		cols : [ [
 			{
 				type : 'checkbox'
 			},
 			{
-				field : 'BLACK_PHONE',
+				field : 'CUST_NAME',
 				title : '客户姓名'
 			},
 			{
-				field : 'BLACK_REASON',
+				field : 'CONN_PHONE',
 				title : '联系电话'
 			},
 			{
-				field : 'CREATE_OPR_NAME',
-				title : '来电时间'
+				field : 'CUST_ADR',
+				title : '联系地址'
 			},
 			{
-				field : 'UPDATE_TIME',
+				field : 'MARK_CONTENT',
+				title : '工单备注'
+			},
+			{
+				field : 'CREATE_OPR_NAME',
 				title : '创建人'
 			},
 			{
-				field : 'ABLE_FLAG',
-				title : '创建时间',
-				templet: function(row){
-					var flag = row.ABLE_FLAG;
-					var status = "";
-					if(flag == "10101"){
-						status = "<input type=\"checkbox\" value=\""+row.MAXACCEPT+"\" checked=\"\" name=\"open\" lay-skin=\"switch\" lay-filter=\"able_switch\" lay-text=\"生效|失效\">";
-					}else{
-						status = "<input type=\"checkbox\" value=\""+row.MAXACCEPT+"\" name=\"close\" lay-skin=\"switch\" lay-filter=\"able_switch\" lay-text=\"生效|失效\">";
-					}
-			        return status;
-				}
+				field : 'CREATE_TIME',
+				title : '创建时间'
 			},
 			{
-				field : 'UPDATE_TIME',
-				title : '状态'
-			},{
-				field : 'UPDATE_TIME',
-				title : '当前处理人'
+				field : 'SEND_OPR_NAME',
+				title : '派发至人员'
+			},
+			{
+				field : 'CREATE_TIME',
+				title : '派发时间'
+			},
+			{
+				field : 'SEND_MARK',
+				title : '派发备注'
 			}
 		] ],
 		page : true,
@@ -59,8 +58,8 @@ layui.use(['form', 'layer', 'table' ], function() {
 	});
 	
 	//查询绑定
-	$('#query_black_btn').click(function() {
-		table.reload("order_grid_list", {where: {blackPhone: $("#black_phone").val()}});
+	$('#query_order_btn').click(function() {
+		table.reload("order_grid_list", {order_phone: $("#order_phone").val(), cust_name: $("#cust_name").val()});
 	});
 	
 	//监听指定开关

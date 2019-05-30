@@ -152,6 +152,52 @@ public class OrderController extends BaseController {
 		return tableResult;
 	}
 	/**
+	 * 获取待处理工单
+	 * @param page
+	 * @param limit
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/getPendingOrder")
+	@ResponseBody
+	public LayTableResult<List<Map<String, String>>> getPendingOrder(Integer page, Integer limit, HttpServletRequest request, HttpServletResponse response, Model model) {
+		String orderPhone = request.getParameter("order_phone");
+		String custName = request.getParameter("cust_name");
+		
+		LayTableResult<List<Map<String, String>>> tableResult = new LayTableResult<List<Map<String, String>>>();
+		try{
+			Map<String, Object> para = new HashMap<String, Object>();
+			UserView user = this.getUserView(request);
+			if("10202".equals(user.getRoleLevel())){//部门管理员看本部门
+				para.put("deptCode", user.getDeptCode());
+			}else if("10203".equals(user.getRoleLevel())){//部门人员看自己的
+				para.put("oprID", user.getMaxaccept());
+			}
+			para.put("orderPhone", orderPhone);
+			para.put("custName", custName);
+			para.put("overFlag", "0");
+			
+			para.put("row", limit);
+			para.put("page", page);
+			
+			PageHelper.startPage(page, limit);
+			List<Map<String, String>> orderList = orderService.getPendingOrder(para);
+			PageInfo<Map<String, String>> pageinfo = new PageInfo<Map<String, String>>(orderList);
+			
+			tableResult.setCount((int) pageinfo.getTotal());
+			tableResult.setData(orderList);
+		}catch(Exception e){
+			logger.error(e.getMessage(),e);
+			tableResult.setCode(1);
+			tableResult.setMsg("数据加载失败！");
+			tableResult.setCount(0);
+			tableResult.setData(new ArrayList<Map<String, String>>());
+		}
+		return tableResult;
+	}
+	/**
 	 * 工单存储
 	 * @param request
 	 * @param response

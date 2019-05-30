@@ -23,19 +23,19 @@
 				<div class="layui-inline">
 					<label class="layui-form-label" style="width:98px;">手机号码</label>
 					<div class="layui-input-inline">
-						<input type="text" id="black_phone" name="conn_phone" autocomplete="off" class="layui-input">
+						<input type="text" id="order_phone" name="order_phone" autocomplete="off" class="layui-input">
 					</div>
 				</div>
 				<div class="layui-inline">
 					<label class="layui-form-label" style="width:98px;">客户姓名</label>
 					<div class="layui-input-inline">
-						<input type="text" id="black_phone" name="cust_name" autocomplete="off" class="layui-input">
+						<input type="text" id="cust_name" name="cust_name" autocomplete="off" class="layui-input">
 					</div>
 				</div>
 				<div class="layui-inline">
 					<label class="layui-form-label"></label>
 					<div class="layui-input-inline">
-						<button type="button" class="layui-btn layui-btn-normal" id="query_black_btn">查询</button>
+						<button type="button" class="layui-btn layui-btn-normal" id="query_order_btn">查询</button>
 						<button type="reset" class="layui-btn layui-btn-danger">重置</button>
 					</div>
 				</div>

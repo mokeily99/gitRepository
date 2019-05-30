@@ -47,6 +47,26 @@
 		order by CREATE_TIME desc
 	</select>
 	
+	<select id="getPendingOrder" parameterType="java.util.Map" resultType="java.util.Map">
+		select 
+			MAXACCEPT,CUST_NAME,CONN_PHONE,CUST_ADR,MARK_CONTENT,IS_SEND,CREATE_OPR_ID,CREATE_OPR_NAME,to_char(CREATE_TIME, 'yyyy-mm-dd HH24:mi:ss') CREATE_TIME, 
+			SEND_OPR_ID,SEND_OPR_NAME,to_char(SEND_TIME, 'yyyy-mm-dd HH24:mi:ss') SEND_TIME,SEND_MARK,OPR_DEPT,OPR_DEPT_NAME,SEDN_OPR_DEPT,SEDN_OPR_DEPT_NAME 
+		FROM T_ORDER WHERE OVER_FLAG=#{overFlag} 
+		<if test="connPhone != null and connPhone !='' ">
+			AND CONN_PHONE=#{connPhone}
+		</if>
+		<if test="custName != null and custName !='' ">
+			AND CUST_NAME=#{custName}
+		</if>
+		<if test="oprID != null and oprID !='' ">
+			AND SEND_OPR_ID=#{oprID}
+		</if>
+		<if test="deptCode != null and deptCode !='' ">
+			AND SEDN_OPR_DEPT=#{deptCode}
+		</if>
+		order by CREATE_TIME desc
+	</select>
+	
 	<update id="updateOrderInfo" parameterType="java.util.Map">
 		update t_order 
 		<trim prefix="set" suffixOverrides=",">
@@ -169,14 +189,16 @@
 	<insert id="saveOrderList" parameterType="java.util.Map">
 		insert into t_order_list 
 		select MAXACCEPT,CUST_NAME,CONN_PHONE,CUST_ADR,MARK_CONTENT,IS_SEND,CREATE_OPR_ID,CREATE_OPR_NAME,CREATE_TIME, 
-			#{sendOprID},#{sendOprName},sysdate,#{markContent},#{oprDeptID},#{oprDeptName},#{sendDeptCode},#{sendDeptName}
+			#{sendOprID},#{sendOprName},sysdate,#{markContent},#{oprDeptID},#{oprDeptName},#{sendDeptCode},#{sendDeptName},
+			OVER_FLAG
 		from t_order where maxaccept=#{maxaccept}
 	</insert>
 	
 	<insert id="insertOrderList" parameterType="java.util.Map">
 		insert into t_order_list 
 		select MAXACCEPT,CUST_NAME,CONN_PHONE,CUST_ADR,MARK_CONTENT,IS_SEND,CREATE_OPR_ID,CREATE_OPR_NAME,CREATE_TIME, 
-			#{sendOprID},#{sendOprName},sysdate,#{markContent},OPR_DEPT,OPR_DEPT_NAME,#{sendOprDeptID},#{sendOprDeptName}
+			#{sendOprID},#{sendOprName},sysdate,#{markContent},OPR_DEPT,OPR_DEPT_NAME,#{sendOprDeptID},#{sendOprDeptName}, 
+			OVER_FLAG
 		from t_order where maxaccept in (${ids})
 	</insert>
 </mapper>  
