@@ -47,4 +47,6 @@ public interface OrderDao {
 	public void overOrder(Map<String, String> param);
 	
 	public void overOrderList(Map<String, String> param);
+	
+	public List<Map<String, String>> getOrderLocusList(Map<String, String> param);
 }

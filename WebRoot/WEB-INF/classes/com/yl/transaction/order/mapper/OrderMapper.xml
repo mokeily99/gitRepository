@@ -221,4 +221,14 @@
 			'1'
 		from t_order where maxaccept in (${ids})
 	</insert>
+	
+	<select id="getOrderLocusList" parameterType="java.util.Map" resultType="java.util.Map">
+		select 
+			MAXACCEPT,CUST_NAME,CONN_PHONE,CUST_ADR,MARK_CONTENT,
+			IS_SEND,CREATE_OPR_ID,CREATE_OPR_NAME,to_char(CREATE_TIME, 'yyyy-mm-dd HH24:mi:ss') CREATE_TIME,
+			SEND_OPR_ID,SEND_OPR_NAME,to_char(SEND_TIME, 'yyyy-mm-dd HH24:mi:ss') SEND_TIME,SEND_MARK,OPR_DEPT,
+			OPR_DEPT_NAME,SEDN_OPR_DEPT,SEDN_OPR_DEPT_NAME,OVER_FLAG
+		from t_order_list 
+		where maxaccept=#{maxaccept}
+	</select>
 </mapper>  

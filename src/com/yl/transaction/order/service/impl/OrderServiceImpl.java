@@ -126,4 +126,9 @@ public class OrderServiceImpl implements OrderService {
 	public void overOrderList(Map<String, String> param) {
 		orderDao.overOrderList(param);
 	}
+
+	@Override
+	public List<Map<String, String>> getOrderLocusList(Map<String, String> param) {
+		return orderDao.getOrderLocusList(param);
+	}
 }

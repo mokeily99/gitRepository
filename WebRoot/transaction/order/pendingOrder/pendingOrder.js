@@ -51,6 +51,13 @@ layui.use(['form', 'layer', 'table' ], function() {
 			{
 				field : 'SEND_MARK',
 				title : '派发备注'
+			},
+			{
+				field : 'MXACCEPT',
+				title : '操作',
+				templet: function(row){
+					return "<a style=\"color:blue\" href=\"javascript:showOrderLocus("+row.MAXACCEPT+")\">轨迹查询</a>";
+				}
 			}
 		] ],
 		page : true,
@@ -61,6 +68,43 @@ layui.use(['form', 'layer', 'table' ], function() {
 	$('#query_order_btn').click(function() {
 		table.reload("order_grid_list", {where: {order_phone: $("#order_phone").val(), cust_name: $("#cust_name").val()}});
 	});
+	
+	//轨迹查询
+	window.showOrderLocus=function(maxaccept){
+		$.ajax({
+			url: webpath + "/order/getOrderLocus.action",
+			type: "post",
+			dataType: "json", 
+			data: {maxaccept: maxaccept},
+			success: function(data){
+				var resultCode = data.resultCode;
+				var resultData = data.resultData;
+				
+				var html = [];
+				html.push("<ul class=\"layui-timeline\">");
+				for(var ix=0; ix<resultData.length; ix++){
+					html.push("<li class=\"layui-timeline-item\">");
+					html.push("  <i class=\"layui-icon layui-timeline-axis\">&#xe63f;</i>");
+					html.push("  <div class=\"layui-timeline-content layui-text\">");
+					html.push("  	<h3 class=\"layui-timeline-title\">8月18日</h3>");
+					html.push("  	<p>");
+					html.push("			layui 2.0 的一切准备工作似乎都已到位。发布之弦，一触即发。不枉近百个日日夜夜与之为伴。因小而大，因弱而强。无论它能走多远，抑或如何支撑？至少我曾倾注全心，无怨无悔");
+					html.push("  	</p>");
+					html.push("  </div>");
+					html.push("</li>");
+				}
+				html.push("</ul>");
+				$("#locus_order_div").html(html.join(""));
+				debugger;
+				dialogIndex = layer.open({
+					type : 1,
+					title : '工单轨迹',
+					content : $('#locus_order_div'),
+					area : [ '500px', '300px' ]
+				});
+			}
+		});
+	}
 	
 	//转发
 	$('#turn_order_btn').click(function() {

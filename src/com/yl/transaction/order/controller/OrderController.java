@@ -354,4 +354,28 @@ public class OrderController extends BaseController {
 		}
 		return result;
 	}
+	/**
+	 * 轨迹查询
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/getOrderLocus")
+	@ResponseBody
+	public Result getOrderLocus(String maxaccept, HttpServletRequest request, HttpServletResponse response, Model model) {
+		
+		Result result = new Result();
+		try {
+			Map<String, String> param = new HashMap<String, String>();
+			param.put("maxaccept", maxaccept);
+			List<Map<String, String>> locusList = orderService.getOrderLocusList(param);
+			result.setResultData(locusList);
+		} catch (Exception e) {
+			logger.error(e.getMessage(),e);
+			result.setResultCode("9999");
+			result.setResultMsg("操作失败！");
+		}
+		return result;
+	}
 }
