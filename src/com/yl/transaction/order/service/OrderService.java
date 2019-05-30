@@ -6,11 +6,24 @@ import java.util.Map;
 
 public interface OrderService {
 
+	public int updateOrderInfo(Map<String, Object> param);
+	
+	public void saveOrderList(Map<String, String> param);
+	
+	public void saveInitOrder(Map<String, String> param);
+	
+	public List<Map<String, String>> getOrderList(Map<String, Object> param);
+	
+	public List<Map<String, Object>> getPageOrder(Map<String, Object> param);
+	
+	public void sendOrder(Map<String, String> param);
+	
+	public void insertOrderList(Map<String, String> param);
+	
+	
 	public List<Map<String, String>> getOrderByStatusAndAble(Map<String, Object> param);
 	
 	public int insertOrder(Map<String, Object> param);
-
-	public int updateOrderInfo(Map<String, Object> param);
 	
 	public int updateOrderInfoApp(Map<String, Object> param);
 	
@@ -26,17 +39,10 @@ public interface OrderService {
 	
 	public List<Map<String, String>> getOutTimeOrder(Map<String, Object> param);
 	
-	public List<Map<String, Object>> getOrderList(Map<String, Object> param);
-	
-	public List<Map<String, Object>> getPageOrder(Map<String, Object> param);
-	
 	public int delOrder(Map<String, String> param);
 
 	public List<Map<String, Object>> getStatisticsList(Map<String, Object> param);
 
 	public List<Map<String, Object>> getStatisticsTotal(Map<String, Object> param);
 	
-	public void saveInitOrder(Map<String, String> param);
-	
-	public void saveOrderList(Map<String, String> param);
 }

@@ -7,9 +7,9 @@ layui.use(['form', 'layer', 'table' ], function() {
 	layer = layui.layer;
 	
 	var blackTable = table.render({
-		id: "black_grid_list",
-		elem : '#black_grid_list',
-		url : webpath + "/sms/blackLists.action",
+		id: "order_grid_list",
+		elem : '#order_grid_list',
+		url : webpath + "/order/getPendingOrder.action",
 		method: "post",
 		where: {blackPhone: $("#black_phone").val()},
 		cols : [ [
@@ -60,7 +60,7 @@ layui.use(['form', 'layer', 'table' ], function() {
 	
 	//查询绑定
 	$('#query_black_btn').click(function() {
-		table.reload("black_grid_list", {where: {blackPhone: $("#black_phone").val()}});
+		table.reload("order_grid_list", {where: {blackPhone: $("#black_phone").val()}});
 	});
 	
 	//监听指定开关
@@ -86,7 +86,7 @@ layui.use(['form', 'layer', 'table' ], function() {
 						icon : 2
 					});
 				}
-				blackTable = table.reload("black_grid_list");
+				blackTable = table.reload("order_grid_list");
 			}
 		});
 	});
@@ -113,7 +113,7 @@ layui.use(['form', 'layer', 'table' ], function() {
 					var resultCode = data1.resultCode;
 					if (resultCode == "0000") {
 						layer.msg('添加成功！');
-						blackTable = table.reload("black_grid_list");
+						blackTable = table.reload("order_grid_list");
 					} else {
 						layer.alert('添加失败，请重新操作！', {
 							icon : 2
@@ -127,7 +127,7 @@ layui.use(['form', 'layer', 'table' ], function() {
 	
 	//黑名单修改
 	$('#edit_black_btn').click(function() {
-		var checkData = table.checkStatus("black_grid_list");
+		var checkData = table.checkStatus("order_grid_list");
 		if(checkData.data.length < 1){
 			layer.msg('未选择任何数据！',{icon:0});
 			return;
@@ -165,7 +165,7 @@ layui.use(['form', 'layer', 'table' ], function() {
 					var resultCode = data1.resultCode;
 					if (resultCode == "0000") {
 						layer.msg('修改成功！');
-						blackTable = table.reload("black_grid_list");
+						blackTable = table.reload("order_grid_list");
 					} else {
 						layer.alert('修改失败，请重新操作！', {
 							icon : 2
@@ -179,7 +179,7 @@ layui.use(['form', 'layer', 'table' ], function() {
 	
 	//删除绑定
 	$('#del_black_btn').click(function() {
-		var checkData = table.checkStatus("black_grid_list");
+		var checkData = table.checkStatus("order_grid_list");
 		if(checkData.data.length < 1){
 			layer.msg('未选择任何数据！',{icon:0});
 			return;
@@ -208,7 +208,7 @@ layui.use(['form', 'layer', 'table' ], function() {
 						}else{
 							layer.msg('删除失败！', {icon: 5});
 						}
-						blackTable = table.reload("black_grid_list");
+						blackTable = table.reload("order_grid_list");
 					}
 				});
 			}

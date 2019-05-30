@@ -24,7 +24,7 @@ public interface OrderDao {
 	
 	public List<Map<String, String>> getOutTimeOrder(Map<String, Object> param);
 	
-	public List<Map<String, Object>> getOrderList(Map<String, Object> param);
+	public List<Map<String, String>> getOrderList(Map<String, Object> param);
 	
 	public List<Map<String, Object>> getPageOrder(Map<String, Object> param);
 	
@@ -37,4 +37,8 @@ public interface OrderDao {
 	public void saveInitOrder(Map<String, String> param);
 	
 	public void saveOrderList(Map<String, String> param);
+	
+	public void sendOrder(Map<String, String> param);
+	
+	public void insertOrderList(Map<String, String> param);
 }

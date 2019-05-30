@@ -23,13 +23,13 @@
 				<div class="layui-inline">
 					<label class="layui-form-label" style="width:98px;">手机号码</label>
 					<div class="layui-input-inline">
-						<input type="text" id="black_phone" name="black_phone" autocomplete="off" class="layui-input">
+						<input type="text" id="black_phone" name="conn_phone" autocomplete="off" class="layui-input">
 					</div>
 				</div>
 				<div class="layui-inline">
 					<label class="layui-form-label" style="width:98px;">客户姓名</label>
 					<div class="layui-input-inline">
-						<input type="text" id="black_phone" name="black_phone" autocomplete="off" class="layui-input">
+						<input type="text" id="black_phone" name="cust_name" autocomplete="off" class="layui-input">
 					</div>
 				</div>
 				<div class="layui-inline">
@@ -46,12 +46,12 @@
 			
 			<div style="width:99%;margin:auto;">
 				<div class="layui-btn-group">
-			    	<button class="layui-btn" id="add_black_btn">转发</button>
-				    <button class="layui-btn" id="edit_black_btn">完结</button>
+			    	<button class="layui-btn" id="turn_order_btn">转发</button>
+				    <button class="layui-btn" id="over_order_btn">完结</button>
 			  	</div>
 		  	</div>
 		  	<div style="width:99%;margin:auto;">
-			  	<table class="layui-hide" id="black_grid_list"></table>
+			  	<table class="layui-hide" id="order_grid_list"></table>
 		  	</div>
 		</fieldset>
 	</div>

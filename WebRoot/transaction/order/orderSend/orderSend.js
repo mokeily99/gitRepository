@@ -6,49 +6,39 @@ layui.use(['form', 'layer', 'table' ], function() {
 	$ = layui.jquery;
 	layer = layui.layer;
 	
-	var blackTable = table.render({
-		id: "black_grid_list",
-		elem : '#black_grid_list',
-		url : webpath + "/sms/blackLists.action",
+	var orderTable = table.render({
+		id: "order_grid_list",
+		elem : '#order_grid_list',
+		url : webpath + "/order/getPageUnsendOrderList.action",
 		method: "post",
-		where: {blackPhone: $("#black_phone").val()},
+		where: {order_phone: $("#order_phone").val(), cust_name: $("#cust_name").val(), send_flag: "0"},
 		cols : [ [
 			{
 				type : 'checkbox'
 			},
 			{
-				field : 'BLACK_PHONE',
+				field : 'CUST_NAME',
 				title : '客户姓名'
 			},
 			{
-				field : 'BLACK_REASON',
+				field : 'CONN_PHONE',
 				title : '联系电话'
 			},
 			{
-				field : 'CREATE_OPR_NAME',
-				title : '来电时间'
+				field : 'CUST_ADR',
+				title : '联系地址'
 			},
 			{
-				field : 'UPDATE_TIME',
+				field : 'MARK_CONTENT',
+				title : '工单备注'
+			},
+			{
+				field : 'CREATE_OPR_NAME',
 				title : '创建人'
 			},
 			{
-				field : 'ABLE_FLAG',
-				title : '创建时间',
-				templet: function(row){
-					var flag = row.ABLE_FLAG;
-					var status = "";
-					if(flag == "10101"){
-						status = "<input type=\"checkbox\" value=\""+row.MAXACCEPT+"\" checked=\"\" name=\"open\" lay-skin=\"switch\" lay-filter=\"able_switch\" lay-text=\"生效|失效\">";
-					}else{
-						status = "<input type=\"checkbox\" value=\""+row.MAXACCEPT+"\" name=\"close\" lay-skin=\"switch\" lay-filter=\"able_switch\" lay-text=\"生效|失效\">";
-					}
-			        return status;
-				}
-			},
-			{
-				field : 'UPDATE_TIME',
-				title : '备注'
+				field : 'CREATE_TIME',
+				title : '创建时间'
 			}
 		] ],
 		page : true,
@@ -56,36 +46,8 @@ layui.use(['form', 'layer', 'table' ], function() {
 	});
 	
 	//查询绑定
-	$('#query_black_btn').click(function() {
-		table.reload("black_grid_list", {where: {blackPhone: $("#black_phone").val()}});
-	});
-	
-	//监听指定开关
-	form.on('switch(able_switch)', function(data){
-		var maxaccept = data.value;
-		var ableFlag = this.checked;
-		if(ableFlag){
-			ableFlag = "10101";
-		}else{
-			ableFlag = "10102";
-		}
-		$.ajax({
-			url: webpath + "/sms/changeBlackStatus.action",
-			type: "post",
-			data: {maxaccept: maxaccept, ableFlag: ableFlag},
-			dataType: "json",
-			success: function(data){
-				var resultCode = data.resultCode;
-				if(resultCode == "0000"){
-					layer.msg('修改成功！');
-				}else{
-					layer.alert('修改失败，请重新操作！', {
-						icon : 2
-					});
-				}
-				blackTable = table.reload("black_grid_list");
-			}
-		});
+	$('#query_order_btn').click(function() {
+		table.reload("order_grid_list", {where: {order_phone: $("#order_phone").val(), cust_name: $("#cust_name").val(), send_flag: "0"}});
 	});
 	
 	//黑名单添加
@@ -110,7 +72,7 @@ layui.use(['form', 'layer', 'table' ], function() {
 					var resultCode = data1.resultCode;
 					if (resultCode == "0000") {
 						layer.msg('添加成功！');
-						blackTable = table.reload("black_grid_list");
+						orderTable = table.reload("order_grid_list");
 					} else {
 						layer.alert('添加失败，请重新操作！', {
 							icon : 2
@@ -122,9 +84,9 @@ layui.use(['form', 'layer', 'table' ], function() {
 		});
 	});
 	
-	//黑名单修改
-	$('#edit_black_btn').click(function() {
-		var checkData = table.checkStatus("black_grid_list");
+	//工单修改
+	$('#edit_order_btn').click(function() {
+		var checkData = table.checkStatus("order_grid_list");
 		if(checkData.data.length < 1){
 			layer.msg('未选择任何数据！',{icon:0});
 			return;
@@ -137,23 +99,25 @@ layui.use(['form', 'layer', 'table' ], function() {
 		
 		var editeData = checkData.data[0];
 		//修改赋值 
-		form.val("edit_black_form", {
-			  "edit_black_id": editeData.MAXACCEPT,
-			  "edit_black_phone": editeData.BLACK_PHONE,
-			  "edit_black_reason": editeData.BLACK_REASON
+		form.val("edit_order_form", {
+			  "edit_order_id": editeData.MAXACCEPT,
+			  "edit_cust_name": editeData.CUST_NAME,
+			  "edit_conn_phone": editeData.CONN_PHONE,
+			  "edit_conn_adr": editeData.CUST_ADR,
+			  "edit_mark_content": editeData.MARK_CONTENT
 		});
 		
 		dialogIndex = layer.open({
 			type : 1,
-			title : '黑名单修改',
-			content : $('#edit_black_div'),
-			area : [ '500px', '300px' ]
+			title : '工单编辑',
+			content : $('#edit_order_div'),
+			area : [ '500px', '400px' ]
 		});
 
-		//黑名单修改提交
-		form.on('submit(edit_black_form_sub)', function(editData) {
+		//工单修改提交
+		form.on('submit(edit_order_form_sub)', function(editData) {
 			$.ajax({
-				url : webpath + "/sms/editBlackList.action",
+				url : webpath + "/order/editOrderList.action",
 				method : 'post',
 				data : editData.field,
 				dataType : "json",
@@ -162,7 +126,66 @@ layui.use(['form', 'layer', 'table' ], function() {
 					var resultCode = data1.resultCode;
 					if (resultCode == "0000") {
 						layer.msg('修改成功！');
-						blackTable = table.reload("black_grid_list");
+						orderTable = table.reload("order_grid_list");
+					} else {
+						layer.alert('修改失败，请重新操作！', {
+							icon : 2
+						});
+					}
+				}
+			});
+
+		});
+	});
+	
+	//工单派发
+	$('#send_order_btn').click(function() {
+		var checkData = table.checkStatus("order_grid_list");
+		if(checkData.data.length < 1){
+			layer.msg('未选择任何数据！',{icon:0});
+			return;
+		}
+		var delData = checkData.data;
+		var ids = "";
+		for(var ix=0; ix<delData.length; ix++){
+			ids = delData[ix].MAXACCEPT + "," + ids;
+		}
+		
+		$("#send_order_form")[0].reset();
+		
+		$("#send_order_ids").val(ids);
+		
+		//加载派发人员
+		LayerSelect.initLayerSelect({
+			dom : "order_send_opr",
+			url : webpath + "/personnel/getSendPersonList.action",
+			type : "post",
+			dataType : "json",
+			text : "USER_NAME",
+			id : "MAXACCEPT"
+		});
+		form.render();
+		
+		dialogIndex = layer.open({
+			type : 1,
+			title : '工单派发',
+			content : $('#send_order_div'),
+			area : [ '500px', '300px' ]
+		});
+
+		//工单派发提交
+		form.on('submit(send_order_form_sub)', function(editData) {
+			$.ajax({
+				url : webpath + "/order/sendOrder.action",
+				method : 'post',
+				data : editData.field,
+				dataType : "json",
+				success : function(data1) {
+					layer.close(dialogIndex);
+					var resultCode = data1.resultCode;
+					if (resultCode == "0000") {
+						layer.msg('修改成功！');
+						orderTable = table.reload("order_grid_list");
 					} else {
 						layer.alert('修改失败，请重新操作！', {
 							icon : 2
@@ -176,7 +199,7 @@ layui.use(['form', 'layer', 'table' ], function() {
 	
 	//删除绑定
 	$('#del_black_btn').click(function() {
-		var checkData = table.checkStatus("black_grid_list");
+		var checkData = table.checkStatus("order_grid_list");
 		if(checkData.data.length < 1){
 			layer.msg('未选择任何数据！',{icon:0});
 			return;
@@ -205,12 +228,26 @@ layui.use(['form', 'layer', 'table' ], function() {
 						}else{
 							layer.msg('删除失败！', {icon: 5});
 						}
-						blackTable = table.reload("black_grid_list");
+						orderTable = table.reload("order_grid_list");
 					}
 				});
 			}
 		}) ;
 	});
+	
+	//表单校验
+  	form.verify({
+  		connPhone : function(value, item) { //value：表单的值、item：表单的DOM对象
+  			if(value != ""){
+  				var tel1= /^((0\d{2,3}-\d{7,8})|(1[3584]\d{9}))$/;
+  				var tel2= /^((0\d{2,3}\d{7,8})|(1[3584]\d{9}))$/;
+  				var phone=/^1[34578]\d{9}$/;
+  				if (!tel1.test(value) && !tel2.test(value) && !phone.test(value)) {
+  					return '联系电话格式错误！';
+  				}
+  			}
+  		}
+  	});
 });
 
 //弹窗关闭

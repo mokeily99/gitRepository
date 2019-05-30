@@ -19,6 +19,7 @@ import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.util.StringUtil;
 import com.yl.common.controller.BaseController;
 import com.yl.common.dao.PublicDao;
+import com.yl.common.pojo.LayTableResult;
 import com.yl.common.pojo.Result;
 import com.yl.common.pojo.TableResult;
 import com.yl.common.user.pojo.UserView;
@@ -104,6 +105,53 @@ public class OrderController extends BaseController {
 		return tableResult;
 	}
 	/**
+	 * 获取未发送工单
+	 * @param pageSize
+	 * @param pageIndex
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/getPageUnsendOrderList")
+	@ResponseBody
+	public LayTableResult<List<Map<String, String>>> getPageUnsendOrderList(Integer page, Integer limit, HttpServletRequest request, HttpServletResponse response, Model model) {
+		String orderPhone = request.getParameter("order_phone");
+		String custName = request.getParameter("cust_name");
+		String sendFlag = request.getParameter("send_flag");
+		
+		LayTableResult<List<Map<String, String>>> tableResult = new LayTableResult<List<Map<String, String>>>();
+		try{
+			Map<String, Object> para = new HashMap<String, Object>();
+			UserView user = this.getUserView(request);
+			if("10202".equals(user.getRoleLevel())){//部门管理员看本部门
+				para.put("deptCode", user.getDeptCode());
+			}else if("10203".equals(user.getRoleLevel())){//部门人员看自己的
+				para.put("oprID", user.getMaxaccept());
+			}
+			para.put("orderPhone", orderPhone);
+			para.put("custName", custName);
+			para.put("sendFlag", sendFlag);
+			
+			para.put("row", limit);
+			para.put("page", page);
+			
+			PageHelper.startPage(page, limit);
+			List<Map<String, String>> orderList = orderService.getOrderList(para);
+			PageInfo<Map<String, String>> pageinfo = new PageInfo<Map<String, String>>(orderList);
+			
+			tableResult.setCount((int) pageinfo.getTotal());
+			tableResult.setData(orderList);
+		}catch(Exception e){
+			logger.error(e.getMessage(),e);
+			tableResult.setCode(1);
+			tableResult.setMsg("数据加载失败！");
+			tableResult.setCount(0);
+			tableResult.setData(new ArrayList<Map<String, String>>());
+		}
+		return tableResult;
+	}
+	/**
 	 * 工单存储
 	 * @param request
 	 * @param response
@@ -149,6 +197,78 @@ public class OrderController extends BaseController {
 			if("1".equals(isSend)){
 				orderService.saveOrderList(param);
 			}
+		} catch (Exception e) {
+			logger.error(e.getMessage(),e);
+			result.setResultCode("9999");
+			result.setResultMsg("操作失败！");
+		}
+		return result;
+	}
+	/**
+	 * 工单修改
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/editOrderList")
+	@ResponseBody
+	public Result editOrderList(HttpServletRequest request, HttpServletResponse response, Model model) {
+		String orderID = request.getParameter("edit_order_id");
+		String custName = request.getParameter("edit_cust_name");
+		String connPhone = request.getParameter("edit_conn_phone");
+		String connAdr = request.getParameter("edit_conn_adr");
+		String markContent = request.getParameter("edit_mark_content");
+		
+		Result result = new Result();
+		try {
+			Map<String, Object> param = new HashMap<String, Object>();
+			
+			param.put("maxaccept", orderID);
+			param.put("custName", custName);
+			param.put("connPhone", connPhone);
+			param.put("connAdr", connAdr);
+			param.put("markContent", markContent);
+			orderService.updateOrderInfo(param);
+		} catch (Exception e) {
+			logger.error(e.getMessage(),e);
+			result.setResultCode("9999");
+			result.setResultMsg("操作失败！");
+		}
+		return result;
+	}
+	/**
+	 * 工单派发
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/sendOrder")
+	@ResponseBody
+	public Result sendOrder(HttpServletRequest request, HttpServletResponse response, Model model) {
+		String ids = request.getParameter("send_order_ids");
+		String sendOprID = request.getParameter("order_send_opr");
+		String sendMark = request.getParameter("send_mark_content");
+		
+		Result result = new Result();
+		try {
+			if(ids.contains(",")){
+				ids = ids.substring(0, ids.length()-1);
+			}
+			
+			Map<String, String> personnel = personnelService.getPersonnelByMax(sendOprID);
+			Map<String, String> param = new HashMap<String, String>();
+			param.put("sendOprID", sendOprID);
+			param.put("sendOprName", personnel.get("USER_NAME"));
+			param.put("sendOprDeptID", personnel.get("DEPT_CODE"));
+			param.put("sendOprDeptName", personnel.get("DEPT_NAME"));
+			param.put("ids", ids);
+			param.put("markContent", sendMark);
+			orderService.sendOrder(param);
+			
+			//记录工单记录表
+			orderService.insertOrderList(param);
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
 			result.setResultCode("9999");

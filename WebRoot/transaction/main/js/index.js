@@ -146,6 +146,8 @@ layui.config({
 	
 	//弹窗方法
 	window.bombScreen=function(phone){
+		$("#show_screen_form")[0].reset();
+
 		$("#call_phone").html(phone);
 		
 		form.val("show_screen_form", {

@@ -62,7 +62,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<Map<String, Object>> getOrderList(Map<String, Object> param) {
+	public List<Map<String, String>> getOrderList(Map<String, Object> param) {
 		return orderDao.getOrderList(param);
 	}
 
@@ -100,5 +100,15 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public void saveOrderList(Map<String, String> param) {
 		orderDao.saveOrderList(param);
+	}
+
+	@Override
+	public void sendOrder(Map<String, String> param) {
+		orderDao.sendOrder(param);
+	}
+
+	@Override
+	public void insertOrderList(Map<String, String> param) {
+		orderDao.insertOrderList(param);
 	}
 }

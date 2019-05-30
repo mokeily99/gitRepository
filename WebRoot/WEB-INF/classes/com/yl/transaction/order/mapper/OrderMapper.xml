@@ -24,6 +24,48 @@
 		order by a.create_time desc
 	</select>
 	
+	<select id="getOrderList" parameterType="java.util.Map" resultType="java.util.Map">
+		select 
+			MAXACCEPT,CUST_NAME,CONN_PHONE,CUST_ADR,MARK_CONTENT,IS_SEND,CREATE_OPR_ID,CREATE_OPR_NAME,to_char(CREATE_TIME, 'yyyy-mm-dd HH24:mi:ss') CREATE_TIME, 
+			SEND_OPR_ID,SEND_OPR_NAME,to_char(SEND_TIME, 'yyyy-mm-dd HH24:mi:ss') SEND_TIME,SEND_MARK,OPR_DEPT,OPR_DEPT_NAME,SEDN_OPR_DEPT,SEDN_OPR_DEPT_NAME 
+		FROM T_ORDER WHERE 1=1 
+		<if test="connPhone != null and connPhone !='' ">
+			AND CONN_PHONE=#{connPhone}
+		</if>
+		<if test="custName != null and custName !='' ">
+			AND CUST_NAME=#{custName}
+		</if>
+		<if test="sendFlag != null and sendFlag !='' ">
+			AND IS_SEND=#{sendFlag}
+		</if>
+		<if test="oprID != null and oprID !='' ">
+			AND CREATE_OPR_ID=#{oprID}
+		</if>
+		<if test="deptCode != null and deptCode !='' ">
+			AND OPR_DEPT=#{deptCode}
+		</if>
+		order by CREATE_TIME desc
+	</select>
+	
+	<update id="updateOrderInfo" parameterType="java.util.Map">
+		update t_order 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="custName != null and custName != '' ">CUST_NAME=#{custName},</if>
+			<if test="connPhone != null and connPhone != '' ">CONN_PHONE=#{connPhone},</if>
+			<if test="connAdr != null and connAdr != '' ">CUST_ADR=#{connAdr},</if>
+			<if test="markContent != null and markContent != '' ">MARK_CONTENT=#{markContent},</if>
+		</trim>
+		where maxaccept=#{maxaccept}
+	</update>
+	
+	<update id="sendOrder" parameterType="java.util.Map">
+		update t_order set 
+		IS_SEND='1', SEND_OPR_ID=#{sendOprID},SEND_OPR_NAME=#{sendOprName}, 
+		SEND_TIME=sysdate, SEND_MARK=#{markContent}, SEDN_OPR_DEPT=#{sendOprDeptID}, 
+		SEDN_OPR_DEPT_NAME=#{sendOprDeptName} 
+		where maxaccept in (${ids})
+	</update>
+	
 	<insert id="saveInitOrder" parameterType="java.util.Map">
 		insert into t_order(
 			MAXACCEPT, 
@@ -129,5 +171,12 @@
 		select MAXACCEPT,CUST_NAME,CONN_PHONE,CUST_ADR,MARK_CONTENT,IS_SEND,CREATE_OPR_ID,CREATE_OPR_NAME,CREATE_TIME, 
 			#{sendOprID},#{sendOprName},sysdate,#{markContent},#{oprDeptID},#{oprDeptName},#{sendDeptCode},#{sendDeptName}
 		from t_order where maxaccept=#{maxaccept}
+	</insert>
+	
+	<insert id="insertOrderList" parameterType="java.util.Map">
+		insert into t_order_list 
+		select MAXACCEPT,CUST_NAME,CONN_PHONE,CUST_ADR,MARK_CONTENT,IS_SEND,CREATE_OPR_ID,CREATE_OPR_NAME,CREATE_TIME, 
+			#{sendOprID},#{sendOprName},sysdate,#{markContent},OPR_DEPT,OPR_DEPT_NAME,#{sendOprDeptID},#{sendOprDeptName}
+		from t_order where maxaccept in (${ids})
 	</insert>
 </mapper>  
