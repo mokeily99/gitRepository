@@ -62,72 +62,42 @@ layui.use(['form', 'layer', 'table' ], function() {
 		table.reload("order_grid_list", {where: {order_phone: $("#order_phone").val(), cust_name: $("#cust_name").val()}});
 	});
 	
-	//黑名单添加
-	$('#add_black_btn').click(function() {
-		dialogIndex = layer.open({
-			type : 1,
-			title : '黑名单新增',
-			content : $('#add_black_div'),
-			area : [ '500px', '300px' ]
-		});
-
-		//黑名单添加提交
-		form.on('submit(add_black_form_sub)', function(data) {
-
-			$.ajax({
-				url : webpath + "/sms/addBlackList.action",
-				method : 'post',
-				data : data.field,
-				dataType : "json",
-				success : function(data1) {
-					layer.close(dialogIndex);
-					var resultCode = data1.resultCode;
-					if (resultCode == "0000") {
-						layer.msg('添加成功！');
-						orderTable = table.reload("order_grid_list");
-					} else {
-						layer.alert('添加失败，请重新操作！', {
-							icon : 2
-						});
-					}
-				}
-			});
-
-		});
-	});
-	
-	//黑名单修改
-	$('#edit_black_btn').click(function() {
+	//转发
+	$('#turn_order_btn').click(function() {
 		var checkData = table.checkStatus("order_grid_list");
 		if(checkData.data.length < 1){
 			layer.msg('未选择任何数据！',{icon:0});
 			return;
 		}
-		
-		if(checkData.data.length > 1){
-			layer.msg('每次只能修改一条信息！',{icon:0});
-			return;
+		var delData = checkData.data;
+		var ids = "";
+		for(var ix=0; ix<delData.length; ix++){
+			ids = delData[ix].MAXACCEPT + "," + ids;
 		}
 		
-		var editeData = checkData.data[0];
-		//修改赋值 
-		form.val("edit_black_form", {
-			  "edit_black_id": editeData.MAXACCEPT,
-			  "edit_black_phone": editeData.BLACK_PHONE,
-			  "edit_black_reason": editeData.BLACK_REASON
+		$("#send_order_form")[0].reset();
+		$("#send_order_ids").val(ids);
+		//加载派发人员
+		LayerSelect.initLayerSelect({
+			dom : "order_send_opr",
+			url : webpath + "/personnel/getSendPersonList.action",
+			type : "post",
+			dataType : "json",
+			text : "USER_NAME",
+			id : "MAXACCEPT"
 		});
 		
 		dialogIndex = layer.open({
 			type : 1,
-			title : '黑名单修改',
-			content : $('#edit_black_div'),
+			title : '工单转发',
+			content : $('#send_order_div'),
 			area : [ '500px', '300px' ]
 		});
 
-		//黑名单修改提交
-		form.on('submit(edit_black_form_sub)', function(editData) {
+		//工单转发提交
+		form.on('submit(send_order_form_sub)', function(editData) {
 			$.ajax({
-				url : webpath + "/sms/editBlackList.action",
+				url : webpath + "/order/sendOrder.action",
 				method : 'post',
 				data : editData.field,
 				dataType : "json",

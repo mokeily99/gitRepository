@@ -64,7 +64,7 @@
 		<if test="deptCode != null and deptCode !='' ">
 			AND SEDN_OPR_DEPT=#{deptCode}
 		</if>
-		order by CREATE_TIME desc
+		order by SEND_TIME desc
 	</select>
 	
 	<update id="updateOrderInfo" parameterType="java.util.Map">
