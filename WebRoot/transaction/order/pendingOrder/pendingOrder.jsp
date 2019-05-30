@@ -81,3 +81,21 @@
 	  </div>
 	</form>
 </div>
+
+<div id="over_order_div"  style="display:none;">
+	<form lay-filter="over_order_form" class="layui-form" action="" id="over_order_form">
+	  <input type="hidden" id="over_order_ids" name="over_order_ids">
+	  <div class="layui-form-item layui-form-text">
+	    <label class="layui-form-label">完结备注</label>
+	    <div class="layui-input-block">
+	      <textarea placeholder="请输入内容" class="layui-textarea" id="over_mark_content" name="over_mark_content" style="width:300px;"></textarea>
+	    </div>
+	  </div>
+      <div class="layui-form-item">
+		<div class="layui-input-block" style="float:right;margin-right:20px;margin-top:15px;">
+		  <a class="layui-btn" lay-submit lay-filter="over_order_form_sub">提交</a>
+		  <a class="layui-btn layui-btn-danger" id="cancelBtn" href="javascript:closeDialog()">取消</a>
+		</div>
+	  </div>
+	</form>
+</div>	

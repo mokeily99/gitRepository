@@ -116,4 +116,14 @@ public class OrderServiceImpl implements OrderService {
 	public List<Map<String, String>> getPendingOrder(Map<String, Object> param) {
 		return orderDao.getPendingOrder(param);
 	}
+
+	@Override
+	public void overOrder(Map<String, String> param) {
+		orderDao.overOrder(param);
+	}
+
+	@Override
+	public void overOrderList(Map<String, String> param) {
+		orderDao.overOrderList(param);
+	}
 }

@@ -322,4 +322,36 @@ public class OrderController extends BaseController {
 		}
 		return result;
 	}
+	/**
+	 * 工单终结
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/overOrder")
+	@ResponseBody
+	public Result overOrder(HttpServletRequest request, HttpServletResponse response, Model model) {
+		String ids = request.getParameter("over_order_ids");
+		String overMark = request.getParameter("over_mark_content");
+		
+		Result result = new Result();
+		try {
+			if(ids.contains(",")){
+				ids = ids.substring(0, ids.length()-1);
+			}
+			Map<String, String> param = new HashMap<String, String>();
+			param.put("ids", ids);
+			param.put("overMark", overMark);
+			orderService.overOrder(param);
+			
+			//终结工单记录表
+			orderService.overOrderList(param);
+		} catch (Exception e) {
+			logger.error(e.getMessage(),e);
+			result.setResultCode("9999");
+			result.setResultMsg("操作失败！");
+		}
+		return result;
+	}
 }

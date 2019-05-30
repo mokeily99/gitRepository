@@ -22,6 +22,10 @@ public interface OrderService {
 	
 	public List<Map<String, String>> getPendingOrder(Map<String, Object> param);
 	
+	public void overOrder(Map<String, String> param);
+	
+	public void overOrderList(Map<String, String> param);
+	
 	
 	public List<Map<String, String>> getOrderByStatusAndAble(Map<String, Object> param);
 	

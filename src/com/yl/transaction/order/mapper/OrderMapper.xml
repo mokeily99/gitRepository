@@ -78,10 +78,22 @@
 		where maxaccept=#{maxaccept}
 	</update>
 	
+	<update id="overOrder" parameterType="java.util.Map">
+		update t_order set OVER_FLAG='1' 
+		<if test="overMark != null and overMark !='' ">
+			,SEND_MARK=#{overMark}
+		</if>
+		where maxaccept in (${ids})
+	</update>
+	
 	<update id="sendOrder" parameterType="java.util.Map">
 		update t_order set 
 		IS_SEND='1', SEND_OPR_ID=#{sendOprID},SEND_OPR_NAME=#{sendOprName}, 
-		SEND_TIME=sysdate, SEND_MARK=#{markContent}, SEDN_OPR_DEPT=#{sendOprDeptID}, 
+		SEND_TIME=sysdate
+		<if test="markContent != null and markContent !='' ">
+			, SEND_MARK=#{markContent}
+		</if>
+		, SEDN_OPR_DEPT=#{sendOprDeptID}, 
 		SEDN_OPR_DEPT_NAME=#{sendOprDeptName} 
 		where maxaccept in (${ids})
 	</update>
@@ -199,6 +211,14 @@
 		select MAXACCEPT,CUST_NAME,CONN_PHONE,CUST_ADR,MARK_CONTENT,IS_SEND,CREATE_OPR_ID,CREATE_OPR_NAME,CREATE_TIME, 
 			#{sendOprID},#{sendOprName},sysdate,#{markContent},OPR_DEPT,OPR_DEPT_NAME,#{sendOprDeptID},#{sendOprDeptName}, 
 			OVER_FLAG
+		from t_order where maxaccept in (${ids})
+	</insert>
+	
+	<insert id="overOrderList" parameterType="java.util.Map">
+		insert into t_order_list 
+		select MAXACCEPT,CUST_NAME,CONN_PHONE,CUST_ADR,MARK_CONTENT,IS_SEND,CREATE_OPR_ID,CREATE_OPR_NAME,CREATE_TIME, 
+			SEND_OPR_ID,SEND_OPR_NAME,sysdate,#{overMark},OPR_DEPT,OPR_DEPT_NAME,SEDN_OPR_DEPT,SEDN_OPR_DEPT_NAME, 
+			'1'
 		from t_order where maxaccept in (${ids})
 	</insert>
 </mapper>  
