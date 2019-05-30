@@ -6,7 +6,7 @@ layui.use(['form', 'layer', 'table' ], function() {
 	$ = layui.jquery;
 	layer = layui.layer;
 	
-	var blackTable = table.render({
+	var orderTable = table.render({
 		id: "order_grid_list",
 		elem : '#order_grid_list',
 		url : webpath + "/order/getPendingOrder.action",
@@ -59,35 +59,7 @@ layui.use(['form', 'layer', 'table' ], function() {
 	
 	//查询绑定
 	$('#query_order_btn').click(function() {
-		table.reload("order_grid_list", {order_phone: $("#order_phone").val(), cust_name: $("#cust_name").val()});
-	});
-	
-	//监听指定开关
-	form.on('switch(able_switch)', function(data){
-		var maxaccept = data.value;
-		var ableFlag = this.checked;
-		if(ableFlag){
-			ableFlag = "10101";
-		}else{
-			ableFlag = "10102";
-		}
-		$.ajax({
-			url: webpath + "/sms/changeBlackStatus.action",
-			type: "post",
-			data: {maxaccept: maxaccept, ableFlag: ableFlag},
-			dataType: "json",
-			success: function(data){
-				var resultCode = data.resultCode;
-				if(resultCode == "0000"){
-					layer.msg('修改成功！');
-				}else{
-					layer.alert('修改失败，请重新操作！', {
-						icon : 2
-					});
-				}
-				blackTable = table.reload("order_grid_list");
-			}
-		});
+		table.reload("order_grid_list", {where: {order_phone: $("#order_phone").val(), cust_name: $("#cust_name").val()}});
 	});
 	
 	//黑名单添加
@@ -112,7 +84,7 @@ layui.use(['form', 'layer', 'table' ], function() {
 					var resultCode = data1.resultCode;
 					if (resultCode == "0000") {
 						layer.msg('添加成功！');
-						blackTable = table.reload("order_grid_list");
+						orderTable = table.reload("order_grid_list");
 					} else {
 						layer.alert('添加失败，请重新操作！', {
 							icon : 2
@@ -164,7 +136,7 @@ layui.use(['form', 'layer', 'table' ], function() {
 					var resultCode = data1.resultCode;
 					if (resultCode == "0000") {
 						layer.msg('修改成功！');
-						blackTable = table.reload("order_grid_list");
+						orderTable = table.reload("order_grid_list");
 					} else {
 						layer.alert('修改失败，请重新操作！', {
 							icon : 2
@@ -207,7 +179,7 @@ layui.use(['form', 'layer', 'table' ], function() {
 						}else{
 							layer.msg('删除失败！', {icon: 5});
 						}
-						blackTable = table.reload("order_grid_list");
+						orderTable = table.reload("order_grid_list");
 					}
 				});
 			}
