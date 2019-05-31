@@ -208,16 +208,16 @@
 	
 	<insert id="insertOrderList" parameterType="java.util.Map">
 		insert into t_order_list 
-		select MAXACCEPT,CUST_NAME,CONN_PHONE,CUST_ADR,MARK_CONTENT,IS_SEND,CREATE_OPR_ID,CREATE_OPR_NAME,CREATE_TIME, 
-			#{sendOprID},#{sendOprName},sysdate,#{markContent},OPR_DEPT,OPR_DEPT_NAME,#{sendOprDeptID},#{sendOprDeptName}, 
+		select MAXACCEPT,CUST_NAME,CONN_PHONE,CUST_ADR,MARK_CONTENT,IS_SEND,#{OprID},#{OprName},CREATE_TIME, 
+			#{sendOprID},#{sendOprName},sysdate,#{markContent},#{oprDeptID},#{oprDeptName},#{sendOprDeptID},#{sendOprDeptName}, 
 			OVER_FLAG
 		from t_order where maxaccept in (${ids})
 	</insert>
 	
 	<insert id="overOrderList" parameterType="java.util.Map">
 		insert into t_order_list 
-		select MAXACCEPT,CUST_NAME,CONN_PHONE,CUST_ADR,MARK_CONTENT,IS_SEND,CREATE_OPR_ID,CREATE_OPR_NAME,CREATE_TIME, 
-			SEND_OPR_ID,SEND_OPR_NAME,sysdate,#{overMark},OPR_DEPT,OPR_DEPT_NAME,SEDN_OPR_DEPT,SEDN_OPR_DEPT_NAME, 
+		select MAXACCEPT,CUST_NAME,CONN_PHONE,CUST_ADR,MARK_CONTENT,IS_SEND,#{OprID},#{OprName},CREATE_TIME, 
+			#{OprID},#{OprName},sysdate,#{overMark},#{oprDeptID},#{oprDeptName},#{oprDeptID},#{oprDeptName},
 			'1'
 		from t_order where maxaccept in (${ids})
 	</insert>

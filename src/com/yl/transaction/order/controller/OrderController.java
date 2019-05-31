@@ -313,6 +313,11 @@ public class OrderController extends BaseController {
 			param.put("markContent", sendMark);
 			orderService.sendOrder(param);
 			
+			UserView user = this.getUserView(request);
+			param.put("OprID", user.getMaxaccept());
+			param.put("OprName", user.getUserName());
+			param.put("oprDeptID", user.getDeptCode());
+			param.put("oprDeptName", user.getDeptName());
 			//记录工单记录表
 			orderService.insertOrderList(param);
 		} catch (Exception e) {
@@ -345,6 +350,11 @@ public class OrderController extends BaseController {
 			param.put("overMark", overMark);
 			orderService.overOrder(param);
 			
+			UserView user = this.getUserView(request);
+			param.put("OprID", user.getMaxaccept());
+			param.put("OprName", user.getUserName());
+			param.put("oprDeptID", user.getDeptCode());
+			param.put("oprDeptName", user.getDeptName());
 			//终结工单记录表
 			orderService.overOrderList(param);
 		} catch (Exception e) {
