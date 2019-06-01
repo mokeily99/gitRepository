@@ -6,52 +6,69 @@ layui.use(['form', 'layer', 'table' ], function() {
 	$ = layui.jquery;
 	layer = layui.layer;
 	
-	var blackTable = table.render({
-		id: "black_grid_list",
-		elem : '#black_grid_list',
-		url : webpath + "/sms/blackLists.action",
+	var orderTable = table.render({
+		id: "order_grid_list",
+		elem : '#order_grid_list',
+		url : webpath + "/order/orderListAll.action",
 		method: "post",
-		where: {blackPhone: $("#black_phone").val()},
+		where: {connPhone: $("#conn_phone").val(), custName: $("#cust_name").val(), orderStatus: $("#order_status").val()},
 		cols : [ [
 			{
 				type : 'checkbox'
 			},
 			{
-				field : 'BLACK_PHONE',
+				field : 'CUST_NAME',
 				title : '客户姓名'
 			},
 			{
-				field : 'BLACK_REASON',
+				field : 'CONN_PHONE',
 				title : '联系电话'
 			},
 			{
+				field : 'CUST_ADR',
+				title : '联系地址'
+			},
+			{
+				field : 'MARK_CONTENT',
+				title : '工单备注'
+			},
+			{
+				field : 'CREATE_TIME',
+				title : '创建时间'
+			},
+			{
 				field : 'CREATE_OPR_NAME',
-				title : '来电时间'
+				title : '派发人'
 			},
 			{
-				field : 'UPDATE_TIME',
-				title : '创建人'
+				field : 'SEND_OPR_NAME',
+				title : '当前处理人'
 			},
 			{
-				field : 'ABLE_FLAG',
-				title : '创建时间',
+				field : 'CREATE_TIME',
+				title : '派发时间'
+			},
+			{
+				field : 'SEND_MARK',
+				title : '派发备注'
+			},
+			{
+				field : 'OVER_FLAG',
+				title : '工单状态',
 				templet: function(row){
-					var flag = row.ABLE_FLAG;
-					var status = "";
-					if(flag == "10101"){
-						status = "<input type=\"checkbox\" value=\""+row.MAXACCEPT+"\" checked=\"\" name=\"open\" lay-skin=\"switch\" lay-filter=\"able_switch\" lay-text=\"生效|失效\">";
+					if(row.OVER_FLAG == "1"){
+						return "已完结";
 					}else{
-						status = "<input type=\"checkbox\" value=\""+row.MAXACCEPT+"\" name=\"close\" lay-skin=\"switch\" lay-filter=\"able_switch\" lay-text=\"生效|失效\">";
+						return "未完结";
 					}
-			        return status;
 				}
 			},
 			{
-				field : 'UPDATE_TIME',
-				title : '状态'
-			},{
-				field : 'UPDATE_TIME',
-				title : '当前处理人'
+				field : 'MXACCEPT',
+				title : '操作',
+				templet: function(row){
+					return "<a style=\"color:blue\" href=\"javascript:showOrderLocus("+row.MAXACCEPT+")\">轨迹查询</a>";
+				}
 			}
 		] ],
 		page : true,
@@ -59,37 +76,50 @@ layui.use(['form', 'layer', 'table' ], function() {
 	});
 	
 	//查询绑定
-	$('#query_black_btn').click(function() {
-		table.reload("black_grid_list", {where: {blackPhone: $("#black_phone").val()}});
+	$('#query_order_btn').click(function() {
+		table.reload("order_grid_list", {where: {connPhone: $("#conn_phone").val(), custName: $("#cust_name").val(), orderStatus: $("#order_status").val()}});
 	});
 	
-	//监听指定开关
-	form.on('switch(able_switch)', function(data){
-		var maxaccept = data.value;
-		var ableFlag = this.checked;
-		if(ableFlag){
-			ableFlag = "10101";
-		}else{
-			ableFlag = "10102";
-		}
+	//轨迹查询
+	window.showOrderLocus=function(maxaccept){
 		$.ajax({
-			url: webpath + "/sms/changeBlackStatus.action",
+			url: webpath + "/order/getOrderLocus.action",
 			type: "post",
-			data: {maxaccept: maxaccept, ableFlag: ableFlag},
-			dataType: "json",
+			dataType: "json", 
+			data: {maxaccept: maxaccept},
 			success: function(data){
 				var resultCode = data.resultCode;
-				if(resultCode == "0000"){
-					layer.msg('修改成功！');
-				}else{
-					layer.alert('修改失败，请重新操作！', {
-						icon : 2
-					});
+				var resultData = data.resultData;
+				
+				var html = [];
+				html.push("<ul class=\"layui-timeline\">");
+				for(var ix=0; ix<resultData.length; ix++){
+					html.push("<li class=\"layui-timeline-item\">");
+					if(resultData[ix].OVER_FLAG == "1"){
+						html.push("  <i class=\"layui-icon layui-timeline-axis\">&#xe617;</i>");
+					}else{
+						html.push("  <i class=\"layui-icon layui-timeline-axis\">&#xe63f;</i>");
+					}
+					html.push("  <div class=\"layui-timeline-content layui-text\">");
+					html.push("  	<h3 class=\"layui-timeline-title\">" +resultData[ix].SEND_TIME+ "&nbsp;&nbsp;&nbsp;" +resultData[ix].CREATE_OPR_NAME+ "</h3>");
+					html.push("  	<p>");
+					html.push("			" +resultData[ix].SEND_MARK+ "");
+					html.push("  	</p>");
+					html.push("  </div>");
+					html.push("</li>");
 				}
-				blackTable = table.reload("black_grid_list");
+				html.push("</ul>");
+				$("#locus_order_div").html(html.join(""));
+				
+				dialogIndex = layer.open({
+					type : 1,
+					title : '工单轨迹',
+					content : $('#locus_order_div'),
+					area : [ '500px', '300px' ]
+				});
 			}
 		});
-	});
+	}
 	
 	//黑名单添加
 	$('#add_black_btn').click(function() {
@@ -113,7 +143,7 @@ layui.use(['form', 'layer', 'table' ], function() {
 					var resultCode = data1.resultCode;
 					if (resultCode == "0000") {
 						layer.msg('添加成功！');
-						blackTable = table.reload("black_grid_list");
+						orderTable = table.reload("order_grid_list");
 					} else {
 						layer.alert('添加失败，请重新操作！', {
 							icon : 2
@@ -127,7 +157,7 @@ layui.use(['form', 'layer', 'table' ], function() {
 	
 	//黑名单修改
 	$('#edit_black_btn').click(function() {
-		var checkData = table.checkStatus("black_grid_list");
+		var checkData = table.checkStatus("order_grid_list");
 		if(checkData.data.length < 1){
 			layer.msg('未选择任何数据！',{icon:0});
 			return;
@@ -165,7 +195,7 @@ layui.use(['form', 'layer', 'table' ], function() {
 					var resultCode = data1.resultCode;
 					if (resultCode == "0000") {
 						layer.msg('修改成功！');
-						blackTable = table.reload("black_grid_list");
+						orderTable = table.reload("order_grid_list");
 					} else {
 						layer.alert('修改失败，请重新操作！', {
 							icon : 2
@@ -179,7 +209,7 @@ layui.use(['form', 'layer', 'table' ], function() {
 	
 	//删除绑定
 	$('#del_black_btn').click(function() {
-		var checkData = table.checkStatus("black_grid_list");
+		var checkData = table.checkStatus("order_grid_list");
 		if(checkData.data.length < 1){
 			layer.msg('未选择任何数据！',{icon:0});
 			return;
@@ -208,7 +238,7 @@ layui.use(['form', 'layer', 'table' ], function() {
 						}else{
 							layer.msg('删除失败！', {icon: 5});
 						}
-						blackTable = table.reload("black_grid_list");
+						orderTable = table.reload("order_grid_list");
 					}
 				});
 			}
