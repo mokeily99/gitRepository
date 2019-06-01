@@ -107,8 +107,8 @@
 	<!-- HighCharts图表 -->
 	<div class="row" style="width:100%;height:20%;">
 		<div class="sysNotice col">
-			<blockquote class="layui-elem-quote title">工单类型分析</blockquote>
-			<div id="doctorCount" style="width:100%;height:295px;float:left;"></div>
+			<blockquote class="layui-elem-quote title">工单量分析</blockquote>
+			<div id="order_type_num_an" style="width:100%;height:295px;float:left;display:none;"></div>
 		</div>
 		<div class="sysNotice col">
 			<blockquote class="layui-elem-quote title">短信类型分析</blockquote>
