@@ -44,7 +44,7 @@
 			<%if("10201".equals(user.getRoleLevel())){ %>
 				<div style="width:99%;margin:auto;">
 					<div class="layui-btn-group">
-				    	<button class="layui-btn" id="add_fee_btn">账户充值</button>
+				    	<button class="layui-btn" id="add_fee_btn">账户金额修改</button>
 				  	</div>
 			  	</div>
 			<%} %>

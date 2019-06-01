@@ -96,13 +96,13 @@ layui.use(['form', 'layer', 'table' ], function() {
 				for(var ix=0; ix<resultData.length; ix++){
 					html.push("<li class=\"layui-timeline-item\">");
 					if(resultData[ix].OVER_FLAG == "1"){
-						html.push("  <i class=\"layui-icon layui-timeline-axis\">&#xe617;</i>");
+						html.push("  <i class=\"layui-icon layui-timeline-axis\">&#xe673;</i>");
 					}else{
 						html.push("  <i class=\"layui-icon layui-timeline-axis\">&#xe63f;</i>");
 					}
 					html.push("  <div class=\"layui-timeline-content layui-text\">");
-					html.push("  	<h3 class=\"layui-timeline-title\">" +resultData[ix].SEND_TIME+ "&nbsp;&nbsp;&nbsp;" +resultData[ix].CREATE_OPR_NAME+ "</h3>");
-					html.push("  	<p>");
+					html.push("  	<h3 class=\"layui-timeline-title\" style=\"font-size: 16px;\">" +resultData[ix].SEND_TIME+ "&nbsp;&nbsp;&nbsp;" +resultData[ix].CREATE_OPR_NAME+ "</h3>");
+					html.push("  	<p style=\"color:cadetblue;\">");
 					html.push("			" +resultData[ix].SEND_MARK+ "");
 					html.push("  	</p>");
 					html.push("  </div>");

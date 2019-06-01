@@ -15,7 +15,7 @@ layui.use(['form', 'layer', 'upload'], function() {
 			if (resultCode == "0000") {
 				$("#userFace").attr("src", "/facePic/" + data.resultData);
 			} else {
-				$("#userFace").attr("src", webpath + "/transaction/main/images/face.png");
+				$("#userFace").attr("src", webpath + "/transaction/main/images/face.jpg");
 			}
 		}
 	});
@@ -24,7 +24,7 @@ layui.use(['form', 'layer', 'upload'], function() {
     if(photoHead != "null" && photoHead != "" && photoHead != undefined){
     	$("#userFace").attr("src","/facePic/" + photoHead);
     }else{
-    	$("#userFace").attr("src",webpath + "/transaction/main/images/face.png");
+    	$("#userFace").attr("src",webpath + "/transaction/main/images/face.jpg");
     }
     
     //表单校验

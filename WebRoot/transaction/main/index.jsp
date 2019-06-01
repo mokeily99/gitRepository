@@ -111,7 +111,7 @@
 							<%if(StringUtils.isNotBlank(user.getPhotoHead())){ %>
 								<img src="/facePic/<%=user.getPhotoHead()%>" class="layui-circle" width="35" height="35">
 							<%} else {%>
-								<img src="<%=webpath%>/transaction/main/images/face.png" class="layui-circle" width="35" height="35">
+								<img src="<%=webpath%>/transaction/main/images/face.jpg" class="layui-circle" width="35" height="35">
 							<%}%>
 							<cite><%=userame %></cite>
 						</a>
@@ -138,7 +138,7 @@
 				<%if(StringUtils.isNotBlank(user.getPhotoHead())){ %>
 					<a class="img" title="我的头像"><img src="/facePic/<%=user.getPhotoHead()%>"></a>
 				<%} else {%>
-					<a class="img" title="我的头像"><img src="<%=webpath%>/transaction/main/images/face.png"></a>
+					<a class="img" title="我的头像"><img src="<%=webpath%>/transaction/main/images/face.jpg"></a>
 				<%}%>
 				<p>
 					你好！<span class="userName"><%=userame %></span>, 欢迎登录
@@ -176,7 +176,7 @@
 			<%if(StringUtils.isNotBlank(user.getPhotoHead())){ %>
 				<img src="/facePic/<%=user.getPhotoHead()%>">
 			<%} else {%>
-				<img src="<%=webpath%>/transaction/main/images/face.png">
+				<img src="<%=webpath%>/transaction/main/images/face.jpg">
 			<%}%>
 		</div>
 		<div class="admin-header-lock-name" id="lockUserName"><%=userame %></div>
