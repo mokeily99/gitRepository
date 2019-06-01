@@ -88,7 +88,7 @@
 	
 	<select id="getConverCount" parameterType="java.util.Map" resultType="java.util.Map">
 		select count(1) CONVER_NUM from t_conversation where 1=1 
-		<if test="smsPhone != null and smsPhone != '' ">
+		<if test="oprID != null and oprID != '' ">
 			and SEAT_ID=#{oprID}
 		</if>
 		<if test="deptCode != null and deptCode != '' ">
@@ -98,7 +98,7 @@
 	
 	<select id="getIntoConverCount" parameterType="java.util.Map" resultType="java.util.Map">
 		select count(1) INTO_CONVER_NUM from t_conversation where CALL_FORWARD='0'
-		<if test="smsPhone != null and smsPhone != '' ">
+		<if test="oprID != null and oprID != '' ">
 			and SEAT_ID=#{oprID}
 		</if>
 		<if test="deptCode != null and deptCode != '' ">
@@ -108,7 +108,7 @@
 	
 	<select id="getOutConverCount" parameterType="java.util.Map" resultType="java.util.Map">
 		select count(1) OUT_CONVER_NUM from t_conversation where CALL_FORWARD='1'
-		<if test="smsPhone != null and smsPhone != '' ">
+		<if test="oprID != null and oprID != '' ">
 			and SEAT_ID=#{oprID}
 		</if>
 		<if test="deptCode != null and deptCode != '' ">

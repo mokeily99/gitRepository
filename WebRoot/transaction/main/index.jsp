@@ -88,11 +88,13 @@
 						}
 					</script>
 				</div>
+				<%if(!"10201".equals(user.getRoleLevel())){ %>
 				<div style="float: left; height: 100%; width: 434px;">
 					<div style="color:white;float:left;margin:20px;"><img id="seat_free_busy_img" src="<%=webpath%>/common/img/busy.png" style="margin-top:-10px;"/></div>
 					<div style="color:white;float:left;margin:20px;"><a class="seat_class" href="javascript:setFree()">置闲</a></div>
 					<div style="color:white;float:left;margin:20px;"><a class="seat_class" href="javascript:setBusy()">置忙</a></div>
 				</div>
+				<%} %>
 				<!-- 顶部右侧菜单 -->
 				<ul class="layui-nav top_menu">
 					<li class="layui-nav-item showNotice" id="showNotice" pc><a
