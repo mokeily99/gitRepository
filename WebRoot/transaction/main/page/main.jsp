@@ -37,7 +37,7 @@
 <body class="childrenBody">
 	<div class="panel_box row" >
 		<div class="panel col">
-			<a href="javascript:;" data-url="page/message/message.html">
+			<div>
 				<div class="panel_icon">
 					<i class="layui-icon" data-icon="&#xe63a;">&#xe63a;</i>
 				</div>
@@ -45,10 +45,10 @@
 					<span></span>
 					<cite>短信总数</cite>
 				</div>
-			</a>
+			</div>
 		</div>
 		<div class="panel col">
-			<a href="javascript:;" data-url="page/user/allUsers.html">
+			<a href="javascript:;" data-url="<%=webpath%>/transaction/smsManager/smshis/smshis.jsp">
 				<div class="panel_icon" style="background-color:#FF5722;">
 					<i class="layui-icon" data-icon="&#xe605;">&#xe605;</i>
 				</div>
@@ -59,7 +59,7 @@
 			</a>
 		</div>
 		<div class="panel col">
-			<a href="javascript:;" data-url="page/user/allUsers.html">
+			<a href="javascript:;" data-url="<%=webpath%>/transaction/smsManager/smslist/smslist.jsp">
 				<div class="panel_icon" style="background-color:#009688;">
 					<i class="layui-icon" data-icon="&#x1006;">&#x1006;</i>
 				</div>
@@ -70,7 +70,7 @@
 			</a>
 		</div>
 		<div class="panel col">
-			<a href="javascript:;" data-url="page/img/images.html">
+			<div>
 				<div class="panel_icon" style="background-color:#5FB878;">
 					<i class="layui-icon" data-icon="&#xe63b;">&#xe63b;</i>
 				</div>
@@ -78,10 +78,10 @@
 					<span></span>
 					<cite>通话总数</cite>
 				</div>
-			</a>
+			</div>
 		</div>
 		<div class="panel col">
-			<a href="javascript:;" data-url="page/news/newsList.html">
+			<a href="javascript:;" data-url="<%=webpath%>/transaction/conver/converQuery/converQuery.jsp?callForward=0">
 				<div class="panel_icon" style="background-color:#FF5722;">
 					<i class="layui-icon" data-icon="&#xe603;">&#xe603;</i>
 				</div>
@@ -92,7 +92,7 @@
 			</a>
 		</div>
 		<div class="panel col max_panel">
-			<a href="javascript:;" data-url="page/news/newsList.html">
+			<a href="javascript:;" data-url="<%=webpath%>/transaction/conver/converQuery/converQuery.jsp?callForward=1">
 				<div class="panel_icon" style="background-color:#009688;">
 					<i class="layui-icon" data-icon="&#xe602;">&#xe602;</i>
 				</div>

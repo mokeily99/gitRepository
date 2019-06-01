@@ -21,6 +21,9 @@
 		<if test="calledPhone != null and calledPhone != ''">
 			and CALLED_NO=#{calledPhone}
 		</if>
+		<if test="callForward != null and callForward != ''">
+			and CALL_FORWARD=#{callForward}
+		</if>
 		
 		order by CALL_TIME desc
 	</select>

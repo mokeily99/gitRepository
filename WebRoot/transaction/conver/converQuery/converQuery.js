@@ -6,12 +6,20 @@ layui.use(['form', 'layer', 'table', 'laydate' ], function() {
 	layer = layui.layer;
 	var laydate = layui.laydate;
 	
+	if(callForward == "0"){
+		$("#call_forward").val("0");
+		form.render();
+	}else if(callForward == "1"){
+		$("#call_forward").val("1");
+		form.render();
+	}
+	
 	var converTable = table.render({
 		id: "conver_grid_list",
 		elem : '#conver_grid_list',
 		url : webpath + "/conver/getConverList.action",
 		method: "post",
-		where: {callerPhone: $("#caller_phone").val(), calledPhone: $("#called_phone").val()},
+		where: {callerPhone: $("#caller_phone").val(), calledPhone: $("#called_phone").val(), callForward: $("#call_forward").val()},
 		cols : [ [
 			{
 				type : 'checkbox'
@@ -80,7 +88,7 @@ layui.use(['form', 'layer', 'table', 'laydate' ], function() {
 	
 	//查询绑定
 	$('#query_conver_btn').click(function() {
-		table.reload("conver_grid_list", {where: {callerPhone: $("#caller_phone").val(), calledPhone: $("#called_phone").val()}});
+		table.reload("conver_grid_list", {where: {callerPhone: $("#caller_phone").val(), calledPhone: $("#called_phone").val(), callForward: $("#call_forward").val()}});
 	});
 	
 	//短信发送

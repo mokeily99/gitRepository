@@ -3,6 +3,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 	String webpath = request.getContextPath();
+	String callForward = request.getParameter("callForward");
 %>
 <!DOCTYPE html>
 <html>
@@ -12,6 +13,9 @@
 
 <jsp:include page="../../../common/jsp/commonContent.jsp" flush="true" />
 <script type="text/javascript" src="<%=webpath%>/transaction/conver/converQuery/converQuery.js"></script>
+<script type="text/javascript">
+	var callForward = '<%=callForward%>';
+</script>
 </head>
 
 
@@ -30,6 +34,16 @@
 					<label class="layui-form-label" style="width:98px;">被叫号码</label>
 					<div class="layui-input-inline">
 						<input type="text" id="called_phone" name="called_phone" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label" style="width:98px;">呼叫方向</label>
+					<div class="layui-input-inline">
+						<select name="call_forward" id="call_forward" lay-verify="required">
+			          		<option value="">请选择</option>
+					        <option value="0">呼入</option>
+					        <option value="1">呼出</option>
+				      	</select>
 					</div>
 				</div>
 				<div class="layui-inline">

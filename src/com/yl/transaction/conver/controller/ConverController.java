@@ -36,7 +36,7 @@ public class ConverController extends BaseController{
 	
 	@RequestMapping("/getConverList")
 	@ResponseBody
-	public LayTableResult<List<Map<String, String>>> getConverList(Integer page, Integer limit, String callerPhone, String calledPhone, HttpServletRequest request, HttpServletResponse response, Model model) {
+	public LayTableResult<List<Map<String, String>>> getConverList(Integer page, Integer limit, String callerPhone, String calledPhone, String callForward, HttpServletRequest request, HttpServletResponse response, Model model) {
 		LayTableResult<List<Map<String, String>>> tableResult = new LayTableResult<List<Map<String, String>>>();
 		try {
 			UserView user = this.getUserView(request);
@@ -46,6 +46,7 @@ public class ConverController extends BaseController{
 
 			param.put("callerPhone", callerPhone);
 			param.put("calledPhone", calledPhone);
+			param.put("callForward", callForward);
 			
 			if("10203".equals(user.getRoleLevel())){//分销商工作人员只能看自己的通话
 				param.put("seatID", user.getMaxaccept());
