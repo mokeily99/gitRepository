@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.github.pagehelper.util.StringUtil;
 import com.yl.common.controller.BaseController;
 import com.yl.common.dao.PublicDao;
 import com.yl.common.pojo.LayTableResult;
@@ -515,5 +516,47 @@ public class SMSController extends BaseController{
 			tableResult.setData(new ArrayList<Map<String, String>>());
 		}
 		return tableResult;
+	}
+	/**
+	 * 获取短信指标
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/getSMSInfo")
+	@ResponseBody
+	public Result getSMSInfo(HttpServletRequest request, HttpServletResponse response, Model model) {
+		Result result = new Result();
+		
+		Map<String, String> resultMap = new HashMap<String, String>();
+		try {
+			Map<String, String> param = new HashMap<String, String>();
+			UserView user = this.getUserView(request);
+			String roleLevel = user.getRoleLevel();
+			if("10202".equals(roleLevel)){
+				param.put("deptCode", user.getDeptCode());
+			}else if("10203".equals(roleLevel)){
+				param.put("oprID", user.getMaxaccept());
+			}
+			//获取短信总数
+			Map<String, String> smsCount = smsService.getSMSCount(param);
+			
+			//获取未发送总数
+			Map<String, String> unSend = smsService.getUnSend(param);
+			
+			//获取已发送总数
+			Map<String, String> smsSend = smsService.getSMSSend(param);
+			
+			resultMap.put("SMS_NUM", StringUtil.isEmpty(String.valueOf(smsCount.get("SMS_NUM"))) ? "0":String.valueOf(smsCount.get("SMS_NUM")));
+			resultMap.put("UN_SMS_NUM", StringUtil.isEmpty(String.valueOf(unSend.get("UN_SMS_NUM")))? "0":String.valueOf(unSend.get("UN_SMS_NUM")));
+			resultMap.put("SEND_SMS_NUM", StringUtil.isEmpty(String.valueOf(smsSend.get("SEND_SMS_NUM")))? "0":String.valueOf(smsSend.get("SEND_SMS_NUM")));
+			result.setResultData(resultMap);
+		} catch (Exception e) {
+			logger.error(e.getMessage(),e);
+			result.setResultCode("9999");
+			result.setResultMsg("操作失败!" + e);
+		}
+		return result;
 	}
 }

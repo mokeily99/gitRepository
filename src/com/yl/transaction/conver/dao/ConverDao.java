@@ -27,4 +27,10 @@ public interface ConverDao {
 	public List<Map<String, String>> getCallStatus(Map<String, String> param);
 	
 	public void updateShowStauts(@Param("seatID") String seatID);
+	
+	public Map<String, String> getConverCount(Map<String, String> param);
+	
+	public Map<String, String> getIntoConverCount(Map<String, String> param);
+	
+	public Map<String, String> getOutConverCount(Map<String, String> param);
 }

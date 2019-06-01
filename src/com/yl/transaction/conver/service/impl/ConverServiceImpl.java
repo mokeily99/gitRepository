@@ -68,4 +68,19 @@ public class ConverServiceImpl implements ConverService{
 	public void updateShowStauts(String seatID) {
 		converDao.updateShowStauts(seatID);
 	}
+
+	@Override
+	public Map<String, String> getConverCount(Map<String, String> param) {
+		return converDao.getConverCount(param);
+	}
+
+	@Override
+	public Map<String, String> getIntoConverCount(Map<String, String> param) {
+		return converDao.getIntoConverCount(param);
+	}
+
+	@Override
+	public Map<String, String> getOutConverCount(Map<String, String> param) {
+		return converDao.getOutConverCount(param);
+	}
 }

@@ -234,4 +234,43 @@
 		</if>
 		order by CREATE_TIME desc
 	</select>
+	
+	<select id="getSMSCount" resultType="java.util.Map" parameterType="java.util.Map">
+		select sum(num) SMS_NUM  from 
+		(select count(1) num from t_sms_list where 1=1 
+		<if test="smsPhone != null and smsPhone != '' ">
+			CREATE_OPR_ID=#{oprID}
+		</if>
+		<if test="deptCode != null and deptCode != '' ">
+			DEPT_CODE=#{deptCode}
+		</if>
+		union all
+		select count(1) num from t_sms_list_his where 1=1 
+		<if test="smsPhone != null and smsPhone != '' ">
+			and CREATE_OPR_ID=#{oprID}
+		</if>
+		<if test="deptCode != null and deptCode != '' ">
+			and DEPT_CODE=#{deptCode}
+		</if>)
+	</select>
+	
+	<select id="getUnSend" resultType="java.util.Map" parameterType="java.util.Map">
+		select count(1) UN_SMS_NUM from t_sms_list where 1=1 
+		<if test="smsPhone != null and smsPhone != '' ">
+			and CREATE_OPR_ID=#{oprID}
+		</if>
+		<if test="deptCode != null and deptCode != '' ">
+			and DEPT_CODE=#{deptCode}
+		</if>
+	</select>
+	
+	<select id="getSMSSend" resultType="java.util.Map" parameterType="java.util.Map">
+		select count(1) SEND_SMS_NUM from t_sms_list_his where 1=1 
+		<if test="smsPhone != null and smsPhone != '' ">
+			and CREATE_OPR_ID=#{oprID}
+		</if>
+		<if test="deptCode != null and deptCode != '' ">
+			and DEPT_CODE=#{deptCode}
+		</if>
+	</select>
 </mapper>  

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.github.pagehelper.util.StringUtil;
 import com.yl.common.controller.BaseController;
 import com.yl.common.dao.PublicDao;
 import com.yl.common.pojo.LayTableResult;
@@ -66,5 +67,47 @@ public class ConverController extends BaseController{
 			tableResult.setData(new ArrayList<Map<String, String>>());
 		}
 		return tableResult;
+	}
+	/**
+	 * 通话总数分析
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/getConverInfo")
+	@ResponseBody
+	public Result getConverInfo(HttpServletRequest request, HttpServletResponse response, Model model) {
+		Result result = new Result();
+		
+		Map<String, String> resultMap = new HashMap<String, String>();
+		try {
+			Map<String, String> param = new HashMap<String, String>();
+			UserView user = this.getUserView(request);
+			String roleLevel = user.getRoleLevel();
+			if("10202".equals(roleLevel)){
+				param.put("deptCode", user.getDeptCode());
+			}else if("10203".equals(roleLevel)){
+				param.put("oprID", user.getMaxaccept());
+			}
+			//获取通话总数
+			Map<String, String> converCount = converService.getConverCount(param);
+			
+			//获取呼入总数
+			Map<String, String> intoCount = converService.getIntoConverCount(param);
+			
+			//获取呼出总数
+			Map<String, String> outCount = converService.getOutConverCount(param);
+			
+			resultMap.put("CONVER_NUM", StringUtil.isEmpty(String.valueOf(converCount.get("CONVER_NUM"))) ? "0":String.valueOf(converCount.get("CONVER_NUM")));
+			resultMap.put("INTO_CONVER_NUM", StringUtil.isEmpty(String.valueOf(intoCount.get("INTO_CONVER_NUM")))? "0":String.valueOf(intoCount.get("INTO_CONVER_NUM")));
+			resultMap.put("OUT_CONVER_NUM", StringUtil.isEmpty(String.valueOf(outCount.get("OUT_CONVER_NUM")))? "0":String.valueOf(outCount.get("OUT_CONVER_NUM")));
+			result.setResultData(resultMap);
+		} catch (Exception e) {
+			logger.error(e.getMessage(),e);
+			result.setResultCode("9999");
+			result.setResultMsg("操作失败!" + e);
+		}
+		return result;
 	}
 }

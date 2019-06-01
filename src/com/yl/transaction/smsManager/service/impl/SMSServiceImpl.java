@@ -83,5 +83,20 @@ public class SMSServiceImpl implements SMSService{
 		return smsDao.getSmsHisList(param);
 	}
 
+	@Override
+	public Map<String, String> getSMSCount(Map<String, String> param) {
+		return smsDao.getSMSCount(param);
+	}
+
+	@Override
+	public Map<String, String> getUnSend(Map<String, String> param) {
+		return smsDao.getUnSend(param);
+	}
+
+	@Override
+	public Map<String, String> getSMSSend(Map<String, String> param) {
+		return smsDao.getSMSSend(param);
+	}
+
 	
 }

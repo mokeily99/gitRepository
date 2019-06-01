@@ -34,12 +34,8 @@ layui.config({
 		}
 	)
 
-	//图片总数
-	$.get("../json/images.json",
-		function(data){
-			$(".imgAll span").text(data.length);
-		}
-	)
+	//通话信息统计
+	loadConverCount();
 
 	//用户数
 	$.get("../json/usersList.json",
@@ -48,12 +44,8 @@ layui.config({
 		}
 	)
 
-	//新消息
-	$.get("../json/message.json",
-		function(data){
-			$(".newMessage span").text(data.length);
-		}
-	)
+	//获取短信总数
+	loadSMSCount();
 
 
 	//数字格式化
@@ -508,4 +500,37 @@ function show_online_type() {
 }
 
 
-
+//短信分析
+function loadSMSCount(){
+	$.ajax({
+		url: webpath + "/sms/getSMSInfo.action",
+		type: "post",
+		dataType: "json",
+		success: function(data){
+			var resultCode = data.resultCode;
+			if(resultCode == "0000"){
+				var resultData = data.resultData;
+				$(".sms_count span").text(resultData.SMS_NUM);
+				$(".send_sms_count span").text(resultData.SEND_SMS_NUM);
+				$(".un_sms_count span").text(resultData.UN_SMS_NUM);
+			}
+		}
+	});
+}
+//通话分析
+function loadConverCount(){
+	$.ajax({
+		url: webpath + "/conver/getConverInfo.action",
+		type: "post",
+		dataType: "json",
+		success: function(data){
+			var resultCode = data.resultCode;
+			if(resultCode == "0000"){
+				var resultData = data.resultData;
+				$(".conver_num span").text(resultData.CONVER_NUM);
+				$(".into_conver_num span").text(resultData.INTO_CONVER_NUM);
+				$(".out_conver_num span").text(resultData.OUT_CONVER_NUM);
+			}
+		}
+	});
+}

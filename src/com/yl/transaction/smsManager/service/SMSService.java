@@ -30,4 +30,10 @@ public interface SMSService {
 	public List<Map<String, String>> getSmsList(Map<String, Object> param);
 	
 	public List<Map<String, String>> getSmsHisList(Map<String, Object> param);
+	
+	public Map<String, String> getSMSCount(Map<String, String> param);
+	
+	public Map<String, String> getUnSend(Map<String, String> param);
+	
+	public Map<String, String> getSMSSend(Map<String, String> param);
 }

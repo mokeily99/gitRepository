@@ -28,6 +28,7 @@
 	<script src="<%=webpath%>/common/js/Highcharts-6.1.0/highcharts-zh_CN.js"></script>
 	<script type="text/javascript" src="main.js"></script>
 	<script type="text/javascript">
+		var webpath = '<%=webpath%>';
 		$(function(){
 			getChart();
 		})
@@ -40,65 +41,64 @@
 				<div class="panel_icon">
 					<i class="layui-icon" data-icon="&#xe63a;">&#xe63a;</i>
 				</div>
-				<div class="panel_word newMessage">
-					<span></span>
-					<cite>新消息</cite>
-				</div>
-			</a>
-		</div>
-		<div class="panel col">
-			<a href="javascript:;" data-url="page/user/allUsers.html">
-				<div class="panel_icon" style="background-color:#FF5722;">
-				<i class="iconfont icon-dongtaifensishu" data-icon="icon-dongtaifensishu"></i>
-			</div>
-			<div class="panel_word userAll">
-				<span></span>
-				<cite>新增人数</cite>
-			</div>
-			</a>
-		</div>
-		<div class="panel col">
-			<a href="javascript:;" data-url="page/user/allUsers.html">
-				<div class="panel_icon" style="background-color:#009688;">
-					<i class="layui-icon" data-icon="&#xe613;">&#xe613;</i>
-				</div>
-				<div class="panel_word userAll">
-					<span></span>
-					<cite>用户总数</cite>
-				</div>
-			</a>
-		</div>
-		<div class="panel col">
-			<a href="javascript:;" data-url="page/img/images.html">
-				<div class="panel_icon" style="background-color:#5FB878;">
-					<i class="layui-icon" data-icon="&#xe64a;">&#xe64a;</i>
-				</div>
-				<div class="panel_word imgAll">
+				<div class="panel_word sms_count">
 					<span></span>
 					<cite>短信总数</cite>
 				</div>
 			</a>
 		</div>
 		<div class="panel col">
-			<a href="javascript:;" data-url="page/news/newsList.html">
-				<div class="panel_icon" style="background-color:#F7B824;">
-					<i class="iconfont icon-wenben" data-icon="icon-wenben"></i>
+			<a href="javascript:;" data-url="page/user/allUsers.html">
+				<div class="panel_icon" style="background-color:#FF5722;">
+					<i class="layui-icon" data-icon="&#xe605;">&#xe605;</i>
 				</div>
-				<div class="panel_word waitNews">
+			<div class="panel_word send_sms_count">
+				<span></span>
+				<cite>已发短信</cite>
+			</div>
+			</a>
+		</div>
+		<div class="panel col">
+			<a href="javascript:;" data-url="page/user/allUsers.html">
+				<div class="panel_icon" style="background-color:#009688;">
+					<i class="layui-icon" data-icon="&#x1006;">&#x1006;</i>
+				</div>
+				<div class="panel_word un_sms_count">
 					<span></span>
-					<cite>工单总数</cite>
+					<cite>未发短信</cite>
+				</div>
+			</a>
+		</div>
+		<div class="panel col">
+			<a href="javascript:;" data-url="page/img/images.html">
+				<div class="panel_icon" style="background-color:#5FB878;">
+					<i class="layui-icon" data-icon="&#xe63b;">&#xe63b;</i>
+				</div>
+				<div class="panel_word conver_num">
+					<span></span>
+					<cite>通话总数</cite>
+				</div>
+			</a>
+		</div>
+		<div class="panel col">
+			<a href="javascript:;" data-url="page/news/newsList.html">
+				<div class="panel_icon" style="background-color:#FF5722;">
+					<i class="layui-icon" data-icon="&#xe603;">&#xe603;</i>
+				</div>
+				<div class="panel_word into_conver_num">
+					<span></span>
+					<cite>呼入总数</cite>
 				</div>
 			</a>
 		</div>
 		<div class="panel col max_panel">
 			<a href="javascript:;" data-url="page/news/newsList.html">
-				<div class="panel_icon" style="background-color:#2F4056;">
-					<i class="iconfont icon-text" data-icon="icon-text"></i>
+				<div class="panel_icon" style="background-color:#009688;">
+					<i class="layui-icon" data-icon="&#xe602;">&#xe602;</i>
 				</div>
-				<div class="panel_word allNews">
+				<div class="panel_word out_conver_num">
 					<span></span>
-					<em>待处理工单总数</em>
-					<cite>待处理工单总数</cite>
+					<cite>呼出总数</cite>
 				</div>
 			</a>
 		</div>

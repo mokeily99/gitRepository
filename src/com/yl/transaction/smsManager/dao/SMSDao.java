@@ -43,4 +43,10 @@ public interface SMSDao {
 	public void insertSmsSynchis(Map<String, String> param);
 	
 	public void updateTryTimes(Map<String, String> param);
+	
+	public Map<String, String> getSMSCount(Map<String, String> param);
+	
+	public Map<String, String> getUnSend(Map<String, String> param);
+	
+	public Map<String, String> getSMSSend(Map<String, String> param);
 }
