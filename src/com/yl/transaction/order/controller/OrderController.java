@@ -1,5 +1,6 @@
 package com.yl.transaction.order.controller;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageHelper;
@@ -434,5 +436,72 @@ public class OrderController extends BaseController {
 			result.setResultMsg("操作失败！");
 		}
 		return result;
+	}
+	/**
+	 * 
+	 * @param maxaccept
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/getOrderTypeCount")
+	@ResponseBody
+	public Result getOrderTypeCount(@RequestParam("dateList[]") List<String> dateList, HttpServletRequest request, HttpServletResponse response, Model model) {
+		
+		Result result = new Result();
+		try {
+			Map<String, String> param = new HashMap<String, String>();
+			UserView user = this.getUserView(request);
+			if("10202".equals(user.getRoleLevel())){//部门管理员看本部门
+				param.put("deptCode", user.getDeptCode());
+			}else if("10203".equals(user.getRoleLevel())){//部门人员看自己的
+				param.put("oprID", user.getMaxaccept());
+			}
+			List<Map<String, String>> typeList = new ArrayList<Map<String, String>>();
+			Map<String, String> type1 = new HashMap<String, String>();
+			type1.put("type", "");
+			type1.put("name", "工单总量");
+			typeList.add(type1);
+			Map<String, String> type2 = new HashMap<String, String>();
+			type2.put("type", "0");
+			type2.put("name", "未派发");
+			typeList.add(type2);
+			Map<String, String> type3 = new HashMap<String, String>();
+			type3.put("type", "1");
+			type3.put("name", "已派发");
+			typeList.add(type3);
+			
+			List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
+			for(Map<String, String> map : typeList){
+				Map<String, Object> resultMap = new HashMap<String, Object>();
+				resultMap.put("name", map.get("name"));
+				
+				param.put("isSend", map.get("type"));
+				List<Integer> dataList = new ArrayList<Integer>();
+				for(int ix=0; ix<dateList.size(); ix++){
+					param.put("date", dateList.get(ix));
+					Map<String, String> num = orderService.getOrderTypeCount(param);
+					Object obj = num.get("TYPE_NUM");
+					Integer temp = Integer.parseInt(String.valueOf(obj));
+					dataList.add(temp);
+				}
+				resultMap.put("data", dataList);
+				resultList.add(resultMap);
+			}
+			result.setResultData(resultList);
+		} catch (Exception e) {
+			logger.error(e.getMessage(),e);
+			result.setResultCode("9999");
+			result.setResultMsg("操作失败！");
+		}
+		return result;
+	}
+	
+	public static void main(String[] args) {
+		Map<String, String> num = new HashMap<String, String>();
+		num.put("TYPE_NUM", "0");
+		Integer ss = Integer.parseInt(num.get("TYPE_NUM").toString());
+		System.out.println(ss);
 	}
 }

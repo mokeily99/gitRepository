@@ -53,4 +53,5 @@ public interface OrderService {
 
 	public List<Map<String, Object>> getStatisticsTotal(Map<String, Object> param);
 	
+	public Map<String, String> getOrderTypeCount(Map<String, String> param);
 }

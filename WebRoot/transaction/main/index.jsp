@@ -200,7 +200,7 @@
 	<!-- <script type="text/javascript" src="js/nav.js"></script> -->
 	<script type="text/javascript" src="js/leftNav.js"></script>
 	<script type="text/javascript" src="js/index.js"></script>
-	<script src="<%=webpath%>/transaction/bombScreen/callStatus/callStatus.js"></script>
+	<%-- <script src="<%=webpath%>/transaction/bombScreen/callStatus/callStatus.js"></script> --%>
 </body>
 </html>
 

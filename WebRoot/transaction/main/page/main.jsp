@@ -27,10 +27,13 @@
 	<script src="<%=webpath%>/common/js/Highcharts-6.1.0/modules/exporting.js"></script>
 	<script src="<%=webpath%>/common/js/Highcharts-6.1.0/highcharts-zh_CN.js"></script>
 	<script type="text/javascript" src="main.js"></script>
+	
+	<script src="<%=webpath%>/transaction/analyse/indexAn/orderTypeAn.js"></script>
+	
 	<script type="text/javascript">
 		var webpath = '<%=webpath%>';
 		$(function(){
-			getChart();
+			loadOrderTypeAn();
 		})
 	</script>
 </head>
@@ -108,7 +111,7 @@
 	<div class="row" style="width:100%;height:20%;">
 		<div class="sysNotice col">
 			<blockquote class="layui-elem-quote title">工单量分析</blockquote>
-			<div id="order_type_num_an" style="width:100%;height:295px;float:left;display:none;"></div>
+			<div id="order_type_num_an" style="width:100%;height:295px;float:left;"></div>
 		</div>
 		<div class="sysNotice col">
 			<blockquote class="layui-elem-quote title">短信类型分析</blockquote>
