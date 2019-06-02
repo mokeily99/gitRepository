@@ -30,4 +30,6 @@ public interface PersonnelDao {
 	public List<Map<String, String>> getDeptPerson(Map<String, String> param);
 	
 	public Map<String, String> getPersonnelByMax(@Param("maxaccept") String maxaccept);
+	
+	public int getUserNum(Map<String, String> param);
 }

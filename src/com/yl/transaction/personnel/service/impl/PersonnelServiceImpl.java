@@ -68,4 +68,9 @@ public class PersonnelServiceImpl implements PersonnelService{
 	public Map<String, String> getPersonnelByMax(String maxaccept) {
 		return personnelDao.getPersonnelByMax(maxaccept);
 	}
+
+	@Override
+	public int getUserNum(Map<String, String> param) {
+		return personnelDao.getUserNum(param);
+	}
 }

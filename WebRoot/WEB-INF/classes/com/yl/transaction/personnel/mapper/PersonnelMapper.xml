@@ -49,7 +49,7 @@
 
 	<!-- 增加人员 -->
 	<insert id="addPersonnel"  parameterType="java.util.Map">
-		insert into t_user (maxaccept,user_account,user_pwd,dept_code,user_name,phone,tel,address,user_role) values (${maxaccept},#{account}, #{pwd},#{dept},#{name},#{phone},#{phone},#{address},#{role})
+		insert into t_user (maxaccept,user_account,user_pwd,dept_code,user_name,phone,tel,address,user_role,create_time) values (${maxaccept},#{account}, #{pwd},#{dept},#{name},#{phone},#{phone},#{address},#{role},sysdate)
 	</insert>
 	
 	<!--删除人员 -->
@@ -113,5 +113,20 @@
 		select a.MAXACCEPT, a.USER_ACCOUNT, a.USER_PWD, a.USER_LEVEL, a.DEPT_CODE, b.dept_name, a.USER_NAME, a.PHONE, 
 			a.TEL, a.ADDRESS, a.USER_ROLE, a.IS_ONLINE, a.PHOTO_HEAD, a.ABLE_FLAG, a.SEAT_NO, a.SEAT_PWD
 		from T_USER a left join t_dept b on a.dept_code=b.maxaccept WHERE a.MAXACCEPT=#{maxaccept}
+	</select>
+	
+	<select id="getUserNum" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(1) USER_NUM from t_user where able_flag='10101'
+		<if test="oprID != null and oprID != '' ">
+			and maxaccept=#{oprID}
+		</if>
+		<if test="deptCode != null and deptCode != '' ">
+			and dept_code=#{deptCode}
+		</if>
+		<if test="date != null and date != '' ">
+			<![CDATA[
+			and to_char(CREATE_TIME, 'yyyy-mm-dd')<=#{date}
+			]]>
+		</if>
 	</select>
 </mapper>  

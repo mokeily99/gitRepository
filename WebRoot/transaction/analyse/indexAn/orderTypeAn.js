@@ -49,6 +49,9 @@ function initOrderTypeChart(categories, series){
 				borderWidth: 0
 			}
 		},
-		series: series
+		series: series,
+		credits: {  
+            enabled: false     //不显示LOGO 
+        }
 	});
 }

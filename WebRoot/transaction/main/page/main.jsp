@@ -29,11 +29,15 @@
 	<script type="text/javascript" src="main.js"></script>
 	
 	<script src="<%=webpath%>/transaction/analyse/indexAn/orderTypeAn.js"></script>
+	<script src="<%=webpath%>/transaction/analyse/indexAn/userNumAn.js"></script>
 	
 	<script type="text/javascript">
 		var webpath = '<%=webpath%>';
 		$(function(){
+			//工单类型分析
 			loadOrderTypeAn();
+			//人员分析
+			loadUserNumAn();
 		})
 	</script>
 </head>
@@ -110,12 +114,12 @@
 	<!-- HighCharts图表 -->
 	<div class="row" style="width:100%;height:20%;">
 		<div class="sysNotice col">
-			<blockquote class="layui-elem-quote title">工单量分析</blockquote>
+			<blockquote class="layui-elem-quote title">工单类型分析</blockquote>
 			<div id="order_type_num_an" style="width:100%;height:295px;float:left;"></div>
 		</div>
 		<div class="sysNotice col">
-			<blockquote class="layui-elem-quote title">短信类型分析</blockquote>
-			<div id="patientCount" style="width:100%;height:295px;float:left"></div>
+			<blockquote class="layui-elem-quote title">人员分析</blockquote>
+			<div id="user_num_an" style="width:100%;height:295px;float:left"></div>
 		</div>
 		<div class="sysNotice col">
 			<blockquote class="layui-elem-quote title">通话分析</blockquote>

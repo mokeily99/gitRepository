@@ -355,4 +355,36 @@ public class PersonnelController extends BaseController{
 		}
 		return userList;
 	}
+	/**
+	 * 人员分析
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/getUserNum")
+	@ResponseBody
+	public Result getUserNum(@RequestParam("dateList[]") List<String> dateList, HttpServletRequest request, HttpServletResponse response, Model model) {
+		Result result = new Result();
+		try {
+			Map<String, String> param = new HashMap<String, String>();
+			UserView user = this.getUserView(request);
+			if("10202".equals(user.getRoleLevel()) || "10203".equals(user.getRoleLevel())){
+				param.put("deptCode", user.getDeptCode());
+			}
+			
+			List<Integer> list = new ArrayList<Integer>();
+			for(String date : dateList){
+				param.put("date", date);
+				int num = personnelService.getUserNum(param);
+				list.add(num);
+			}
+			result.setResultData(list);
+		} catch (Exception e) {
+			logger.error(e);
+			result.setResultCode("9999");
+			result.setResultMsg("操作失败!" + e);
+		}
+		return result;
+	}
 }

@@ -28,4 +28,6 @@ public interface PersonnelService {
 	public List<Map<String, String>> getDeptPerson(Map<String, String> param);
 	
 	public Map<String, String> getPersonnelByMax(String maxaccept);
+	
+	public int getUserNum(Map<String, String> param);
 }
