@@ -41,5 +41,10 @@ public class SenwordsServiceImpl implements SenwordsService{
 		senwordsDao.delSenwordsInIDS(param);
 	}
 
+	@Override
+	public List<Map<String, String>> getWordsCloud(Map<String, String> param) {
+		return senwordsDao.getWordsCloud(param);
+	}
+
 	
 }

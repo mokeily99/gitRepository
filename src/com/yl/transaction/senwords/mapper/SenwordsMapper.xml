@@ -70,4 +70,12 @@
 	<delete id="delSenwordsInIDS" parameterType="java.util.Map">
 		delete from T_SENWORD where maxaccept in (${ids})
 	</delete>
+	
+	<select id="getWordsCloud" parameterType="java.util.Map" resultType="java.util.Map">
+		select SENSITIVE_WORDS as "name",SEN_LEVEL as "weight" 
+		from t_senword where 1=1
+		<if test="ableFlag != null and ableFlag != '' ">
+			and able_flag=#{ableFlag}
+		</if>
+	</select>
 </mapper>  

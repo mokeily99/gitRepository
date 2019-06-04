@@ -16,4 +16,6 @@ public interface SenwordsDao {
 	public void updateSenwords(Map<String, String> param);
 	
 	public void delSenwordsInIDS(@Param("ids") String ids);
+	
+	public List<Map<String, String>> getWordsCloud(Map<String, String> param);
 }

@@ -136,4 +136,14 @@ public class OrderServiceImpl implements OrderService {
 	public Map<String, String> getOrderTypeCount(Map<String, String> param) {
 		return orderDao.getOrderTypeCount(param);
 	}
+
+	@Override
+	public List<Map<String, String>> getOrderOver(Map<String, String> param) {
+		return orderDao.getOrderOver(param);
+	}
+	
+	@Override
+	public List<Map<String, String>> getOrderSend(Map<String, String> param) {
+		return orderDao.getOrderSend(param);
+	}
 }

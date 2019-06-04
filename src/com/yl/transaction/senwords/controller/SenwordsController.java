@@ -191,4 +191,28 @@ public class SenwordsController extends BaseController{
 		}
 		return result;
 	}
+	/**
+	 * 敏感词统计
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/getWordsCloud")
+	@ResponseBody
+	public Result getWordsCloud(HttpServletRequest request, HttpServletResponse response, Model model) {
+		Result result = new Result();
+		
+		try {
+			Map<String, String> param = new HashMap<String, String>();
+			param.put("ableFlag", "10101");
+			List<Map<String, String>> cloudList = senwordsService.getWordsCloud(param);
+			result.setResultData(cloudList);
+		} catch (Exception e) {
+			logger.error(e.getMessage(),e);
+			result.setResultCode("9999");
+			result.setResultMsg("操作失败!" + e);
+		}
+		return result;
+	}
 }

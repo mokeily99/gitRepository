@@ -497,11 +497,64 @@ public class OrderController extends BaseController {
 		}
 		return result;
 	}
-	
-	public static void main(String[] args) {
-		Map<String, String> num = new HashMap<String, String>();
-		num.put("TYPE_NUM", "0");
-		Integer ss = Integer.parseInt(num.get("TYPE_NUM").toString());
-		System.out.println(ss);
+	/**
+	 * 工单类型占比分析
+	 * @param maxaccept
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/getOrderPointCount")
+	@ResponseBody
+	public Result getOrderPointCount(HttpServletRequest request, HttpServletResponse response, Model model) {
+		
+		Result result = new Result();
+		try {
+			Map<String, String> param = new HashMap<String, String>();
+			UserView user = this.getUserView(request);
+			if("10202".equals(user.getRoleLevel())){//部门管理员看本部门
+				param.put("deptCode", user.getDeptCode());
+			}else if("10203".equals(user.getRoleLevel())){//部门人员看自己的
+				param.put("oprID", user.getMaxaccept());
+			}
+			List<Map<String, String>> overList = orderService.getOrderOver(param);
+			result.setResultData(overList);
+		} catch (Exception e) {
+			logger.error(e.getMessage(),e);
+			result.setResultCode("9999");
+			result.setResultMsg("操作失败！");
+		}
+		return result;
+	}
+	/**
+	 * 工单派发占比
+	 * @param maxaccept
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/getOrderSendCount")
+	@ResponseBody
+	public Result getOrderSendCount(HttpServletRequest request, HttpServletResponse response, Model model) {
+		
+		Result result = new Result();
+		try {
+			Map<String, String> param = new HashMap<String, String>();
+			UserView user = this.getUserView(request);
+			if("10202".equals(user.getRoleLevel())){//部门管理员看本部门
+				param.put("deptCode", user.getDeptCode());
+			}else if("10203".equals(user.getRoleLevel())){//部门人员看自己的
+				param.put("oprID", user.getMaxaccept());
+			}
+			List<Map<String, String>> overList = orderService.getOrderSend(param);
+			result.setResultData(overList);
+		} catch (Exception e) {
+			logger.error(e.getMessage(),e);
+			result.setResultCode("9999");
+			result.setResultMsg("操作失败！");
+		}
+		return result;
 	}
 }

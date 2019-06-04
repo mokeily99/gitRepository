@@ -14,4 +14,6 @@ public interface SenwordsService {
 	public void updateSenwords(Map<String, String> param);
 	
 	public void delSenwordsInIDS(String param);
+	
+	public List<Map<String, String>> getWordsCloud(Map<String, String> param);
 }

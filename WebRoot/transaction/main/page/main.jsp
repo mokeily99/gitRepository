@@ -23,13 +23,16 @@
 	<script type="text/javascript" src="../layui/layui.js"></script>
 	<script src="<%=webpath%>/common/ui/hAdmin/js/jquery.min.js?v=2.1.4"></script>
 	
-	<script src="<%=webpath%>/common/js/Highcharts-6.1.0/highcharts.js"></script>
-	<script src="<%=webpath%>/common/js/Highcharts-6.1.0/modules/exporting.js"></script>
-	<script src="<%=webpath%>/common/js/Highcharts-6.1.0/highcharts-zh_CN.js"></script>
+	<script src="<%=webpath%>/common/js/Highcharts-7.1.1/code/highcharts.js"></script>
+	<script src="<%=webpath%>/common/js/Highcharts-7.1.1/code/modules/exporting.js"></script>
+	<script src="<%=webpath%>/common/js/Highcharts-7.1.1/code/modules/wordcloud.js"></script>
+	<script src="<%=webpath%>/common/js/Highcharts-7.1.1/code/highcharts-zh_CN.js"></script>
 	<script type="text/javascript" src="main.js"></script>
 	
 	<script src="<%=webpath%>/transaction/analyse/indexAn/orderTypeAn.js"></script>
 	<script src="<%=webpath%>/transaction/analyse/indexAn/userNumAn.js"></script>
+	<script src="<%=webpath%>/transaction/analyse/indexAn/orderPointAn.js"></script>
+	<script src="<%=webpath%>/transaction/analyse/indexAn/senWordsAn.js"></script>
 	
 	<script type="text/javascript">
 		var webpath = '<%=webpath%>';
@@ -38,6 +41,10 @@
 			loadOrderTypeAn();
 			//人员分析
 			loadUserNumAn();
+			//工单占比分析
+			loadOrderPointAn();
+			//敏感词云
+			senWordsAn();
 		})
 	</script>
 </head>
@@ -122,13 +129,13 @@
 			<div id="user_num_an" style="width:100%;height:295px;float:left"></div>
 		</div>
 		<div class="sysNotice col">
-			<blockquote class="layui-elem-quote title">通话分析</blockquote>
-			<div id="question" style="width:100%;height:293px;float:left"></div>
+			<blockquote class="layui-elem-quote title">工单占比分析</blockquote>
+			<div id="order_type_point_an" style="width:50%;height:293px;float:left"></div>
+			<div id="order_type_send_an" style="width:50%;height:293px;float:left"></div>
 		</div>
 		<div class="sysNotice col">
-			<blockquote class="layui-elem-quote title">客户分析</blockquote>
-			<div id="show_online" style="width:50%;height:293px;float:left"></div>
-			<div id="show_online_type" style="width:50%;height:293px;float:left"></div>
+			<blockquote class="layui-elem-quote title">敏感词云</blockquote>
+			<div id="sen_words_an" style="width:100%;height:293px;float:left"></div>
 		</div>
 	</div>
 	

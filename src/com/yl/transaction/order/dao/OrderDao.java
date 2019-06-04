@@ -51,4 +51,8 @@ public interface OrderDao {
 	public List<Map<String, String>> getOrderLocusList(Map<String, String> param);
 	
 	public Map<String, String> getOrderTypeCount(Map<String, String> param);
+	
+	public List<Map<String, String>> getOrderOver(Map<String, String> param);
+	
+	public List<Map<String, String>> getOrderSend(Map<String, String> param);
 }
