@@ -17,8 +17,11 @@ function initWordsCloud(data){
 	Highcharts.chart('sen_words_an', {
 		series: [{
 			type: 'wordcloud',
-			data: [{name:"推销", weight:2}, {name:"购买", weight:2}, {name:"收费", weight:2}, {name:"费用", weight:2}]
+			data: data
 		}],
+		tooltip : {
+			pointFormat : '<b>{point.percentage}</b>'
+		},
 		title: {
 			text: ''
 		},
