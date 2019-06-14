@@ -33,4 +33,8 @@ public interface ConverDao {
 	public Map<String, String> getIntoConverCount(Map<String, String> param);
 	
 	public Map<String, String> getOutConverCount(Map<String, String> param);
+	
+	public List<Map<String, String>> getConverSumAn(Map<String, Object> param);
+	
+	public Map<String, String> getConverIsTalk(Map<String, String> param);
 }

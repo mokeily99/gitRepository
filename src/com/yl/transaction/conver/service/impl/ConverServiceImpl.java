@@ -83,4 +83,14 @@ public class ConverServiceImpl implements ConverService{
 	public Map<String, String> getOutConverCount(Map<String, String> param) {
 		return converDao.getOutConverCount(param);
 	}
+
+	@Override
+	public List<Map<String, String>> getConverSumAn(Map<String, Object> param) {
+		return converDao.getConverSumAn(param);
+	}
+
+	@Override
+	public Map<String, String> getConverIsTalk(Map<String, String> param) {
+		return converDao.getConverIsTalk(param);
+	}
 }

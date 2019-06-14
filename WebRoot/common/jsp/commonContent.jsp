@@ -11,11 +11,15 @@
 <meta http-equiv="refresh" content="0;ie.html" />
 <![endif]-->
 
-<link href="<%=webpath%>/common/ui/treeselect/assets/layui/css/layui.css" rel="stylesheet">
+<link
+	href="<%=webpath%>/common/ui/treeselect/assets/layui/css/layui.css"
+	rel="stylesheet">
 
-<script type="text/javascript" src="<%=webpath%>/common/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript"
+	src="<%=webpath%>/common/js/jquery-1.10.2.min.js"></script>
 <script src="<%=webpath%>/common/ui/treeselect/assets/layui/layui.js"></script>
-<script type="text/javascript" src="<%=webpath%>/common/ui/layui/layui.extends.js"></script>
+<script type="text/javascript"
+	src="<%=webpath%>/common/ui/layui/layui.extends.js"></script>
 
 <script type="text/javascript">
 	var webpath = '<%=webpath%>';
@@ -78,6 +82,23 @@
 		return obj;
 	}
 	/**************公共客户类型编码转换方法end **************/
+	
+	/************日期加减begin************/
+	function addDate(date,days){
+      	var d=new Date(date); 
+       	d.setDate(d.getDate()+days); 
+       	var m=d.getMonth()+1; 
+       	if(m < 10){
+       		m = "0"+m;
+       	}
+       	var day = d.getDate();
+       	if(day < 10){
+			day = "0"+day;
+		}
+       	return d.getFullYear()+'-'+m+'-'+day; 
+    } 
+	/************日期加减end************/
+	
 	
 	/************初始化表格高度begin************/
 	var H = "";

@@ -1,50 +1,60 @@
 var dialogIndex;
-layui.use(['form', 'layer', 'table' ], function() {
+layui.use(['form', 'layer', 'table', 'laydate' ], function() {
 	var treeSelect = layui.treeSelect;
 	var table = layui.table;
 	form = layui.form;
 	$ = layui.jquery;
 	layer = layui.layer;
+	var laydate = layui.laydate;
+	
+	//日期加载
+	var myDate = new Date();
+	var year = myDate.getFullYear();
+	var month = myDate.getMonth()+1;
+	if(month < 10){
+		month = "0"+month;
+	}
+	var date = myDate.getDate();
+	if(date < 10){
+		date = "0"+date;
+	}
+	laydate.render({
+	    elem: '#begin_query_date', //指定元素
+	    value: year+"-"+month+"-"+date,
+	    min: year+"-"+month+"-"+date
+	});
+	endDate = addDate(year+"-"+month+"-"+date, 20);
+	laydate.render({
+	    elem: '#end_query_date', //指定元素
+	    value: endDate,
+	    min: year+"-"+month+"-"+date
+	});
 	
 	var blackTable = table.render({
-		id: "black_grid_list",
-		elem : '#black_grid_list',
-		url : webpath + "/sms/blackList.action",
+		id: "conver_an_grid_list",
+		elem : '#conver_an_grid_list',
+		url : webpath + "/conver/converIsTalkAnalyse.action",
 		method: "post",
-		where: {blackPhone: $("#black_phone").val()},
+		where: {beginDate: $("#begin_query_date").val(), endDate: $("#end_query_date").val()},
 		cols : [ [
 			{
 				type : 'checkbox'
 			},
 			{
-				field : 'BLACK_PHONE',
-				title : '通话号码'
+				field : 'SEAT_NAME',
+				title : '坐席姓名'
 			},
 			{
-				field : 'BLACK_REASON',
-				title : '通话时长'
+				field : 'CONVER_NUM',
+				title : '通话总量'
 			},
 			{
-				field : 'CREATE_OPR_NAME',
-				title : '修改人'
+				field : 'TALK_NUM',
+				title : '接通数'
 			},
 			{
-				field : 'UPDATE_TIME',
-				title : '修改时间'
-			},
-			{
-				field : 'ABLE_FLAG',
-				title : '状态',
-				templet: function(row){
-					var flag = row.ABLE_FLAG;
-					var status = "";
-					if(flag == "10101"){
-						status = "<input type=\"checkbox\" value=\""+row.MAXACCEPT+"\" checked=\"\" name=\"open\" lay-skin=\"switch\" lay-filter=\"able_switch\" lay-text=\"生效|失效\">";
-					}else{
-						status = "<input type=\"checkbox\" value=\""+row.MAXACCEPT+"\" name=\"close\" lay-skin=\"switch\" lay-filter=\"able_switch\" lay-text=\"生效|失效\">";
-					}
-			        return status;
-				}
+				field : 'UN_TALK_NUM',
+				title : '未接通数'
 			}
 		] ],
 		page : true,
@@ -53,7 +63,7 @@ layui.use(['form', 'layer', 'table' ], function() {
 	
 	//查询绑定
 	$('#query_black_btn').click(function() {
-		table.reload("black_grid_list", {where: {blackPhone: $("#black_phone").val()}});
+		table.reload("conver_an_grid_list", {where: {beginDate: $("#begin_query_date").val(), endDate: $("#end_query_date").val()}});
 	});
 	
 	//监听指定开关
@@ -79,7 +89,7 @@ layui.use(['form', 'layer', 'table' ], function() {
 						icon : 2
 					});
 				}
-				blackTable = table.reload("black_grid_list");
+				blackTable = table.reload("conver_an_grid_list");
 			}
 		});
 	});
@@ -106,7 +116,7 @@ layui.use(['form', 'layer', 'table' ], function() {
 					var resultCode = data1.resultCode;
 					if (resultCode == "0000") {
 						layer.msg('添加成功！');
-						blackTable = table.reload("black_grid_list");
+						blackTable = table.reload("conver_an_grid_list");
 					} else {
 						layer.alert('添加失败，请重新操作！', {
 							icon : 2
@@ -120,7 +130,7 @@ layui.use(['form', 'layer', 'table' ], function() {
 	
 	//黑名单修改
 	$('#edit_black_btn').click(function() {
-		var checkData = table.checkStatus("black_grid_list");
+		var checkData = table.checkStatus("conver_an_grid_list");
 		if(checkData.data.length < 1){
 			layer.msg('未选择任何数据！',{icon:0});
 			return;
@@ -158,7 +168,7 @@ layui.use(['form', 'layer', 'table' ], function() {
 					var resultCode = data1.resultCode;
 					if (resultCode == "0000") {
 						layer.msg('修改成功！');
-						blackTable = table.reload("black_grid_list");
+						blackTable = table.reload("conver_an_grid_list");
 					} else {
 						layer.alert('修改失败，请重新操作！', {
 							icon : 2
@@ -172,7 +182,7 @@ layui.use(['form', 'layer', 'table' ], function() {
 	
 	//删除绑定
 	$('#del_black_btn').click(function() {
-		var checkData = table.checkStatus("black_grid_list");
+		var checkData = table.checkStatus("conver_an_grid_list");
 		if(checkData.data.length < 1){
 			layer.msg('未选择任何数据！',{icon:0});
 			return;
@@ -201,7 +211,7 @@ layui.use(['form', 'layer', 'table' ], function() {
 						}else{
 							layer.msg('删除失败！', {icon: 5});
 						}
-						blackTable = table.reload("black_grid_list");
+						blackTable = table.reload("conver_an_grid_list");
 					}
 				});
 			}

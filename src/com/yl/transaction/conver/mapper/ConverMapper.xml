@@ -115,4 +115,26 @@
 			and DEPT_CODE=#{deptCode}
 		</if>
 	</select>
+	
+	<select id="getConverSumAn" parameterType="java.util.Map" resultType="java.util.Map">
+		select count(1) CONVER_NUM, SEAT_ID , SEAT_NAME from t_conversation where 1=1 
+		<if test="seatID != null and seatID != '' ">
+			and SEAT_ID=#{seatID}
+		</if>
+		<if test="deptCode != null and deptCode != '' ">
+			and DEPT_CODE=#{deptCode}
+		</if>
+		<if test="beginDate != null and beginDate != '' ">
+			<![CDATA[ and TO_CHAR(CREATE_TIME, 'yyyy-mm-dd')>=#{beginDate}]]>
+		</if>
+		<if test="endDate != null and endDate != '' ">
+			<![CDATA[ and TO_CHAR(CREATE_TIME, 'yyyy-mm-dd')<=#{endDate}]]>
+		</if>
+		group by SEAT_ID , SEAT_NAME
+		order by CONVER_NUM desc
+	</select>
+	
+	<select id="getConverIsTalk" parameterType="java.util.Map" resultType="java.util.Map">
+		select count(1) TALK_NUM from t_conversation where SEAT_ID=#{SEAT_ID} and TALK_FLAG=#{isTalk}
+	</select>
 </mapper>  

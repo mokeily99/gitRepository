@@ -111,4 +111,67 @@ public class ConverController extends BaseController{
 		}
 		return result;
 	}
+	/**
+	 * 是否通话分析
+	 * @param page
+	 * @param limit
+	 * @param beginDate
+	 * @param endDate
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/converIsTalkAnalyse")
+	@ResponseBody
+	public LayTableResult<List<Map<String, String>>> converIsTalkAnalyse(Integer page, Integer limit, String beginDate, String endDate, HttpServletRequest request, HttpServletResponse response, Model model) {
+		LayTableResult<List<Map<String, String>>> tableResult = new LayTableResult<List<Map<String, String>>>();
+		
+		List<Map<String, String>> resultList = new ArrayList<Map<String, String>>();
+		try {
+			UserView user = this.getUserView(request);
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("row", limit);
+			param.put("page", page);
+			
+			param.put("beginDate", beginDate);
+			param.put("endDate", endDate);
+			
+			if("10203".equals(user.getRoleLevel())){//分销商工作人员只能看自己的通话
+				param.put("seatID", user.getMaxaccept());
+			}else if("10202".equals(user.getRoleLevel())){//分销商管理员看自己部门所有通话
+				param.put("deptCode", user.getDeptCode());
+			}
+			PageHelper.startPage(page, limit);
+			
+			//获取通话总数
+			List<Map<String, String>> sumList = converService.getConverSumAn(param);
+			PageInfo<Map<String, String>> pageinfo = new PageInfo<Map<String, String>>(sumList);
+			for(Map<String, String> sum : sumList){
+				sum.put("isTalk", "0");
+				Map<String, String> unTalk = converService.getConverIsTalk(sum);
+				sum.put("isTalk", "1");
+				Map<String, String> talk = converService.getConverIsTalk(sum);
+				
+				Map<String, String> temp = new HashMap<String, String>();
+				temp.put("SEAT_ID", sum.get("SEAT_ID"));
+				temp.put("SEAT_NAME", sum.get("SEAT_NAME"));
+				temp.put("CONVER_NUM", String.valueOf(sum.get("CONVER_NUM")));
+				temp.put("TALK_NUM", String.valueOf(unTalk.get("TALK_NUM")));
+				temp.put("UN_TALK_NUM", String.valueOf(talk.get("TALK_NUM")));
+				resultList.add(temp);
+			}
+
+			tableResult.setCount((int) pageinfo.getTotal());
+			tableResult.setData(resultList);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			tableResult.setCode(1);
+			tableResult.setMsg("数据加载失败！");
+			tableResult.setCount(0);
+			tableResult.setData(new ArrayList<Map<String, String>>());
+		}
+		return tableResult;
+	}
+	
 }
