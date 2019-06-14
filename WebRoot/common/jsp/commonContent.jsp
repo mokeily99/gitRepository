@@ -11,16 +11,17 @@
 <meta http-equiv="refresh" content="0;ie.html" />
 <![endif]-->
 
-<link
-	href="<%=webpath%>/common/ui/treeselect/assets/layui/css/layui.css"
-	rel="stylesheet">
+<link href="<%=webpath%>/common/ui/treeselect/assets/layui/css/layui.css" rel="stylesheet">
 
-<script type="text/javascript"
-	src="<%=webpath%>/common/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="<%=webpath%>/common/js/jquery-1.10.2.min.js"></script>
 <script src="<%=webpath%>/common/ui/treeselect/assets/layui/layui.js"></script>
-<script type="text/javascript"
-	src="<%=webpath%>/common/ui/layui/layui.extends.js"></script>
+<script type="text/javascript" src="<%=webpath%>/common/ui/layui/layui.extends.js"></script>
 
+<script src="<%=webpath%>/common/js/Highcharts-7.1.1/code/highcharts.js"></script>
+<script src="<%=webpath%>/common/js/Highcharts-7.1.1/code/modules/exporting.js"></script>
+<script src="<%=webpath%>/common/js/Highcharts-7.1.1/code/modules/wordcloud.js"></script>
+<script src="<%=webpath%>/common/js/Highcharts-7.1.1/code/highcharts-zh_CN.js"></script>
+	
 <script type="text/javascript">
 	var webpath = '<%=webpath%>';
 	$(function() {

@@ -11,7 +11,9 @@
 <title>通话分析</title>
 
 <jsp:include page="../../../common/jsp/commonContent.jsp" flush="true" />
+
 <script type="text/javascript" src="<%=webpath%>/transaction/analyse/converanalyse/converanalyse.js"></script>
+<script type="text/javascript" src="<%=webpath%>/transaction/analyse/converanalyse/converTalkAn.js"></script>
 </head>
 
 
@@ -44,8 +46,11 @@
 		<fieldset class="layui-elem-field site-demo-button" style="margin: 30px;padding-top:20px;padding-bottom:20px;">
 			<legend>工作区域</legend>
 			
-		  	<div style="width:49%;">
+		  	<div style="width:49%;float:left;margin-left:10px;">
 			  	<table class="layui-hide" id="conver_an_grid_list"></table>
+		  	</div>
+		  	<div style="width:49%;float:left;margin-left:10px;">
+				<div id="conver_talk_an"></div>
 		  	</div>
 		</fieldset>
 	</div>
