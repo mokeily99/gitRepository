@@ -36,4 +36,6 @@ public interface ConverService {
 	public List<Map<String, String>> getConverSumAn(Map<String, Object> param);
 	
 	public Map<String, String> getConverIsTalk(Map<String, String> param);
+	
+	public List<Map<String, String>> getConverIsTalkList(Map<String, String> param);
 }

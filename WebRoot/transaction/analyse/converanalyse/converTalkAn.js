@@ -1,10 +1,22 @@
-$(function(){
-	
-	
-	initConverTalkPie();
-});
 
-function initConverTalkPie(){
+
+function getConverTalkData(){
+	$.ajax({
+		url: webpath + "/conver/getConverIsTalkData.action",
+		type: "post",
+		dataType: "json",
+		data: {beginDate: beginDate, endDate: endDate},
+		success: function(data){
+			var resultCode = data.resultCode;
+			if(resultCode == "0000"){
+				var resultData = data.resultData;
+				initConverTalkPie(resultData, "通话量占比");
+			}
+		}
+	});
+}
+
+function initConverTalkPie(resultData, title){
 	Highcharts.chart('conver_talk_an', {
 		chart: {
 			plotBackgroundColor: null,
@@ -13,10 +25,10 @@ function initConverTalkPie(){
 			type: 'pie'
 		},
 		title: {
-			text: '2018年1月浏览器市场份额'
+			text: title
 		},
 		tooltip: {
-			pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+			pointFormat: '<b>{point.percentage:.1f}%</b>'
 		},
 		plotOptions: {
 			pie: {
@@ -32,38 +44,11 @@ function initConverTalkPie(){
 			}
 		},
 		series: [{
-			name: 'Brands',
 			colorByPoint: true,
-			data: [{
-				name: 'Chrome',
-				y: 61.41,
-				sliced: true,
-				selected: true
-			}, {
-				name: 'Internet Explorer',
-				y: 11.84
-			}, {
-				name: 'Firefox',
-				y: 10.85
-			}, {
-				name: 'Edge',
-				y: 4.67
-			}, {
-				name: 'Safari',
-				y: 4.18
-			}, {
-				name: 'Sogou Explorer',
-				y: 1.64
-			}, {
-				name: 'Opera',
-				y: 1.6
-			}, {
-				name: 'QQ',
-				y: 1.2
-			}, {
-				name: 'Other',
-				y: 2.61
-			}]
-		}]
+			data: resultData
+		}],
+		credits: {  
+            enabled: false     //不显示LOGO 
+        }
 	});
 }

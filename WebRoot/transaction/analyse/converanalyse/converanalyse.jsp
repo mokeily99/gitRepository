@@ -3,6 +3,8 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 	String webpath = request.getContextPath();
+	UserView user = (UserView) session.getAttribute("userInfo");
+	String userLevel = user.getRoleLevel();
 %>
 <!DOCTYPE html>
 <html>
@@ -14,6 +16,10 @@
 
 <script type="text/javascript" src="<%=webpath%>/transaction/analyse/converanalyse/converanalyse.js"></script>
 <script type="text/javascript" src="<%=webpath%>/transaction/analyse/converanalyse/converTalkAn.js"></script>
+
+<script type="text/javascript">
+	var userLevel = '<%=userLevel%>';
+</script>
 </head>
 
 

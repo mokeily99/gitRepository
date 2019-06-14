@@ -1,4 +1,6 @@
 var dialogIndex;
+var beginDate;
+var endDate;
 layui.use(['form', 'layer', 'table', 'laydate' ], function() {
 	var treeSelect = layui.treeSelect;
 	var table = layui.table;
@@ -18,13 +20,13 @@ layui.use(['form', 'layer', 'table', 'laydate' ], function() {
 	if(date < 10){
 		date = "0"+date;
 	}
-	var beginDate = year+"-"+month+"-"+date;
+	beginDate = year+"-"+month+"-"+date;
 	laydate.render({
 	    elem: '#begin_query_date', //指定元素
 	    value: beginDate,
 	    min: year+"-"+month+"-"+date
 	});
-	var endDate = addDate(year+"-"+month+"-"+date, 20);
+	endDate = addDate(year+"-"+month+"-"+date, 20);
 	laydate.render({
 	    elem: '#end_query_date', //指定元素
 	    value: endDate,
@@ -51,7 +53,7 @@ layui.use(['form', 'layer', 'table', 'laydate' ], function() {
 			},
 			{
 				field : 'TALK_NUM',
-				title : '接通数'
+				title : '已接通数'
 			},
 			{
 				field : 'UN_TALK_NUM',
@@ -66,6 +68,11 @@ layui.use(['form', 'layer', 'table', 'laydate' ], function() {
 	$('#query_black_btn').click(function() {
 		table.reload("conver_an_grid_list", {where: {beginDate: $("#begin_query_date").val(), endDate: $("#end_query_date").val()}});
 	});
+	
+	/***************************************图形模块*************************************************/
+	if(userLevel == "10203"){//分销商工作人员
+		getConverTalkData();
+	}
 });
 
 //弹窗关闭

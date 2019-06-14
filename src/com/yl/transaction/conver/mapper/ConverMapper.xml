@@ -137,4 +137,22 @@
 	<select id="getConverIsTalk" parameterType="java.util.Map" resultType="java.util.Map">
 		select count(1) TALK_NUM from t_conversation where SEAT_ID=#{SEAT_ID} and TALK_FLAG=#{isTalk}
 	</select>
+	
+	<select id="getConverIsTalkList" parameterType="java.util.Map" resultType="java.util.Map">
+		select count(1) as "y", '未接通' as "name" from t_conversation where seat_id=#{oprID} and talk_flag='0' 
+		<if test="beginDate != null and beginDate != '' ">
+			<![CDATA[ and TO_CHAR(CREATE_TIME, 'yyyy-mm-dd')>=#{beginDate}]]>
+		</if>
+		<if test="endDate != null and endDate != '' ">
+			<![CDATA[ and TO_CHAR(CREATE_TIME, 'yyyy-mm-dd')<=#{endDate}]]>
+		</if>
+		union all
+		select count(1) as "y", '已接通' as "name" from t_conversation where seat_id=#{oprID} and talk_flag='1' 
+		<if test="beginDate != null and beginDate != '' ">
+			<![CDATA[ and TO_CHAR(CREATE_TIME, 'yyyy-mm-dd')>=#{beginDate}]]>
+		</if>
+		<if test="endDate != null and endDate != '' ">
+			<![CDATA[ and TO_CHAR(CREATE_TIME, 'yyyy-mm-dd')<=#{endDate}]]>
+		</if>
+	</select>
 </mapper>  
