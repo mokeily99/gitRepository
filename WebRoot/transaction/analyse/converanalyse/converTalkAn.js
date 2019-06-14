@@ -1,11 +1,20 @@
 
 
 function getConverTalkData(){
+	var bDate = $("#begin_query_date").val();
+	var eDate = $("#end_query_date").val();
+	if(isEmpty(bDate)){
+		bDate = beginDate;
+	}
+	if(isEmpty(eDate)){
+		eDate = endDate;
+	}
+	
 	$.ajax({
 		url: webpath + "/conver/getConverIsTalkData.action",
 		type: "post",
 		dataType: "json",
-		data: {beginDate: beginDate, endDate: endDate},
+		data: {beginDate: bDate, endDate: eDate},
 		success: function(data){
 			var resultCode = data.resultCode;
 			if(resultCode == "0000"){

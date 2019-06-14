@@ -20,17 +20,19 @@ layui.use(['form', 'layer', 'table', 'laydate' ], function() {
 	if(date < 10){
 		date = "0"+date;
 	}
-	beginDate = year+"-"+month+"-"+date;
+	beginDate = addDate(year+"-"+month+"-"+date, -10);
 	laydate.render({
 	    elem: '#begin_query_date', //指定元素
 	    value: beginDate,
-	    min: year+"-"+month+"-"+date
+	    min: addDate(year+"-"+month+"-"+date, -30)
 	});
-	endDate = addDate(year+"-"+month+"-"+date, 20);
+	
+	endDate = year+"-"+month+"-"+date;
 	laydate.render({
 	    elem: '#end_query_date', //指定元素
 	    value: endDate,
-	    min: year+"-"+month+"-"+date
+	    max: endDate,
+	    min: addDate(year+"-"+month+"-"+date, -30)
 	});
 	
 	var blackTable = table.render({
@@ -67,6 +69,9 @@ layui.use(['form', 'layer', 'table', 'laydate' ], function() {
 	//查询绑定
 	$('#query_black_btn').click(function() {
 		table.reload("conver_an_grid_list", {where: {beginDate: $("#begin_query_date").val(), endDate: $("#end_query_date").val()}});
+		if(userLevel == "10203"){//分销商工作人员
+			getConverTalkData();
+		}
 	});
 	
 	/***************************************图形模块*************************************************/
