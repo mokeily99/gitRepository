@@ -12,20 +12,17 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.util.StringUtil;
 import com.yl.common.controller.BaseController;
-import com.yl.common.dao.PublicDao;
 import com.yl.common.pojo.LayTableResult;
 import com.yl.common.pojo.Result;
 import com.yl.common.user.pojo.UserView;
-import com.yl.common.util.DBUtil;
-import com.yl.transaction.account.service.AccountService;
 import com.yl.transaction.conver.service.ConverService;
-import com.yl.transaction.dept.service.DeptService;
 
 @Controller
 @RequestMapping("/conver")
@@ -213,17 +210,60 @@ public class ConverController extends BaseController{
 	 */
 	@RequestMapping("/getConverDeptTalkData")
 	@ResponseBody
-	public Result getConverDeptTalkData(String beginDate, String endDate, HttpServletRequest request, HttpServletResponse response, Model model){
+	public Result getConverDeptTalkData(@RequestParam("dateList[]") List<String> dateList, HttpServletRequest request, HttpServletResponse response, Model model){
 		
 		Result result = new Result();
 		try{
 			Map<String, String> param = new HashMap<String, String>();
-			param.put("beginDate", beginDate);
-			param.put("endDate", endDate);
 			UserView user = this.getUserView(request);
-			param.put("oprID", user.getMaxaccept());
-			List<Map<String, String>> talkList = converService.getConverIsTalkList(param);
-			result.setResultData(talkList);
+			if("10202".equals(user.getRoleLevel())){//分销商管理员看自己部门所有通话
+				param.put("deptCode", user.getDeptCode());
+			}
+			
+			List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
+			
+			//获取工单总量
+			Map<String, Object> totalMap = new HashMap<String, Object>();
+			totalMap.put("name", "总量");
+			List<Integer> talkListNum = new ArrayList<Integer>();
+			for(int ix=0; ix<dateList.size(); ix++){
+				String date = dateList.get(ix);
+				param.put("date", date);
+				Integer talkNum = converService.getConverTalkNum(param);
+				talkListNum.add(talkNum);
+			}
+			totalMap.put("data", talkListNum);
+			resultList.add(totalMap);
+			
+			//获取工单总量
+			Map<String, Object> unTalkMap = new HashMap<String, Object>();
+			unTalkMap.put("name", "未接通");
+			List<Integer> unTalkList = new ArrayList<Integer>();
+			for(int ix=0; ix<dateList.size(); ix++){
+				String date = dateList.get(ix);
+				param.put("date", date);
+				param.put("talkFlag", "0");
+				Integer talkNum = converService.getConverTalkNum(param);
+				unTalkList.add(talkNum);
+			}
+			unTalkMap.put("data", unTalkList);
+			resultList.add(unTalkMap);
+			
+			//获取工单总量
+			Map<String, Object> talkMap = new HashMap<String, Object>();
+			talkMap.put("name", "已接通");
+			List<Integer> talkList = new ArrayList<Integer>();
+			for(int ix=0; ix<dateList.size(); ix++){
+				String date = dateList.get(ix);
+				param.put("date", date);
+				param.put("talkFlag", "1");
+				Integer talkNum = converService.getConverTalkNum(param);
+				talkList.add(talkNum);
+			}
+			talkMap.put("data", talkList);
+			resultList.add(talkMap);
+			
+			result.setResultData(resultList);
 		}catch(Exception e){
 			logger.error(e.getMessage(),e);
 			result.setResultCode("9999");

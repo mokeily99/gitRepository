@@ -155,4 +155,17 @@
 			<![CDATA[ and TO_CHAR(CREATE_TIME, 'yyyy-mm-dd')<=#{endDate}]]>
 		</if>
 	</select>
+	
+	<select id="getConverTalkNum" parameterType="java.util.Map" resultType="Integer">
+		select count(1) NUM from t_conversation where 1=1 
+		<if test="talkFlag != null and talkFlag != '' ">
+			and talk_flag=#{talkFlag}
+		</if>
+		<if test="deptCode != null and deptCode != '' ">
+			and DEPT_CODE=#{deptCode}
+		</if>
+		<if test="date != null and date != '' ">
+			and TO_CHAR(CREATE_TIME, 'yyyy-mm-dd')=#{date}
+		</if>
+	</select>
 </mapper>  

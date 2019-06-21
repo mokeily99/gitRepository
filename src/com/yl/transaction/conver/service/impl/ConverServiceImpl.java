@@ -98,4 +98,9 @@ public class ConverServiceImpl implements ConverService{
 	public List<Map<String, String>> getConverIsTalkList(Map<String, String> param) {
 		return converDao.getConverIsTalkList(param);
 	}
+
+	@Override
+	public Integer getConverTalkNum(Map<String, String> param) {
+		return converDao.getConverTalkNum(param);
+	}
 }

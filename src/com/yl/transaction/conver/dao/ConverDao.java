@@ -39,4 +39,6 @@ public interface ConverDao {
 	public Map<String, String> getConverIsTalk(Map<String, String> param);
 	
 	public List<Map<String, String>> getConverIsTalkList(Map<String, String> param);
+	
+	public Integer getConverTalkNum(Map<String, String> param);
 }

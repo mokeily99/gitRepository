@@ -100,6 +100,17 @@
     } 
 	/************日期加减end************/
 	
+	/************日期间隔************/
+	function getDateSpaceList(beginDate, endDate){
+		var date = (endDate.getTime()-beginDate.getTime())/(1000*60*60*24);
+		var dateList = [];
+		for(var ix=0; ix<date; ix++){
+			var temp = addDate(beginDate, ix)
+		    dateList.push(temp);
+		}
+		return dateList;
+	}
+	/************日期间隔************/
 	
 	/************初始化表格高度begin************/
 	var H = "";
