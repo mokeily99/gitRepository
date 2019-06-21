@@ -202,4 +202,33 @@ public class ConverController extends BaseController{
 		}
 		return result;
 	}
+	/**
+	 * 分销商管理员获取成员通话量
+	 * @param beginDate
+	 * @param endDate
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/getConverDeptTalkData")
+	@ResponseBody
+	public Result getConverDeptTalkData(String beginDate, String endDate, HttpServletRequest request, HttpServletResponse response, Model model){
+		
+		Result result = new Result();
+		try{
+			Map<String, String> param = new HashMap<String, String>();
+			param.put("beginDate", beginDate);
+			param.put("endDate", endDate);
+			UserView user = this.getUserView(request);
+			param.put("oprID", user.getMaxaccept());
+			List<Map<String, String>> talkList = converService.getConverIsTalkList(param);
+			result.setResultData(talkList);
+		}catch(Exception e){
+			logger.error(e.getMessage(),e);
+			result.setResultCode("9999");
+			result.setResultMsg("操作失败!" + e);
+		}
+		return result;
+	}
 }

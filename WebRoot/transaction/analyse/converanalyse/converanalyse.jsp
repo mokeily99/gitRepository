@@ -52,10 +52,10 @@
 		<fieldset class="layui-elem-field site-demo-button" style="margin: 30px;padding-top:20px;padding-bottom:20px;">
 			<legend>工作区域</legend>
 			
-		  	<div style="width:49%;float:left;margin-left:10px;">
+		  	<div style="width:99%;float:left;margin-left:10px;">
 			  	<table class="layui-hide" id="conver_an_grid_list"></table>
 		  	</div>
-		  	<div style="width:49%;float:left;margin-left:10px;">
+		  	<div style="width:99%;float:left;margin-left:10px;">
 				<div id="conver_talk_an"></div>
 		  	</div>
 		</fieldset>

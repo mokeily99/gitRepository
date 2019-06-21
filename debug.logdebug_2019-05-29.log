@@ -1,0 +1,37 @@
+2019-05-29 10:14:42,803 DEBUG [org.apache.ibatis.logging.LogFactory] - Logging initialized using 'org.apache.ibatis.logging.commons.JakartaCommonsLoggingImpl' adapter.
+2019-05-29 10:14:42,926 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:42,927 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:42,927 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:42,927 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:42,927 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:42,930 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:42,930 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:42,930 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:42,930 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:42,930 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:42,930 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:43,160 DEBUG [root] - com.yl.common.util.DBUtil create default sqlsessionfactory success!
+2019-05-29 10:14:43,190 DEBUG [org.apache.ibatis.transaction.jdbc.JdbcTransaction] - Openning JDBC Connection
+2019-05-29 10:14:57,988 INFO [root] - com.yl.daemon.sendSMS.SendsmsDaemon 程序开始运行...
+2019-05-29 10:14:57,989 INFO [root] - com.yl.daemon.sendSMS.SendsmsDaemon 开始同步订购关系...
+2019-05-29 10:14:57,989 INFO [root] - com.yl.daemon.sendSMS.SendsmsDaemon 启动同步线程...
+2019-05-29 10:14:57,989 INFO [root] - com.yl.daemon.sendSMS.SendsmsDaemon 核心线程数:1
+2019-05-29 10:14:57,989 INFO [root] - com.yl.daemon.sendSMS.SendsmsDaemon 最大线程数:10
+2019-05-29 10:14:57,989 INFO [root] - com.yl.daemon.sendSMS.SendsmsDaemon 队列长度:100
+2019-05-29 10:14:57,989 INFO [root] - com.yl.daemon.sendSMS.SendsmsDaemon 同步报文最大记录条数:300
+2019-05-29 10:14:57,989 INFO [root] - com.yl.daemon.sendSMS.SendsmsDaemon 无数据程序休眠时间（毫秒）:15000
+2019-05-29 10:14:57,989 INFO [root] - com.yl.daemon.sendSMS.SendsmsDaemon 将所有处于正在处理状态中的数据，修改状态为待处理
+2019-05-29 10:14:58,063 DEBUG [org.apache.ibatis.logging.LogFactory] - Logging initialized using 'org.apache.ibatis.logging.commons.JakartaCommonsLoggingImpl' adapter.
+2019-05-29 10:14:58,180 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:58,180 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:58,180 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:58,180 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:58,180 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:58,180 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:58,180 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:58,180 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:58,181 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:58,181 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:58,181 DEBUG [org.apache.ibatis.datasource.pooled.PooledDataSource] - PooledDataSource forcefully closed/removed all connections.
+2019-05-29 10:14:58,394 DEBUG [root] - com.yl.common.util.DBUtil create default sqlsessionfactory success!
+2019-05-29 10:14:58,446 DEBUG [org.apache.ibatis.transaction.jdbc.JdbcTransaction] - Openning JDBC Connection

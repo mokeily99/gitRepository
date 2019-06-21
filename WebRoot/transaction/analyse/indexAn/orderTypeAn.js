@@ -1,6 +1,6 @@
 function loadOrderTypeAn(){
 	//获取横轴
-	var dateList = getDateList(12);
+	var dateList = getDateList(10);
 	
 	$.ajax({
 		url: webpath + "/order/getOrderTypeCount.action",

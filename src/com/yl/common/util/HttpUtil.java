@@ -243,7 +243,9 @@ public class HttpUtil {
 	}
 	public static void main(String[] args) throws Exception {
 		Map<String, String> param = new HashMap<String, String>();
-		
-		doPostJson("{\"event\":\"ANSWER\",\"callid\":\"87180740-d388-11e8-8421-55df9da9116c\"}", "http://localhost:8080/sms-dms/getwayInterface/report.action", "sss");
+		param.put("xmlhead", "<?xml version='1.0' encoding='UTF-8'?><InterBOSS><Version>0100</Version><TestFlag>0</TestFlag><BIPType><BIPCode>BIP5A031</BIPCode><ActivityCode>T5000031</ActivityCode><ActionCode>0</ActionCode></BIPType><RoutingInfo><OrigDomain>UPMS</OrigDomain><RouteType>01</RouteType><Routing><HomeDomain>BOSS</HomeDomain><RouteValue>13844417949</RouteValue></Routing></RoutingInfo><TransInfo><SessionID>UPMSPID20150906151440685764</SessionID><TransIDO>TransIDO20150906151440685764</TransIDO><TransIDOTime>20150906151440</TransIDOTime></TransInfo><SNReserve><TransIDC>9980770120150906151404374005468</TransIDC><ConvID>30b57e85-602f-4580-a916-4abb78e37704</ConvID><CutOffDay>20150906</CutOffDay><OSNTime>20150906151404</OSNTime><OSNDUNS>9980</OSNDUNS><HSNDUNS>4310</HSNDUNS><MsgSender>0056</MsgSender><MsgReceiver>4311</MsgReceiver><Priority>3</Priority><ServiceLevel>5</ServiceLevel></SNReserve></InterBOSS>");
+		param.put("xmlbody", "<?xml version='1.0' encoding='UTF-8'?><InterBOSS><SvcCont><![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\"?><AuthReq><OrgID>0006</OrgID><OrgName>web</OrgName><MobileNum>13844417949</MobileNum></AuthReq>]]></SvcCont></InterBOSS>");
+		JSONObject jsonObject=JSONObject.fromObject(param);
+		doPostJson(jsonObject.toString(), "http://10.162.200.95:8600/servlet/BossServ", "sss");
 	}
 }

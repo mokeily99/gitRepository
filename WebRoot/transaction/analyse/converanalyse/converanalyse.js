@@ -62,6 +62,7 @@ layui.use(['form', 'layer', 'table', 'laydate' ], function() {
 				title : '未接通数'
 			}
 		] ],
+		limit: 5,
 		page : true,
 		loading : true
 	});
@@ -69,15 +70,11 @@ layui.use(['form', 'layer', 'table', 'laydate' ], function() {
 	//查询绑定
 	$('#query_black_btn').click(function() {
 		table.reload("conver_an_grid_list", {where: {beginDate: $("#begin_query_date").val(), endDate: $("#end_query_date").val()}});
-		if(userLevel == "10203"){//分销商工作人员
-			getConverTalkData();
-		}
+		getConverDeptTalkData();
 	});
 	
 	/***************************************图形模块*************************************************/
-	if(userLevel == "10203"){//分销商工作人员
-		getConverTalkData();
-	}
+	getConverDeptTalkData();
 });
 
 //弹窗关闭
