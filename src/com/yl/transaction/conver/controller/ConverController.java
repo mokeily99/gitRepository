@@ -146,6 +146,8 @@ public class ConverController extends BaseController{
 			PageInfo<Map<String, String>> pageinfo = new PageInfo<Map<String, String>>(sumList);
 			for(Map<String, String> sum : sumList){
 				sum.put("isTalk", "0");
+				sum.put("beginDate", beginDate);
+				sum.put("endDate", endDate);
 				Map<String, String> unTalk = converService.getConverIsTalk(sum);
 				sum.put("isTalk", "1");
 				Map<String, String> talk = converService.getConverIsTalk(sum);

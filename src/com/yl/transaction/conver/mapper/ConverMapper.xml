@@ -136,6 +136,12 @@
 	
 	<select id="getConverIsTalk" parameterType="java.util.Map" resultType="java.util.Map">
 		select count(1) TALK_NUM from t_conversation where SEAT_ID=#{SEAT_ID} and TALK_FLAG=#{isTalk}
+		<if test="beginDate != null and beginDate != '' ">
+			<![CDATA[ and TO_CHAR(CREATE_TIME, 'yyyy-mm-dd')>=#{beginDate}]]>
+		</if>
+		<if test="endDate != null and endDate != '' ">
+			<![CDATA[ and TO_CHAR(CREATE_TIME, 'yyyy-mm-dd')<=#{endDate}]]>
+		</if>
 	</select>
 	
 	<select id="getConverIsTalkList" parameterType="java.util.Map" resultType="java.util.Map">

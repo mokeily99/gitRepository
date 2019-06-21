@@ -273,4 +273,29 @@
 			and DEPT_CODE=#{deptCode}
 		</if>
 	</select>
+	
+	<select id="getSmsListAnalyse" resultType="java.util.Map" parameterType="java.util.Map">
+		select create_opr_id, creacreate_opr_name, count(1) SMS_NUM from t_sms_list_his where 1=1
+		<if test="deptCode != null and deptCode != '' ">
+			and DEPT_CODE=#{deptCode}
+		</if>
+		<if test="beginDate != null and beginDate != '' ">
+			<![CDATA[ and TO_CHAR(CREATE_TIME, 'yyyy-mm-dd')>=#{beginDate}]]>
+		</if>
+		<if test="endDate != null and endDate != '' ">
+			<![CDATA[ and TO_CHAR(CREATE_TIME, 'yyyy-mm-dd')<=#{endDate}]]>
+		</if>
+		group by create_opr_id, creacreate_opr_name
+		order by SMS_NUM desc
+	</select>
+	
+	<select id="getSendNum" parameterType="java.util.Map" resultType="java.util.Map">
+		select count(1) SEND_NUM from t_sms_list_his where CREATE_OPR_ID=#{CREATE_OPR_ID} and SEND_FLAG=#{sendFlag} 
+		<if test="beginDate != null and beginDate != '' ">
+			<![CDATA[ and TO_CHAR(CREATE_TIME, 'yyyy-mm-dd')>=#{beginDate}]]>
+		</if>
+		<if test="endDate != null and endDate != '' ">
+			<![CDATA[ and TO_CHAR(CREATE_TIME, 'yyyy-mm-dd')<=#{endDate}]]>
+		</if>
+	</select>
 </mapper>  

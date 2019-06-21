@@ -49,4 +49,8 @@ public interface SMSDao {
 	public Map<String, String> getUnSend(Map<String, String> param);
 	
 	public Map<String, String> getSMSSend(Map<String, String> param);
+	
+	public List<Map<String, String>> getSmsListAnalyse(Map<String, Object> param);
+	
+	public Map<String, String> getSendNum(Map<String, String> param);
 }

@@ -559,4 +559,64 @@ public class SMSController extends BaseController{
 		}
 		return result;
 	}
+	/**
+	 * 短信分析表格
+	 * @param page
+	 * @param limit
+	 * @param smsPhone
+	 * @param sendFlag
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/smsSendAnalyse")
+	@ResponseBody
+	public LayTableResult<List<Map<String, String>>> smsSendAnalyse(Integer page, Integer limit, String beginDate, String endDate, HttpServletRequest request, HttpServletResponse response, Model model){
+		LayTableResult<List<Map<String, String>>> tableResult = new LayTableResult<List<Map<String, String>>>();
+		
+		List<Map<String, String>> resultList = new ArrayList<Map<String, String>>();
+		try{
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("row", limit);
+			param.put("page", page);
+			
+			UserView user = this.getUserView(request);
+			param.put("beginDate", beginDate);
+			param.put("endDate", endDate);
+			if("10202".equals(user.getRoleLevel())){//分销商管理员看自己部门所有通话
+				param.put("deptCode", user.getDeptCode());
+			}
+			
+			PageHelper.startPage(page, limit);
+			List<Map<String, String>> smsList = smsService.getSmsListAnalyse(param);
+			PageInfo<Map<String, String>> pageinfo = new PageInfo<Map<String, String>>(smsList);
+			for(Map<String, String> sum : smsList){
+				sum.put("sendFlag", "10601");
+				sum.put("beginDate", beginDate);
+				sum.put("endDate", endDate);
+				Map<String, String> send = smsService.getSendNum(sum);
+				sum.put("sendFlag", "10602");
+				Map<String, String> unSend = smsService.getSendNum(sum);
+				
+				Map<String, String> temp = new HashMap<String, String>();
+				temp.put("SEAT_ID", sum.get("CREATE_OPR_ID"));
+				temp.put("SEAT_NAME", sum.get("CREACREATE_OPR_NAME"));
+				temp.put("SMS_NUM", String.valueOf(sum.get("SMS_NUM")));
+				temp.put("UN_SEND_NUM", String.valueOf(unSend.get("SEND_NUM")));
+				temp.put("SEND_NUM", String.valueOf(send.get("SEND_NUM")));
+				resultList.add(temp);
+			}
+			
+			tableResult.setCount((int) pageinfo.getTotal());
+			tableResult.setData(resultList);
+		}catch(Exception e){
+			logger.error(e.getMessage(), e);
+			tableResult.setCode(1);
+			tableResult.setMsg("数据加载失败！");
+			tableResult.setCount(0);
+			tableResult.setData(new ArrayList<Map<String, String>>());
+		}
+		return tableResult;
+	}
 }
