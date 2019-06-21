@@ -102,7 +102,7 @@
 	
 	/************日期间隔************/
 	function getDateSpaceList(beginDate, endDate){
-		var date = (endDate.getTime()-beginDate.getTime())/(1000*60*60*24);
+		var date = (endDate.getTime()-beginDate.getTime())/(1000*60*60*24)+1;
 		var dateList = [];
 		for(var ix=0; ix<date; ix++){
 			var temp = addDate(beginDate, ix)

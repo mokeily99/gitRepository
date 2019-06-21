@@ -20,7 +20,7 @@ layui.use(['form', 'layer', 'table', 'laydate' ], function() {
 	if(date < 10){
 		date = "0"+date;
 	}
-	beginDate = addDate(year+"-"+month+"-"+date, -10);
+	beginDate = addDate(year+"-"+month+"-"+date, -9);
 	laydate.render({
 	    elem: '#begin_query_date', //指定元素
 	    value: beginDate,
