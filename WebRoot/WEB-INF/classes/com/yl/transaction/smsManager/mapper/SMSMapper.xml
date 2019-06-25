@@ -155,7 +155,7 @@
 				#{custName}, 
 			</if>
 			#{phone}, 
-			to_date(#{sendDate}, 'yyyy-mm-dd'), #{oprID}, #{oprName}, 
+			to_date(#{sendDate}, 'yyyy-mm-dd HH24:mi:ss'), #{oprID}, #{oprName}, 
 			#{smsContent}, #{deptCode}, sysdate, '10702', '0'
 		)
 	</insert>

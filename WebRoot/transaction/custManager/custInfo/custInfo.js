@@ -342,7 +342,7 @@ layui.use(['form', 'layer', 'table', 'upload', 'laydate'], function() {
 			type : 1,
 			title : '短信发送',
 			content : $('#send_sms_div'),
-			area : [ '500px', '300px' ]
+			area : [ '500px', '350px' ]
 		});
 		
 		//发送方式赋值
@@ -374,10 +374,13 @@ layui.use(['form', 'layer', 'table', 'upload', 'laydate'], function() {
 		var year = myDate.getFullYear();
 		var month = myDate.getMonth()+1;
 		var date = myDate.getDate();
+		
+		
 		laydate.render({
 		    elem: '#send_sms_date', //指定元素
-		    value: year+"-"+month+"-"+date,
-		    min: year+"-"+month+"-"+date
+		    value: year+"-"+month+"-"+date + " " + myDate.getHours()+":"+myDate.getMinutes()+":"+myDate.getSeconds(),
+		    min: year+"-"+month+"-"+date + " " + myDate.getHours()+":"+myDate.getMinutes()+":"+myDate.getSeconds(),
+		    type: 'datetime'
 		});
 		form.render();
 		
