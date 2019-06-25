@@ -1,34 +1,5 @@
 //通话分析
-function getConverTalkData() {
-	var bDate = $("#begin_query_date").val();
-	var eDate = $("#end_query_date").val();
-	if (isEmpty(bDate)) {
-		bDate = beginDate;
-	}
-	if (isEmpty(eDate)) {
-		eDate = endDate;
-	}
-
-	$.ajax({
-		url : webpath + "/conver/getConverIsTalkData.action",
-		type : "post",
-		dataType : "json",
-		data : {
-			beginDate : bDate,
-			endDate : eDate
-		},
-		success : function(data) {
-			var resultCode = data.resultCode;
-			if (resultCode == "0000") {
-				var resultData = data.resultData;
-				initConverTalkLine(resultData, "通话量占比");
-			}
-		}
-	});
-}
-
-//通话分析
-function getConverDeptTalkData() {
+function getSMSDeptTalkData() {
 	var bDate = $("#begin_query_date").val();
 	var eDate = $("#end_query_date").val();
 	if (isEmpty(bDate)) {
@@ -40,7 +11,7 @@ function getConverDeptTalkData() {
 
 	var dateList = getDateSpaceList(new Date(bDate), new Date(eDate));
 	$.ajax({
-		url : webpath + "/conver/getConverDeptTalkData.action",
+		url : webpath + "/sms/getSMSDeptTalkData.action",
 		type : "post",
 		dataType : "json",
 		data : {
@@ -50,14 +21,14 @@ function getConverDeptTalkData() {
 			var resultCode = data.resultCode;
 			if (resultCode == "0000") {
 				var resultData = data.resultData;
-				initConverTalkLine(dateList, resultData, "短信量分析");
+				initSMSLine(dateList, resultData, "短信量分析");
 			}
 		}
 	});
 }
 
-function initConverTalkLine(categories, resultData, title) {
-	var chart = Highcharts.chart('csms_talk_an', {
+function initSMSLine(categories, resultData, title) {
+	var chart = Highcharts.chart('sms_send_an', {
 		chart : {
 			type : 'line'
 		},
@@ -69,7 +40,7 @@ function initConverTalkLine(categories, resultData, title) {
 		},
 		yAxis : {
 			title : {
-				text : '通话量'
+				text : '短信量'
 			}
 		},
 		plotOptions : {

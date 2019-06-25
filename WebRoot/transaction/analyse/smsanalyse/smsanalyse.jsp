@@ -44,7 +44,6 @@
 					<label class="layui-form-label"></label>
 					<div class="layui-input-inline">
 						<button type="button" class="layui-btn layui-btn-normal" id="query_black_btn">查询</button>
-						<button type="reset" class="layui-btn layui-btn-danger">重置</button>
 					</div>
 				</div>
 			</form>
@@ -56,7 +55,7 @@
 			  	<table class="layui-hide" id="sms_an_grid_list"></table>
 		  	</div>
 		  	<div style="width:99%;float:left;margin-left:10px;">
-				<div id="csms_talk_an"></div>
+				<div id="sms_send_an"></div>
 		  	</div>
 		</fieldset>
 	</div>

@@ -70,11 +70,11 @@ layui.use(['form', 'layer', 'table', 'laydate' ], function() {
 	//查询绑定
 	$('#query_black_btn').click(function() {
 		table.reload("sms_an_grid_list", {where: {beginDate: $("#begin_query_date").val(), endDate: $("#end_query_date").val()}});
-		getConverDeptTalkData();
+		getSMSDeptTalkData();
 	});
 	
 	/***************************************图形模块*************************************************/
-	getConverDeptTalkData();
+	getSMSDeptTalkData();
 });
 
 //弹窗关闭

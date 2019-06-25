@@ -108,5 +108,10 @@ public class SMSServiceImpl implements SMSService{
 		return smsDao.getSendNum(param);
 	}
 
+	@Override
+	public Integer getSMSNum(Map<String, String> param) {
+		return smsDao.getSMSNum(param);
+	}
+
 	
 }

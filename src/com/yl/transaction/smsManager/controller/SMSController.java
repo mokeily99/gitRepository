@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageHelper;
@@ -618,5 +619,76 @@ public class SMSController extends BaseController{
 			tableResult.setData(new ArrayList<Map<String, String>>());
 		}
 		return tableResult;
+	}
+	/**
+	 * 短信发送情况分析
+	 * @param dateList
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/getSMSDeptTalkData")
+	@ResponseBody
+	public Result getSMSDeptTalkData(@RequestParam("dateList[]") List<String> dateList, HttpServletRequest request, HttpServletResponse response, Model model){
+		
+		Result result = new Result();
+		try{
+			Map<String, String> param = new HashMap<String, String>();
+			UserView user = this.getUserView(request);
+			if("10202".equals(user.getRoleLevel())){//分销商管理员看自己部门所有通话
+				param.put("deptCode", user.getDeptCode());
+			}
+			
+			List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
+			
+			//获取短信总量
+			Map<String, Object> totalMap = new HashMap<String, Object>();
+			totalMap.put("name", "总量");
+			List<Integer> smsListNum = new ArrayList<Integer>();
+			for(int ix=0; ix<dateList.size(); ix++){
+				String date = dateList.get(ix);
+				param.put("date", date);
+				Integer sendNum = smsService.getSMSNum(param);
+				smsListNum.add(sendNum);
+			}
+			totalMap.put("data", smsListNum);
+			resultList.add(totalMap);
+			
+			//获取发送失败
+			Map<String, Object> unTalkMap = new HashMap<String, Object>();
+			unTalkMap.put("name", "失败量");
+			List<Integer> failList = new ArrayList<Integer>();
+			for(int ix=0; ix<dateList.size(); ix++){
+				String date = dateList.get(ix);
+				param.put("date", date);
+				param.put("sendFlag", "10602");
+				Integer sendNum = smsService.getSMSNum(param);
+				failList.add(sendNum);
+			}
+			unTalkMap.put("data", failList);
+			resultList.add(unTalkMap);
+			
+			//获取发送成功
+			Map<String, Object> talkMap = new HashMap<String, Object>();
+			talkMap.put("name", "成功量");
+			List<Integer> sucList = new ArrayList<Integer>();
+			for(int ix=0; ix<dateList.size(); ix++){
+				String date = dateList.get(ix);
+				param.put("date", date);
+				param.put("sendFlag", "10601");
+				Integer sendNum = smsService.getSMSNum(param);
+				sucList.add(sendNum);
+			}
+			talkMap.put("data", sucList);
+			resultList.add(talkMap);
+			
+			result.setResultData(resultList);
+		}catch(Exception e){
+			logger.error(e.getMessage(),e);
+			result.setResultCode("9999");
+			result.setResultMsg("操作失败!" + e);
+		}
+		return result;
 	}
 }
