@@ -97,9 +97,9 @@
 				<%} %>
 				<!-- 顶部右侧菜单 -->
 				<ul class="layui-nav top_menu">
-					<li class="layui-nav-item showNotice" id="showNotice" pc><a
+					<!-- <li class="layui-nav-item showNotice" id="showNotice" pc><a
 						href="javascript:;"><i class="iconfont icon-gonggao"></i><cite>系统提醒</cite></a>
-					</li>
+					</li> -->
 					<li class="layui-nav-item" mobile><a href="javascript:;"
 						data-url="page/user/changePwd.html"><i
 							class="iconfont icon-shezhi1" data-icon="icon-shezhi1"></i><cite>设置</cite></a>

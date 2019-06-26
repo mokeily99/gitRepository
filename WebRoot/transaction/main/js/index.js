@@ -65,7 +65,7 @@ layui.config({
 	})
 
 	//公告层
-	function showNotice(){
+	/*function showNotice(){
 		layer.open({
 	        type: 1,
 	        title: "系统公告", //不显示标题栏
@@ -98,7 +98,7 @@ layui.config({
 	}
 	$(".showNotice").on("click",function(){
 		showNotice();
-	})
+	})*/
 
 	//刷新后还原打开的窗口
 	if(window.sessionStorage.getItem("menu") != null){

@@ -39,7 +39,9 @@ function getSeatFreeBusyStatus(){
 						}
 					}
 				}
-			}else{
+			}else if(resultCode == "0002"){
+				//非坐席登录不处理
+			}else {
 				layer.alert('坐席账号密码错误！', {
 					icon : 2
 				});

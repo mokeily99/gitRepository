@@ -25,6 +25,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.github.pagehelper.util.StringUtil;
+import com.mysql.jdbc.StringUtils;
 import com.yl.common.controller.BaseController;
 import com.yl.common.dao.PublicDao;
 import com.yl.common.pojo.LayTableResult;
@@ -109,31 +111,37 @@ public class SeatController extends BaseController {
 		String status = null;
 		try {
 			UserView user = this.getUserView(request);
-			//从网关获取状态
-			JSONObject resp1 = HttpUtil.agentQuery(ConfigUtil.getConfigKey("QUEUEID"), user.getSeatNO(), ConfigUtil.getConfigKey("QUEUE_PWD"), publicDao.getToken());
-			if("success".equals(resp1.optString("status"))){
-				String seatStatus = resp1.optString("agentstatus");
-				if("logged out".equals(seatStatus)){
-					HttpUtil.agentLogin(ConfigUtil.getConfigKey("QUEUEID"), user.getSeatNO(), ConfigUtil.getConfigKey("QUEUE_PWD"), publicDao.getToken());
-					//重新获取登入状态
-					JSONObject resp2 = HttpUtil.agentQuery(ConfigUtil.getConfigKey("QUEUEID"), user.getSeatNO(), ConfigUtil.getConfigKey("QUEUE_PWD"), publicDao.getToken());
-					status = resp2.optString("agentstatus");
+			
+			if(StringUtil.isNotEmpty(user.getSeatNO())){
+				//从网关获取状态
+				JSONObject resp1 = HttpUtil.agentQuery(ConfigUtil.getConfigKey("QUEUEID"), user.getSeatNO(), ConfigUtil.getConfigKey("QUEUE_PWD"), publicDao.getToken());
+				if("success".equals(resp1.optString("status"))){
+					String seatStatus = resp1.optString("agentstatus");
+					if("logged out".equals(seatStatus)){
+						HttpUtil.agentLogin(ConfigUtil.getConfigKey("QUEUEID"), user.getSeatNO(), ConfigUtil.getConfigKey("QUEUE_PWD"), publicDao.getToken());
+						//重新获取登入状态
+						JSONObject resp2 = HttpUtil.agentQuery(ConfigUtil.getConfigKey("QUEUEID"), user.getSeatNO(), ConfigUtil.getConfigKey("QUEUE_PWD"), publicDao.getToken());
+						status = resp2.optString("agentstatus");
+					}else{
+						status = seatStatus;
+					}
 				}else{
-					status = seatStatus;
+					JSONObject loginRsp = HttpUtil.login(ConfigUtil.getConfigKey("API_USER_NAME"), ConfigUtil.getConfigKey("API_PWD"), ConfigUtil.getConfigKey("API_ACCEPT_URL"));
+					String loginStatus = loginRsp.optString("status");
+					if("success".equals(loginStatus)){
+						Map<String, String> para = new HashMap<String, String>();
+						para.put("token", loginRsp.optString("token"));
+						seatService.updateSeatStatus(para);
+						JSONObject resp3 = HttpUtil.agentQuery(ConfigUtil.getConfigKey("QUEUEID"), user.getSeatNO(), ConfigUtil.getConfigKey("QUEUE_PWD"), publicDao.getToken());
+						status = resp3.optString("agentstatus");
+					}else{
+						result.setResultCode("0001");
+						result.setResultMsg("坐席账号密码错误!");
+					}
 				}
 			}else{
-				JSONObject loginRsp = HttpUtil.login(ConfigUtil.getConfigKey("API_USER_NAME"), ConfigUtil.getConfigKey("API_PWD"), ConfigUtil.getConfigKey("API_ACCEPT_URL"));
-				String loginStatus = loginRsp.optString("status");
-				if("success".equals(loginStatus)){
-					Map<String, String> para = new HashMap<String, String>();
-					para.put("token", loginRsp.optString("token"));
-					seatService.updateSeatStatus(para);
-					JSONObject resp3 = HttpUtil.agentQuery(ConfigUtil.getConfigKey("QUEUEID"), user.getSeatNO(), ConfigUtil.getConfigKey("QUEUE_PWD"), publicDao.getToken());
-					status = resp3.optString("agentstatus");
-				}else{
-					result.setResultCode("0001");
-					result.setResultMsg("坐席账号密码错误!");
-				}
+				result.setResultCode("0002");
+				result.setResultMsg("非坐席登录");
 			}
 			
 			if("0000".equals(result.getResultCode())){
