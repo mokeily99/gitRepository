@@ -73,5 +73,6 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/poi-ooxml-schemas-3.8-20120326.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jackson-all-1.8.2.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jackson-jr-all-2.4.3-xh.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/dom4j-1.6.1.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>

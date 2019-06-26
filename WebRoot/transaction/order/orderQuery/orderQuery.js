@@ -103,7 +103,7 @@ layui.use(['form', 'layer', 'table' ], function() {
 					html.push("  <div class=\"layui-timeline-content layui-text\">");
 					html.push("  	<h3 class=\"layui-timeline-title\" style=\"font-size: 16px;\">" +resultData[ix].SEND_TIME+ "&nbsp;&nbsp;&nbsp;" +resultData[ix].CREATE_OPR_NAME+ "</h3>");
 					html.push("  	<p style=\"color:cadetblue;\">");
-					html.push("			" +resultData[ix].SEND_MARK+ "");
+					html.push("			" +(resultData[ix].SEND_MARK==undefined?'':resultData[ix].SEND_MARK)+ "");
 					html.push("  	</p>");
 					html.push("  </div>");
 					html.push("</li>");
